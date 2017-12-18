@@ -5,14 +5,14 @@ return [
         'namespace' => 'Project'
     ],
     'template' => [
-        'name' => 'default',
-        'dir' =>  '/default',
+        'name' => 'goandlfy',
+        'dir' =>  '/goandfly',
     ],
     'database' => [
         'host' => 'localhost',
         'user' => 'root',
         'password' => '',
-        'database' => 'boilerplate'
+        'database' => 'goandfly'
     ],
     'controller' => [
         'namespace' => 'Controller'
