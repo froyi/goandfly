@@ -3,6 +3,8 @@ declare (strict_types=1);
 
 namespace Project\Controller;
 
+use Project\Module\GenericValueObject\Id;
+
 /**
  * Class IndexController
  * @package Project\Controller
@@ -18,6 +20,7 @@ class IndexController extends DefaultController
      */
     public function indexAction(): void
     {
+        echo Id::generateId();
         $this->showStandardPage('home');
     }
 

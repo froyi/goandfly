@@ -9,7 +9,7 @@ namespace Project\Module\GenericValueObject;
  */
 class Text
 {
-    const MIN_TEXT_LENGTH = 50;
+    protected const MIN_TEXT_LENGTH = 10;
 
     /** @var string $text */
     protected $text;
@@ -42,7 +42,7 @@ class Text
      */
     protected static function ensureTextIsValid(string $text): void
     {
-        if (strlen($text) < self::MIN_TEXT_LENGTH) {
+        if (\strlen($text) < self::MIN_TEXT_LENGTH) {
             throw new \InvalidArgumentException('The text is not long enough.', 1);
         }
     }

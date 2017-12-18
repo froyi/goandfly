@@ -14,12 +14,12 @@ $route = 'index';
 if (Tools::getValue('route') !== false) {
     $route = Tools::getValue('route') ;
 }
-
-$routing = new Routing(new Configuration());
+$configuration = new Configuration();
+$routing = new Routing($configuration);
 
 try {
     $routing->startRoute($route);
 } catch(\InvalidArgumentException $error) {
-    $indexController = new IndexController();
+    $indexController = new IndexController($configuration);
     $indexController->errorPageAction();
 }

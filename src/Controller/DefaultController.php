@@ -4,7 +4,9 @@ declare (strict_types=1);
 namespace Project\Controller;
 
 use Project\Configuration;
+use Project\Module\Continent\ContinentService;
 use Project\Module\Database\Database;
+use Project\Module\Region\RegionService;
 use Project\View\ViewRenderer;
 
 /**
@@ -33,6 +35,8 @@ class DefaultController
         $this->database = new Database($this->configuration);
 
         $this->setDefaultViewConfig();
+
+        $this->setDefaultData();
     }
 
     /**
@@ -41,6 +45,16 @@ class DefaultController
     protected function setDefaultViewConfig(): void
     {
         $this->viewRenderer->addViewConfig('page', 'notfound');
+    }
+
+    protected function setDefaultData(): void
+    {
+
+        $regionService = new RegionService($this->database);
+        $this->viewRenderer->addViewConfig('regions', $regionService->getAllRegions());
+
+        $continentService = new ContinentService($this->database);
+        $this->viewRenderer->addViewConfig('continents', $continentService->getAllContinentsWithRegionList($regionService));
     }
 
     /**

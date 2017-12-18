@@ -45,37 +45,36 @@
     <header>
         <div class="container">
             <!-- Menü -->
-            <a class="open" href="#nav"><img src="img/nav_world.png"  /></a>
-            <img id="menueBig" src="img/globus.png"  onClick="toggleMenue();" />
+            <a class="open" href="#nav"><img src="{{ templateDir }}/img/nav_world.png"  /></a>
+            <img id="menueBig" src="{{ templateDir }}/img/globus.png"  onClick="toggleMenue();" />
 
             <!-- Logo -->
             <div id="logo">
-                <a href="index.php"><img src="img/logo_smartphone.png"/></a>
+                <a href="{{ route('index') }}"><img src="{{ templateDir }}/img/logo_smartphone.png"/></a>
                 <p>Mit uns fliegen Sie raus ...</p>
             </div> <!-- #logo -->
             <div id="logo_big" class="left">
-                <a href="index.php"><img src="img/logo.jpg"/></a>
+                <a href="{{ route('index') }}"><img src="{{ templateDir }}/img/logo.jpg"/></a>
             </div> <!-- #logo_big -->
 
             <!-- Hotline -->
             <div id="hotline" class="right">
-                <img src="img/hotline.png" />
+                <img src="{{ templateDir }}/img/hotline.png" />
             </div>
             <p class="clear"></p>
 
             <!-- Navigation small -->
             <div id="navigation">
                 <div id="nav">
-                    <?php
-					// Kontinente holen
-					$ko = holeKontinente();
-					while ($kontinente = mysql_fetch_assoc($ko))
-					{
-					?>
-                    <div class="kontinent">
-                        <a href="index.php?konti_id=<?php echo $kontinente["id"]; ?>"><img src="img/smartphone/kontinente/<?php echo $kontinente["bild"]; ?>" width="220"/></a>
-                        <table width="200">
-                            <?php
+                    {% for region in regions %}
+                        {{ region.getName }}
+                    {% endfor %}
+                    {% for continent in continents %}
+                        <div class="kontinent">
+                            {{ continent.getFlaeche }}
+                            <a href="{{ route('index') }}index.php?konti_id=<?php echo $kontinente["id"]; ?>"><img src="img/smartphone/kontinente/<?php echo $kontinente["bild"]; ?>" width="220"/></a>
+                            <table width="200">
+                                <?php
 						// Regionen holen
 						$count_re = 0;
 						$re = holeRegionen($kontinente["id"]);
@@ -86,22 +85,30 @@
 								// gerade Anzahl an Elementen
 								echo "<tr>";
 
-                            }
-                            ?>
-                            <td><a href="index.php?re_id=<?php echo $regionen["id"]; ?>"><?php echo $regionen["titel"]; ?></a></td>
+                                }
+                                ?>
+                                <td><a href="index.php?re_id=<?php echo $regionen["id"]; ?>"><?php echo $regionen["titel"]; ?></a></td>
 
-                            <?php
+                                <?php
 						if($count_re % 2 != 0)
 						{
 							// gerade Anzahl an Elementen
 							echo "</tr>";
 
-                            }
-                            $count_re ++;
-                            } // while() Regionen ?>
-                            </tr>
-                        </table>
-                    </div> <!-- .kontinent -->
+                                }
+                                $count_re ++;
+                                } // while() Regionen ?>
+                                </tr>
+                            </table>
+                        </div> <!-- .kontinent -->
+                    {% endfor %}
+                    <?php
+					// Kontinente holen
+					$ko = holeKontinente();
+					while ($kontinente = mysql_fetch_assoc($ko))
+					{
+					?>
+
                     <?php } // while() Kontinente ?>
                 </div> <!-- #nav -->
             </div> <!-- #navigation -->

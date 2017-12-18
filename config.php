@@ -12,7 +12,7 @@ return [
         'host' => 'localhost',
         'user' => 'root',
         'password' => '',
-        'database' => 'goandfly'
+        'database' => 'fly'
     ],
     'controller' => [
         'namespace' => 'Controller'

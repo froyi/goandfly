@@ -1,0 +1,1741 @@
+/*****************/
+/*   CSS RESET   */
+/*****************/
+
+@font-face {
+  font-family: 'cooper_lt_btlight';
+  src: url('../font/09495_cooperltbtlight-webfont.eot');
+  src: url('../font/09495_cooperltbtlight-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../font/09495_cooperltbtlight-webfont.woff') format('woff'),
+  url('../font/09495_cooperltbtlight-webfont.ttf') format('truetype'),
+  url('../font/09495_cooperltbtlight-webfont.svg#cooper_lt_btlight') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'CandaraRegular';
+  src: url('../font/candara-webfont.eot');
+  src: url('../font/candara-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../font/candara-webfont.woff') format('woff'),
+  url('../font/candara-webfont.ttf') format('truetype'),
+  url('../font/candara-webfont.svg#CandaraRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'cooper_md_btmedium';
+  src: url('../font/09495_coopermdbt-webfont.eot');
+  src: url('../font/09495_coopermdbt-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../font/09495_coopermdbt-webfont.woff') format('woff'),
+  url('../font/09495_coopermdbt-webfont.ttf') format('truetype'),
+  url('../font/09495_coopermdbt-webfont.svg#cooper_md_btmedium') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+
+:link,:visited { text-decoration:none }
+
+ul,ol { list-style:none }
+
+h1,h2,h3,h4,h5,h6,pre,code { font-size:1em }
+
+ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input{ margin:0;padding:0 }
+
+a img,:link img,:visited img { border:none }
+
+address { font-style:normal }
+
+* {
+  vertical-align: baseline;
+  font-weight: inherit;
+  font-family: 'cooper_lt_btlight', Arial, Helvetica, sans-serif;
+  font-style: inherit;
+  font-size: 1em;
+  border: 0 none;
+  outline: 0;
+  padding: 0;
+  margin: 0;
+  color:white;
+}
+
+
+/*********************/
+/*   MAIN STRUKTUR   */
+/*********************/
+body
+{
+  background-color:#1C191D;
+}
+
+#wrapper
+{
+  width:100%;
+}
+
+#header
+{
+  background:#1C191D;
+}
+#header #hotline
+{
+  display:none;
+}
+#pageslide
+{
+  /* These styles MUST be included. Do not change. */
+  display: none;
+  position: absolute;
+  /*position: fixed;*/
+  top: 0;
+  height: 1400px;
+  z-index: 999999;
+
+  /* Specify the width of your pageslide here */
+  width: 240px;
+  padding: 20px 0px;
+
+  /* These styles are optional, and describe how the pageslide will look */
+  background-color: #333;
+  color: #FFF;
+  border-right:2px solid #C90019;
+  border-bottom:2px solid #C90019;
+  /*-webkit-box-shadow: inset 0 0 5px 5px #222;
+  -moz-box-shadow: inset 0 0 5px 5px #222;
+  box-shadow: inset 0 0 5px 5px #222;*/
+}
+.kontinent
+{
+  border-bottom: 1px dotted #464646;
+  margin-bottom:20px;
+}
+.kontinent table
+{
+  margin-left: 20px;
+}
+.kontinent table tbody tr
+{
+  height:28px;
+}
+.kontinent table tbody tr td a
+{
+  font-size:0.9em;
+  color:white;
+}
+.open
+{
+  float:left;
+}
+a.open img
+{
+  margin:70% 0% 0% 20%;
+}
+#menueBig
+{
+  display:none;
+}
+#nav
+{
+  display:none;
+}
+#nav .kontinent:last-of-type
+{
+  border-bottom:none;
+}
+#navigationBig
+{
+  display:none;
+}
+#logo
+{
+  text-align:center;
+  width:210px;
+  margin:0 auto;
+}
+#logo p
+{
+  font-size: 18px;
+  font-family: 'cooper_lt_btlight', Arial, Helvetica, sans-serif;
+  color: rgb( 207, 211, 205 );
+  line-height: 1.167;
+  padding-bottom:6%;
+}
+#logo img
+{
+  max-width:173px;
+  margin:0% auto;
+  padding: 4% 0% 1% 0%;
+}
+#logo_big
+{
+  display:none;
+}
+#teaser img
+{
+  min-width:200px;
+  max-width:1096px;
+  height:auto;
+  width:100%;
+}
+#tagListe
+{
+  display:none;
+}
+#main {}
+h2
+{
+  font-family: 'cooper_lt_btlight', Arial, Helvetica, sans-serif;
+  color: rgb( 201, 0, 25 );
+  line-height: 1.563;
+  margin-left:15px;
+  font-size:1.28em;
+  letter-spacing:0.05em;
+}
+.reise
+{
+  min-width:300px;
+}
+.reise > img
+{
+  margin-left:15px;
+  width:58.82352941176471%;
+  min-width:150px;
+  max-width:300px;
+  height:auto;
+  float:left;
+}
+.reise > div
+{
+  margin-top:15px;
+  margin-right:15px;
+  float:right;
+  width:30%;
+  min-width:90px;
+}
+.reise > div > div
+{
+  width:50%;
+  height:50px;
+  float:left;
+  text-align:center;
+}
+.reise > div > div > p
+{
+  font-size: 0.8125em;
+  font-family: 'CandaraRegular', Arial, Helvetica, sans-serif;
+  color: rgb( 255, 255, 255 );
+  line-height: 0.8;
+}
+.reise h3
+{
+  height:42px;
+}
+
+
+#footer
+{
+  width:100%;
+  margin-top:30px;
+  padding-top:20px;
+  border-top:2px solid #C90019;
+  background-color:#1C191D;
+}
+#footer .line
+{
+  border-bottom: 1px dotted #464646;
+  width:100%;
+  max-width:100%;
+  height:2px;
+  margin-bottom:20px;
+  padding-bottom:0px;
+}
+#footer .container > div
+{
+  /* */
+  margin:0px auto;
+  width:100%;
+  max-width:350px;
+  padding-bottom:30px;
+}
+#footer .container > div:first-of-type
+{
+  margin-top:2em;
+}
+#footer .container > div:first-of-type img
+{
+  /* Dieter Rosenbusch */
+  width: 31%;
+  float: left;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+#footer .container > div:first-of-type h3
+{
+  margin-top:2em;
+}
+#footer .container > div > div
+{
+  float:left;
+  width:66%;
+  max-width:250px;
+  padding-top:10px;
+}
+#footer .container > div > div p
+{
+  font-size:0.8125em;
+}
+#footer #kontaktform
+{
+  padding-left:15px;
+  padding-top: 10px;
+}
+#footer #kontaktform h3
+{
+  margin-bottom:10px;
+}
+#footer #partner_footer
+{
+  padding-left:10px;
+  padding-top: 10px;
+}
+#footer #partner_footer > div
+{
+  width:45%;
+}
+#footer #partner_footer > div:nth-of-type(2n-1)
+{
+  margin-right:20px;
+}
+#footer #partner_footer > div a
+{
+}
+#footer #partner_footer img
+{
+  width:100%;
+  max-width:300px;
+}
+#footer #partner_footer img#bw
+{
+  width:100%;
+}
+#footer div:first-of-type ul
+{
+  margin-top:3em;
+}
+#footer div:first-of-type ul li
+{
+  display:inline;
+  list-style:none;
+  margin-right:2%;
+}
+#footer div:first-of-type ul li a
+{
+  font-size:0.9em;
+}
+#u_0_2
+{
+  color:white !important;
+}
+
+h3
+{
+  font-size: 1.125em;
+  font-family: 'cooper_lt_btlight', Arial, Helvetica, sans-serif;
+  color: rgb( 201, 0, 25 );
+  line-height: 1.167;
+}
+input[type="text"], input[type="email"], textarea, input[type="tel"], select, input[type="date"], input[type="file"], input[type="password"]
+{
+  width: 80%;
+  max-width: 350px;
+  border: 1px solid #C90019;
+  background-color: #1C191D;
+  margin-bottom: 15px;
+  height:30px;
+  line-height: 30px;
+  padding-left: 10px;
+}
+input[type="file"]
+{
+  border: none;
+  background-color:inherit;
+}
+select
+{
+  width:84%;
+  max-width:400px;
+  height:30px;
+}
+input[type="submit"]
+{
+  width: 84%;
+  background-color: #C90019;
+  height: 30px;
+  cursor:pointer;
+}
+
+
+.whiteLine
+{
+  height:1px;
+  width:100%;
+  background-color:#FFFFFF;
+}
+p
+{
+  font-family: 'CandaraRegular', Arial, Helvetica, sans-serif;
+  color: rgb( 255, 255, 255 );
+  line-height:1.5em;
+}
+optgroup[label]
+{
+  color:#C90019;
+}
+select.multipleSelect
+{
+  height:10em;
+}
+strong
+{
+  font-weight:bold;
+}
+@media screen and (min-width:500px)
+{
+  body
+  {
+    background:url(../img/body_bg.jpg) top center no-repeat;
+    background-attachment:fixed;
+    background-size:cover;
+  }
+  #wrapper
+  {
+    background:url(../img/wrapper_bg.jpg) top left repeat-x;
+
+  }
+  #header, #main, #teaser, #tagListe
+  {
+    width:90%;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  #header
+  {
+    background-image:none;
+    height:70px;
+  }
+  #header .container
+  {
+  }
+  #header #hotline
+  {
+    width: 24%;
+    max-height: 58px;
+    text-align: right;
+    display: inherit;
+    padding-top: 12px;
+  }
+  #header #hotline img
+  {
+    width:100%;
+    min-width:140px;
+    max-width:220px;
+  }
+  #teaser
+  {
+    /*padding:0px;*/
+    /*background-color:#1c191d;*/
+    border:2px solid #C90019;/*
+		border-left:2px solid #C90019;
+		border-right:2px solid #C90019;*/
+    max-height:366px;
+    max-width:1096px;
+    overflow: hidden;
+
+  }
+  #teaser img
+  {
+    /*border-left:2px solid #C90019;
+    border-right:2px solid #C90019;*/
+    max-height:367px;
+  }
+  .open
+  {
+    position:absolute;
+    top:21px;
+    left:46%;
+  }
+  .open img
+  {
+    content:url(../img/globus.png);
+    width:49px;
+    height:41px;
+  }
+  #logo
+  {
+    display:none;
+  }
+  #logo_big
+  {
+    width:50%;
+    max-width:350px;
+    display:inherit;
+    padding-top:22px;
+  }
+  #logo_big img
+  {
+    width:100%;
+    max-width:428px;
+    height:auto;
+  }
+  #navigationBig
+  {
+    display:none;
+  }
+  #tagListe
+  {
+    display: block;
+    background: #1c191d;
+    border-bottom: 2px solid #c90019;
+    border-left: 2px solid #c90019;
+    padding: 0.5em 0;
+    max-width: 1096px;
+    border-right: 2px solid #c90019;
+  }
+  #tagListe table
+  {
+    width:96%;
+    margin-left:3em;
+  }
+  #tagListe table tbody tr td
+  {
+    list-style-type:none;
+    line-height:1.5em;
+    font-size:0.9375em;
+    font-family: 'cooper_md_btmedium', Arial, Helvetica, sans-serif;
+    cursor:pointer;
+  }
+  #main
+  {
+    min-height:400px;
+  }
+  #main .container
+  {
+    /*display:none;*/
+  }
+
+}
+@media screen and (min-width:700px)
+{
+  /* REISE VORSCHAU INDEX */
+  #main > div.right
+  {
+    width:30%;
+  }
+  .reise
+  {
+    width:30%;
+    max-width:340px;
+    border-left:2px solid #C90019;
+    border-right:2px solid #C90019;
+    border-bottom:2px solid #C90019;
+    background:rgba(28,25,29,0.9);
+  }
+  .reise p
+  {
+    font-size: 0.8125em;
+    font-family: 'CandaraRegular', Arial, Helvetica, sans-serif;
+    line-height: 1.563;
+    padding-left:0.625em;
+    padding-right:0.625em;
+  }
+  .reise h3
+  {
+    padding-left:0.4em;
+  }
+  .container .reise:nth-of-type(1), .container .reise:nth-of-type(2), .container .reise:nth-of-type(3)
+  {
+    float:left;
+  }
+  .container .reise:nth-of-type(3)
+  {
+    float:right;
+  }
+  .reise:nth-of-type(2)
+  {
+    margin:0 4%;
+  }
+  #reiseListeContainer
+  {
+    width:66%;
+  }
+  #reiseListeContainer .reise
+  {
+    width:100%;
+    max-width:708px;
+    margin:2em 0;
+    border-top:2px solid #C90019;
+    float:left;
+  }
+
+  #reiseListeContainer .reise a img
+  {
+    float:left;
+  }
+  #reiseListeContainer .reise > div
+  {
+    float:none;
+  }
+  #reiseListeContainer .reise h3
+  {
+    float:left;
+    margin-top:0.5em;
+    margin-left:0.5em;
+    min-width:45%;
+    max-width: 45%;
+  }
+  #reiseListeContainer .reise > p
+  {
+    float:left;
+    margin-left:0.5em;
+    width:35%;
+  }
+  #reiseListeContainer .reise .reiseKurzinformation
+  {
+    margin-top:0;
+    min-width:70px;
+    width:5%;
+    float:right;
+  }
+  #reiseListeContainer .reise .reiseKurzinformation > div
+  {
+    width:100%;
+    float:none;
+  }
+  #reiseListeContainer .reise .reiseKurzinformation > div:first-of-type
+  {
+    margin:0;
+  }
+  #reiseListeContainer .reise .reiseKurzinformation p.clear
+  {
+    clear:none;
+  }
+  #reiseListeContainer .reise .whiteLine
+  {
+    background-color:inherit;
+    border-left:1px solid #FFFFFF;
+    width:1px;
+    height:185px;
+    margin:0;
+    padding:0;
+  }
+
+  .reise > a > img
+  {
+    margin-left:0px;
+    max-width:340px;
+    min-width:150px;
+    width: 100%;
+    height: auto;
+  }
+  .reise .reiseKurzinformation
+  {
+    width:100%;
+  }
+  .reise .reiseKurzinformation > div
+  {
+    width:23%;
+    float:left;
+  }
+  .reise .reiseKurzinformation > div:first-of-type
+  {
+    margin-left:0.5em;
+  }
+  .reise .whiteLine
+  {
+    margin: 0.5em 0.625em 0 0.625em;
+    max-width:90%
+  }
+
+  /* REISE */
+  #reiseContainer
+  {
+    width:100%;
+    max-width:1096px;
+    background:rgba(28,25,29,0.9);
+    border-left:2px solid #C90019;
+    border-right:2px solid #C90019;
+    border-bottom:2px solid #C90019;
+    padding-top:1em;
+  }
+  #reiseContainer .left
+  {
+    width:60%;
+    max-width:800px;
+  }
+  #reiseContainer .right
+  {
+
+  }
+  #reiseContent
+  {
+    margin-left:1em;
+  }
+  #reiseContent > h3
+  {
+    margin-bottom:1em;
+  }
+  #reiseContent p
+  {
+    margin-bottom:1em;
+  }
+  #reiseContent #reiseFormular
+  {
+    margin-top:2em;
+    margin-bottom:1em;
+  }
+  #reiseFormular select
+  {
+    width:52%;
+  }
+  #reiseFormular input[type="text"], #reiseFormular input[type="email"], #reiseFormular input[type="tel"], #reiseFormular input[type="submit"]
+  {
+    width:50%;
+  }
+  #reiseFormular textarea
+  {
+    width:82%;
+    height:150px;
+    max-width:800px;
+  }
+  #reiseRecommenderContainer .container .reise
+  {
+    border-top:2px solid #C90019;
+    margin-bottom:3em;
+  }
+  #reiseRecommenderContainer .container .reise:first-of-type
+  {
+    margin-left:1.2em;
+  }
+  #reiseRecommenderContainer .container .reise:nth-of-type(2)
+  {
+    margin: 0 1.8em;
+  }
+  #reiseRecommenderContainer .container .reise:last-of-type
+  {
+    margin-right:1.2em;
+  }
+  #keineReise
+  {
+    background:	rgba(28,25,29,0.9);
+    border-left:2px solid #C90019;
+    border-right:2px solid #C90019;
+    border-bottom:2px solid #C90019;
+    padding:20px 10px 20px 10px;
+    width:100%;
+    max-width:1076px;
+    float:left;
+  }
+
+
+  /* SIDEBAR */
+  #sidebar
+  {
+    float:right;
+    width:20%;
+    background:rgba(28,25,29,0.9);
+    border-left:2px solid #C90019;
+    border-right:2px solid #C90019;
+    border-bottom:2px solid #C90019;
+    padding:0px 20px;
+  }
+  #sidebar img
+  {
+    max-width:250px;
+    margin:1.5em 0;
+  }
+  #mainSidebar
+  {
+    float:right;
+    width:100%;
+    background:rgba(28,25,29,0.9);
+    border:2px solid #C90019;
+    margin-top:2em;
+    /*padding:0px 20px;*/
+  }
+  #mainSidebar #schildSidebar
+  {
+    position: relative;
+    top: -27px;
+    right: -295px;
+  }
+  #mainSidebar h3
+  {
+    margin-top:-70px;
+    margin-left:0.7em;
+  }
+  #mainSidebar p
+  {
+    margin: 0.2em 1em;
+    font-size: 0.8125em;
+    font-family: 'CandaraRegular', Arial, Helvetica, sans-serif;
+    line-height: 1.563;
+  }
+  #mainSidebar p span
+  {
+    font-size: 1.2em;
+    font-family: 'cooper_lt_btlight', Arial, Helvetica, sans-serif;
+    color: rgb( 201, 0, 25 );
+    line-height: 1.5;
+  }
+  #mainSidebar div.neuigkeit:last-of-type p.whiteLine
+  {
+    border:none;
+    background-color:inherit;
+  }
+  #mainSidebar p.whiteLine
+  {
+    width:inherit !important;
+    margin-top:0.5em;
+  }
+  #mainSidebar .neuigkeit p.clear img
+  {
+    position:relative;
+    top: -3em;
+    left: -20em;
+  }
+
+  #reiseSidebar
+  {
+    width:31%;
+    max-width:500px;
+    border-left:1px solid white;
+    padding-left:1.5em;
+  }
+  #reiseSidebar #reiseSidebarKarte img
+  {
+    border:2px solid #C90019;
+    width:92%;
+  }
+  #reiseSidebar #reiseSidebarKurzinformation
+  {
+    /*margin-top:0.5em;*/
+  }
+  #reiseSidebar #reiseSidebarKurzinformation > img
+  {
+    width: 14%;
+    margin-top: 2px;
+  }
+  #reiseSidebar #reiseSidebarKurzinformation table
+  {
+    width:80%;
+  }
+  #reiseSidebar #reiseSidebarKurzinformation table tbody tr td
+  {
+    font-size:0.825em;
+  }
+  #reiseSidebar #reiseSidebarKurzinformation table tbody tr td:first-of-type
+  {
+    width:20%;
+  }
+  #reiseSidebar #reiseSidebarKurzinformation table tbody tr:nth-of-type(2) td:first-of-type
+  {
+    padding-left:3%;
+  }
+  #reiseSidebar #reiseSidebarKurzinformation table tbody tr td:nth-of-type(2)
+  {
+    width:20%;
+  }
+  #reiseSidebar #reiseSidebarKurzinformation table tbody tr td:nth-of-type(2) img
+  {
+    margin-left: 3%;
+  }
+  #reiseSidebar #reiseSidebarKurzinformation table tbody tr td:nth-of-type(3)
+  {
+    width:15%;
+  }
+  #reiseSidebar #reiseSidebarKurzinformation table tbody tr td:nth-of-type(4)
+  {
+    width:20%;
+  }
+  #reiseSidebar #reiseSidebarKurzinformation table tbody tr td:nth-of-type(4) img
+  {
+    margin-left: 10%;
+  }
+  #reiseSidebarReiseverlauf
+  {
+    margin-top:1em;
+    padding-bottom:1em;
+  }
+  #reiseverlaufDetail
+  {
+
+  }
+  #reiseverlaufMehr
+  {
+    cursor:pointer;
+  }
+  #reiseSidebarReiseverlauf p
+  {
+    font-size:0.8125em;
+    padding-left:1em;
+    padding-right:1em;
+    margin-bottom:1em;
+  }
+  #reiseSidebarReiseverlauf p:nth-of-type(2n+1)
+  {
+    margin-left: 1.5em;
+  }
+  #reiseSidebarReiseverlauf h3
+  {
+    padding-left:0.7em;
+  }
+  #reiseSidebarReiseverlauf p span
+  {
+    color:#c90019;
+    cursor:pointer;
+  }
+
+  #reiseSidebarHotline
+  {
+    background:url(../img/reiseSidebarHoerer.png) no-repeat 14% 10%;
+    padding-left:20%;
+  }
+  #termineMehr
+  {
+    margin-left:1em;
+    cursor:pointer;
+  }
+  #reiseSidebarTermine h3
+  {
+    padding-left:0.7em;
+  }
+  #reiseSidebarTermine table
+  {
+    padding-left:1em;
+    width: 100%;
+  }
+  #reiseSidebarTermine table tbody tr td
+  {
+    font-size: 0.8125em;
+    font-family: 'CandaraRegular', Arial, Helvetica, sans-serif;
+    color: rgb( 255, 255, 255 );
+    line-height: 1.5;
+  }
+  #reiseSidebarTermine table tbody tr td:nth-of-type(2)
+  {
+    width:2%;
+  }
+  #reiseSidebarTermine table tbody tr td:first-of-type
+  {
+    width:18%;
+  }
+  #reiseSidebarTermine table tbody tr td:nth-of-type(3)
+  {
+    width:20%;
+    text-align: right;
+    padding-right: 5px;
+  }
+
+  #reiseSidebarLeistungen h3
+  {
+    margin-left:1.2em;
+  }
+  #reiseSidebarLeistungen ul
+  {
+    margin-left:1.6em;
+    margin-right:1em;
+  }
+  #reiseSidebarLeistungen ul li
+  {
+    list-style-type:circle;
+    list-style-position:outside;
+    margin-left:1em;
+    font-size: 0.8125em;
+    font-family: 'CandaraRegular', Arial, Helvetica, sans-serif;
+    color: rgb( 255, 255, 255 );
+    line-height: 1.5;
+  }
+  #reiseSidebarLeistungenContainer
+  {
+    height:192px;
+    overflow:hidden;
+  }
+  #leistungenMehr
+  {
+    cursor:pointer;
+  }
+
+  #reiseSidebarFragen
+  {
+    margin-top:1em;
+    padding-bottom:1em;
+  }
+  #reiseSidebarFragen h3
+  {
+    padding-left:0.7em;
+  }
+  #reiseSidebarFragen p
+  {
+    font-size:0.8125em;
+    padding-left:1em;
+    padding-right:1em;
+    margin-bottom:1em;
+  }
+  #reiseSidebarFragen p span
+  {
+    color:#c90019;
+  }
+
+
+  .reiseSidebarContainer
+  {
+    background:#1c191d;
+    border:2px solid #C90019;
+    width:103%;
+    padding:0.5em 0;
+  }
+  #reiseSidebarReiseverlauf.reiseSidebarContainer
+  {
+    background: #1c191d url(../img/reiseReiseverlaufBg.png) no-repeat bottom right;
+  }
+  #reiseSidebarTermine.reiseSidebarContainer
+  {
+    background: #1c191d url(../img/termineSidebarBg.png) no-repeat bottom right;
+  }
+  #reiseSidebarFragen.reiseSidebarContainer
+  {
+    background: #1c191d url(../img/fragenSidebar.png) no-repeat bottom right;
+  }
+  .reiseSidebarContainerAfter
+  {
+    background:url(../img/backgroundPfeilSidebar.png) no-repeat;
+    width:10%;
+    min-height:15px;
+    height:auto;
+    position:relative;
+    left:100%;
+    right:0;
+  }
+  /* PARTNER */
+  #main
+  {
+  }
+  #partner
+  {
+    background:rgba(28,25,29,0.9);
+    border-left:2px solid #C90019;
+    border-right:2px solid #C90019;
+    border-bottom:2px solid #C90019;
+    padding-top:20px;
+  }
+  #partner > div img
+  {
+    width:100%;
+    border:2px solid #C90019;
+  }
+  #partner > div ul
+  {
+    margin-bottom:80px;
+  }
+  #partner > div ul li
+  {
+    list-style:circle;
+    list-style-position:inside;
+  }
+  #partner > div p
+  {
+    margin-bottom:0.5em;
+  }
+  #partner > div p span
+  {
+    /*font-weight:bold;*/
+    color:#c90019;
+  }
+  #partner .partnerBeschreibung
+  {
+    margin-top:2em;
+  }
+  #studiosus, #chamaeleon, #diamir
+  {
+    width:30%;
+    font-size: 0.8125em;
+    font-family: 'CandaraRegular', Arial, Helvetica, sans-serif;
+    color: rgb( 255, 255, 255 );
+    line-height: 1.5;
+    margin:0 1.5%;
+  }
+  /* DIAMIR RESELLER */
+  #diamirReseller
+  {
+    background:	rgba(28,25,29,0.9);
+    border-left:2px solid #C90019;
+    border-right:2px solid #C90019;
+    border-bottom:2px solid #C90019;
+    padding:20px 10px 20px 10px;
+    max-width:1076px;
+    width:100%;
+  }
+  #diamirReseller iframe
+  {
+    background-color:rgba(0,0,0,0) !important;
+  }
+  #reseller-diamir-content
+  {
+    background-color:rgba(0,0,0,0);
+  }
+
+  /* ÜBER UNS */
+  #ueber_uns
+  {
+    background:	rgba(28,25,29,0.9);
+    border-left:2px solid #C90019;
+    border-right:2px solid #C90019;
+    border-bottom:2px solid #C90019;
+    padding:20px 10px 20px 10px;
+    width:70%;
+    float:left;
+  }
+  #ueber_uns p
+  {
+    margin:0px 2em 1em 15px;
+  }
+  #ueber_uns p img
+  {
+    width:22%;
+    min-width:160px;
+    float:left;
+    margin-right:1em;
+    margin-bottom:1em;
+  }
+
+  /* KONTAKT */
+  #kontakt
+  {
+    background:	rgba(28,25,29,0.9);
+    border-left:2px solid #C90019;
+    border-right:2px solid #C90019;
+    border-bottom:2px solid #C90019;
+    padding:20px 10px 20px 10px;
+    width:70%;
+    float:left;
+  }
+  #kontakt ul
+  {
+    margin-bottom:1em;
+  }
+  #kontakt ul li
+  {
+    margin-left:32px;
+    list-style-type:circle;
+    line-height:1.5;
+  }
+  #kontakt h3
+  {
+    margin-left:15px;
+  }
+  #kontakt p input.left
+  {
+    margin-right:1em;
+  }
+  #kontakt > p
+  {
+    margin-bottom:1em;
+  }
+  #kontakt > p, #kontakt form p
+  {
+    margin-left:15px;
+  }
+  #kontakt form p
+  {
+    width:45%;
+  }
+  #kontakt form p textarea
+  {
+    width:184%;
+    max-width:800px;
+    min-height:150px;
+  }
+
+  /* IMPRESSUM */
+  #impressum
+  {
+    background:	rgba(28,25,29,0.9);
+    border-left:2px solid #C90019;
+    border-right:2px solid #C90019;
+    border-bottom:2px solid #C90019;
+    padding:20px 10px 20px 10px;
+    width:70%;
+    float:left;
+  }
+  #impressum p
+  {
+    margin-bottom:1em;
+    margin-right:1.5em;
+    margin-left:15px;
+  }
+  #impressum h3
+  {
+    margin-top:1em;
+    margin-left:15px;
+  }
+
+
+  #footer
+  {
+    font-size:0.9em;
+    clear:both;
+
+  }
+  #footer .fb-like
+  {
+    margin-top:1em;
+  }
+  #footer .container
+  {
+    width:90%;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  #footer .container > div
+  {
+    float:left;
+    width:31%;
+
+    min-height:240px;
+  }
+  #footer .container > div:first-of-type
+  {
+    padding-bottom: 8px;
+  }
+  #footer .container > div#kontaktform
+  {
+    border-right: 1px dotted #464646;
+    border-left: 1px dotted #464646;
+  }
+  #footer .container > div:first-of-type img
+  {
+    margin-left:0px;
+  }
+  #footer .container > div:last-of-type
+  {
+    border-right:none;
+  }
+  #footer a
+  {
+    color:white;
+  }
+  #footer a:hover
+  {
+    color:#c90019 !important;
+  }
+  .line
+  {
+    display:none;
+  }
+  /* LOGIN */
+  #login
+  {
+    background:rgba(28,25,29,0.9);
+    border-left:2px solid #C90019;
+    border-right:2px solid #C90019;
+    border-bottom:2px solid #C90019;
+    padding:2em 0em;
+  }
+  #login form
+  {
+    margin: 0 auto;
+    width:35%;
+  }
+  #login input[type="submit"]
+  {
+    width:47%;
+  }
+  /* ADMIN */
+  .containerAdmin
+  {
+    width:100%;
+    max-width:1096px !important;
+    background:rgba(28,25,29,0.9);
+    border-left:2px solid #C90019;
+    border-right:2px solid #C90019;
+    border-bottom:2px solid #C90019;
+    padding-top:1em;
+  }
+  .containerAdmin > div > .errorLog
+  {
+    padding-left:1.2em;
+  }
+  .containerAdmin .errorLog
+  {
+    margin-bottom:1em;
+  }
+  .containerAdmin > p
+  {
+    padding: 1em 1em;
+  }
+  /* Reise erstellen */
+  #erstelleReise h3, #bearbeiteReise h3, #erstelleNeuigkeit h3, #bearbeiteNeuigkeit h3
+  {
+    background:black;
+    width:100%-1em;
+    cursor:pointer;
+    line-height:2em;
+    border-top:2px solid #C90019;
+    border-bottom:2px solid #C90019;
+    padding-left:1em;
+    margin-bottom:2em;
+  }
+  #holeReisedatenformAuswahl option
+  {
+    /*background-color:rgba(0,0,0,0.55);*/
+  }
+
+  #bearbeiteReise h3
+  {
+    cursor:default;
+  }
+  #bearbeiteReise > form > p
+  {
+    width:50%;
+    padding-left:1em;
+  }
+  #bearbeiteReise > form:first-of-type, #bearbeiteNeuigkeit > form:first-of-type
+  {
+    margin-bottom:1.5em;
+  }
+  .marginLeft
+  {
+    margin-left:1em;
+    border-left:2px solid #C90019;
+    margin-bottom:0.5em;
+  }
+  #bearbeiteReise div.left, #bearbeiteReise > p
+  {
+    margin-left:1.2em;
+  }
+  #bearbeiteReise div.left
+  {
+    margin-top:1em;
+  }
+  #bearbeiteReise div.left form input[type="submit"]
+  {
+    width:65%;
+    margin-bottom:1em;
+  }
+  #bearbeiteReise > form input[type="submit"]
+  {
+    width:73%;
+  }
+  #bearbeiteReise div.right
+  {
+    width: 35%;
+    padding-left: 2em;
+    border-left: 1px solid white;
+    margin-top: 1em;
+  }
+  #bearbeiteReise div.right > h3
+  {
+    margin-top:1em;
+    margin-bottom:0.5em;
+    border-left:2px solid #C90019;
+  }
+  #bearbeiteReise div.right > p
+  {
+    padding-right:1em;
+    margin-bottom:0.5em;
+  }
+  #bearbeiteReise div.right form input[type="submit"]
+  {
+    margin-bottom:5em;
+  }
+  #erstelleReiseContainer
+  {
+    display:none;
+  }
+  #erstelleReiseContainer div.left
+  {
+    width:60%;
+    margin-left:1em;
+  }
+  #erstelleReiseContainer #erstelleReiseFormKurzbeschreibung, #bearbeiteReiseFormKurzbeschreibung, .neuigkeitBeschreibung
+  {
+    height:200px;
+  }
+  #erstelleReiseContainer div.right
+  {
+    width:30%;
+    margin-right:1em;
+  }
+  #erstelleReiseContainer div.right p input[type="text"], div#bearbeiteReise div.right form p input, div#bearbeiteReise div.right textarea
+  {
+    width:96%;
+  }
+  div#bearbeiteReise div.right form p input[type="checkbox"]
+  {
+    width:10%;
+  }
+  #erstelleReiseContainer div.right p select
+  {
+    width:100%;
+  }
+  #erstelleReiseContainer  p.clear
+  {
+    padding: 0 1em;
+  }
+  #erstelleReiseContainer  p.clear input[type="submit"]
+  {
+    width:100%;
+    margin-bottom:1em;
+  }
+  .terrainWertung p.left
+  {
+    margin-right:1.3em;
+  }
+  .terrainWertung p.left input
+  {
+    margin-left:1.3em;
+  }
+  #erstelleReiseContainer .terrainWertung p.left
+  {
+    margin-right:0.6em;
+  }
+  #erstelleNeuigkeit p
+  {
+    margin-left:1.2em;
+  }
+  #erstelleNeuigkeit input[type="submit"]
+  {
+    width:34%;
+    margin-bottom:1em;
+  }
+  #bearbeiteNeuigkeit > form  p
+  {
+    margin-left:1.2em;
+  }
+  #bearbeiteNeuigkeit > form  p input[type="submit"]
+  {
+    width:37%;
+  }
+  #bearbeiteNeuigkeitDetail form p
+  {
+    margin-left:1.2em;
+  }
+  #bearbeiteNeuigkeitDetail form p input[type="submit"]
+  {
+    width:34%;
+    margin-bottom:1em;
+    margin-top:1em;
+  }
+
+  /* cke_editorCKE */
+  #cke_editorCKE, #cke_editorCKE2, #cke_editorCKE3
+  {
+    width:100%;
+    margin-bottom:1em;
+  }
+  #cke_editorCKE3
+  {
+    width:95%;
+  }
+}
+
+@media screen and (max-width:800px)
+{
+  #header #kompass
+  {
+    top: 23px;
+  }
+
+}
+@media screen and (min-width:800px)
+{
+  #header #kompass
+  {
+    right:0%;
+  }
+}
+@media screen and (min-width:900px)
+{
+  #header #kompass
+  {
+    right:1%;
+  }
+}
+@media screen and (min-width:1000px)
+{
+  /* Navigation austauschen */
+  .open
+  {
+    display:none;
+  }
+  #menueBig
+  {
+    z-index:100;
+    display:inherit;
+    position:absolute;
+    top:29px;
+    left:48.5%;
+    content:url(../img/globus.png);
+
+    cursor:pointer;
+  }
+  #navigationBig
+  {
+    width: 90%;
+    max-width:1096px;
+    height: 560px;
+    background: rgba(0,0,0,0.87);
+    position: absolute;
+    border-left: 2px solid #C90019;
+    border-right: 2px solid #C90019;
+    border-bottom: 2px solid #C90019;
+    margin-left: -2px;
+  }
+  #navigationBig img
+  {
+    max-height:1000px;
+  }
+  #navigationBig > div.left
+  {
+    width:22.222222222%;
+    height:540px;
+    margin-top:15px;
+    padding-left:15px;
+    border-right:1px solid white;
+  }
+  #navigationBig > div.left p
+  {
+    font-size: 1.1em;
+    font-family: 'cooper_lt_btlight', Arial, Helvetica, sans-serif;
+    color: white;
+    cursor:pointer;
+    line-height: 2.824;
+    margin-left:5%;
+  }
+  #navigationBig > div.left > p:hover
+  {
+    color:#C90019;
+  }
+  #regionenAusgabe
+  {
+    width:74% !important;
+    border:none !important;
+  }
+  #regionenAusgabe img
+  {
+    width:100%;
+    border:none;
+    height:auto;
+  }
+  #regionenAusgabe div.left
+  {
+    width:30%;
+    border-right:1px solid white;
+    height:540px;
+    padding-right:5px;
+  }
+  #regionenAusgabe > div.left div
+  {
+    margin-bottom:10px;
+  }
+  #regionenAusgabe div.left p
+  {
+    font-size: 1em;
+    font-family: 'cooper_lt_btlight', Arial, Helvetica, sans-serif;
+    color: white;
+    line-height: 1.667;
+    text-align: left;
+    margin-left:0;
+  }
+  #regionenAusgabe div.left span
+  {
+    font-size: 0.9em;
+    font-family: 'cooper_lt_btlight', Arial, Helvetica, sans-serif;
+    color: #C90019;
+    margin-bottom:10px;
+    cursor:pointer;
+  }
+  #regionenAusgabe div.right
+  {
+    width:68%;
+  }
+  #regionenAusgabe div.right #kontinentInformation
+  {
+    margin-top:5px;
+  }
+  #regionenAusgabe div.right #kontinentInformation h2
+  {
+    margin-left:25px;
+  }
+  #regionenAusgabe div.right #kontinentInformation p
+  {
+    padding-right:0.3em;
+    font-size:0.85em;
+    line-height:1.5em;
+    cursor:default;
+    padding-top:6px;
+  }
+  #regionenAusgabe div.right #kontinentInformation span
+  {
+    font-size:1.15em;
+    color:#c90019;
+  }
+}
+@media screen and (min-width:1100px)
+{
+  #footer
+  {
+    font-size:1.1em;
+  }
+  #footer .container
+  {
+    padding-left:5%;
+  }
+  #main
+  {
+    min-height:400px;
+  }
+  #header #kompass
+  {
+    right:3%;
+  }
+
+}
+@media screen and (min-width:1300px)
+{
+  #header #kompass
+  {
+    right:4%;
+  }
+}
+@media screen and (min-width:1400px)
+{
+  #header #kompass
+  {
+    right:9%;
+  }
+}
+@media screen and (min-width:1400px)
+{
+  #header #kompass
+  {
+    right:11%;
+  }
+}
+@media screen and (min-width:1600px)
+{
+  #header #kompass
+  {
+    right:14%;
+  }
+}
+@media screen and (min-width:1700px)
+{
+  #header #kompass
+  {
+    right:17%;
+  }
+}
+@media screen and (min-width:1800px)
+{
+  #header #kompass
+  {
+    right:19%;
+  }
+}
+
+
+/***************/
+/*   CLASSES   */
+/***************/
+.left { float:left }
+
+.right { float:right }
+
+.clear { clear:both }
+
+.container {}
+.errorLog
+{
+  color: #C90019;
+}
+.zurueck
+{
+  width: 30%;
+  padding-top: 5px;
+  padding-left: 1.5em;
+  height: 25px;
+  background-color: #c90019;
+  margin-left: -1.5em;
+  margin-bottom: 1em;
+}
+.zurueck a
+{
+  color:white;
+}
+
+/************/
+/*   TAGS   */
+/************/
+
+h1 {}
+
+h2 {}
+
+h3 {}
+
+p{}
+
+li{}
+
+a{ color:#c90019;}
+
+/* Placeholder */
+::-webkit-input-placeholder { color:white;}
+
+:-moz-placeholder { /* Firefox 18- */ color:white;}
+
+::-moz-placeholder {  /* Firefox 19+ */ color:white;}
+
+:-ms-input-placeholder {color:white;}
+
+/*************************/
+/*   FIREFOX ANPASSUNG   */
+/*************************/
+@-moz-document url-prefix()
+{
+
+}
+
+/********************/
+/*   IE ANPASSUNG   */
+/********************/
+.ie #menueBig
+{
+  z-index:100;
+  display:inherit;
+  position:absolute;
+  top:55px;
+  left:48.5%;
+  background-image:url(../img/globus.png);
+
+  cursor:pointer;
+}
+#kontinentInformation p
+{
+  line-height:1.2em !important;
+  font-size:0.9em !important;
+  padding-top:3px;
+}
+.ie6
+{}
+
+.ie7
+{}
+
+.ie8
+{}
+
+.ie9
+{}
