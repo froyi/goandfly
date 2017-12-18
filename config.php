@@ -5,7 +5,7 @@ return [
         'namespace' => 'Project'
     ],
     'template' => [
-        'name' => 'goandlfy',
+        'name' => 'goandfly',
         'dir' =>  '/goandfly',
     ],
     'database' => [

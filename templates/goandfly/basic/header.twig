@@ -1,13 +1,109 @@
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7 ]>
+<html class="no-js ie6 ie"> <![endif]-->
+<!--[if IE 7 ]>
+<html class="no-js ie7 ie"> <![endif]-->
+<!--[if IE 8 ]>
+<html class="no-js ie8 ie"> <![endif]-->
+<!--[if IE 9 ]>
+<html class="no-js ie9 ie"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html> <!--<![endif]-->
 <head>
-    <title>Testpage1</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.67, maximum-scale=1.0"/>
+
+    <title>go and fly</title>
 
     <link rel="stylesheet" href="{{ templateDir }}/css/main.css">
+    <link rel="stylesheet" href="{{ templateDir }}/css/fancybox.min.css">
+    <link rel="stylesheet" href="{{ templateDir }}/js/editor/minified/themes/default.min.css">
+
+    <script src="{{ templateDir }}/js/jquery-3.2.1.min.js"></script>
+    <script src="{{ templateDir }}/js/responsiveSlides.min.js"></script>
+    <script src="{{ templateDir }}/js/jquery.fancybox.min.js"></script>
+    <script src="{{ templateDir }}/js/editor/minified/jquery.sceditor.bbcode.min.js"></script>
 
     <script src="{{ templateDir }}/js/main.js"></script>
+
+    <script src="{{ templateDir }}/ckeditor/ckeditor.js"></script>
 </head>
 <body>
-<header>
-    <h1>Webseite Boilerplate (header)</h1>
-</header>
+
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1&appId=292092680810799";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div id="wrapper">
+    <header>
+        <div class="container">
+            <!-- Menü -->
+            <a class="open" href="#nav"><img src="img/nav_world.png"  /></a>
+            <img id="menueBig" src="img/globus.png"  onClick="toggleMenue();" />
+
+            <!-- Logo -->
+            <div id="logo">
+                <a href="index.php"><img src="img/logo_smartphone.png"/></a>
+                <p>Mit uns fliegen Sie raus ...</p>
+            </div> <!-- #logo -->
+            <div id="logo_big" class="left">
+                <a href="index.php"><img src="img/logo.jpg"/></a>
+            </div> <!-- #logo_big -->
+
+            <!-- Hotline -->
+            <div id="hotline" class="right">
+                <img src="img/hotline.png" />
+            </div>
+            <p class="clear"></p>
+
+            <!-- Navigation small -->
+            <div id="navigation">
+                <div id="nav">
+                    <?php
+					// Kontinente holen
+					$ko = holeKontinente();
+					while ($kontinente = mysql_fetch_assoc($ko))
+					{
+					?>
+                    <div class="kontinent">
+                        <a href="index.php?konti_id=<?php echo $kontinente["id"]; ?>"><img src="img/smartphone/kontinente/<?php echo $kontinente["bild"]; ?>" width="220"/></a>
+                        <table width="200">
+                            <?php
+						// Regionen holen
+						$count_re = 0;
+						$re = holeRegionen($kontinente["id"]);
+						while ($regionen = mysql_fetch_assoc($re))
+						{
+							if($count_re % 2 == 0)
+							{
+								// gerade Anzahl an Elementen
+								echo "<tr>";
+
+                            }
+                            ?>
+                            <td><a href="index.php?re_id=<?php echo $regionen["id"]; ?>"><?php echo $regionen["titel"]; ?></a></td>
+
+                            <?php
+						if($count_re % 2 != 0)
+						{
+							// gerade Anzahl an Elementen
+							echo "</tr>";
+
+                            }
+                            $count_re ++;
+                            } // while() Regionen ?>
+                            </tr>
+                        </table>
+                    </div> <!-- .kontinent -->
+                    <?php } // while() Kontinente ?>
+                </div> <!-- #nav -->
+            </div> <!-- #navigation -->
+        </div> <!-- .container -->
+    </header>
