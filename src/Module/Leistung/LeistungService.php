@@ -37,7 +37,8 @@ class LeistungService
         $leistungen = $this->leistungRepository->getAllLeistungen();
 
         foreach ($leistungen as $leistungData) {
-            $leistungenArray[] = $this->leistungFactory->getLeistungFromObject($leistungData);
+            $leistung = $this->leistungFactory->getLeistungFromObject($leistungData);
+            $leistungenArray[$leistung->getLeistungId()->toString()] = $leistung;
         }
 
         return $leistungenArray;

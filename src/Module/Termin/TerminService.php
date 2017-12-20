@@ -37,7 +37,8 @@ class TerminService
         $termine = $this->terminRepository->getAllTermine();
 
         foreach ($termine as $termineData) {
-            $termineArray[] = $this->terminFactory->getTerminFromObject($termineData);
+            $termin = $this->terminFactory->getTerminFromObject($termineData);
+            $termineArray[$termin->getTerminId()->toString()] = $termin;
         }
 
         return $termineArray;

@@ -37,7 +37,8 @@ class ReiseService
         $reisen = $this->reiseRepository->getAllReisen();
 
         foreach ($reisen as $reiseData) {
-            $reisenArray[] = $this->reiseFactory->getReiseFromObject($reiseData);
+            $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+            $reisenArray[$reise->getReiseId()->toString()] = $reise;
         }
 
         return $reisenArray;
@@ -53,11 +54,10 @@ class ReiseService
         $reisen = $this->reiseRepository->getAllVisibleReisen();
 
         foreach ($reisen as $reiseData) {
-            $reisenArray[] = $this->reiseFactory->getReiseFromObject($reiseData);
+            $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+            $reisenArray[$reise->getReiseId()->toString()] = $reise;
         }
 
         return $reisenArray;
     }
-
-
 }

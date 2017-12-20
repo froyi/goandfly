@@ -15,8 +15,8 @@ use Project\Module\Region\Region;
  */
 class Continent
 {
-    /** @var Id $id */
-    protected $id;
+    /** @var Id $continentId */
+    protected $continentId;
 
     /** @var Name $name */
     protected $name;
@@ -49,9 +49,9 @@ class Continent
      * @param Text $klima
      * @param Image $bild
      */
-    public function __construct(Id $id, Name $name, Text $flaeche, Text $gliederung, Text $tourismus, Text $klima, Image $bild)
+    public function __construct(Id $continentId, Name $name, Text $flaeche, Text $gliederung, Text $tourismus, Text $klima, Image $bild)
     {
-        $this->id = $id;
+        $this->continentId = $continentId;
         $this->name = $name;
         $this->flaeche = $flaeche;
         $this->gliederung = $gliederung;
@@ -63,9 +63,9 @@ class Continent
     /**
      * @return Id
      */
-    public function getId(): Id
+    public function getContinentId(): Id
     {
-        return $this->id;
+        return $this->continentId;
     }
 
     /**

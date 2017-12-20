@@ -37,7 +37,8 @@ class TeaserbildService
         $teaserbilder = $this->teaserbildRepository->getAllTeaserbilder();
 
         foreach ($teaserbilder as $teaserbildData) {
-            $teaserbilderArray[] = $this->teaserbildFactory->getTeaserbildFromObject($teaserbildData);
+            $teaserbild = $this->teaserbildFactory->getTeaserbildFromObject($teaserbildData);
+            $teaserbilderArray[$teaserbild->getTeaserbildId()->toString()] = $teaserbild;
         }
 
         return $teaserbilderArray;

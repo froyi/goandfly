@@ -38,7 +38,8 @@ class RegionService
         $regions = $this->regionRepository->getAllRegions();
 
         foreach ($regions as $regionData) {
-            $regionsArray[] = $this->regionFactory->getRegionFromObject($regionData);
+            $region = $this->regionFactory->getRegionFromObject($regionData);
+            $regionsArray[$region->getRegionId()->toString()] = $region;
         }
 
         return $regionsArray;
@@ -51,10 +52,10 @@ class RegionService
         $regions = $this->regionRepository->getAllRegionsByContinentId($continentId);
 
         foreach ($regions as $regionData) {
-            $regionsArray[] = $this->regionFactory->getRegionFromObject($regionData);
+            $region = $this->regionFactory->getRegionFromObject($regionData);
+            $regionsArray[$region->getRegionId()->toString()] = $region;
         }
 
         return $regionsArray;
-
     }
 }

@@ -38,7 +38,8 @@ class ContinentService
         $continents = $this->continentRepository->getAllContinents();
 
         foreach ($continents as $continentData) {
-            $continentArray[] = $this->continentFactory->getContinentFromObject($continentData);
+            $continent = $this->continentFactory->getContinentFromObject($continentData);
+            $continentArray[$continent->getContinentId()->toString()] = $continent;
         }
 
         return $continentArray;
@@ -57,13 +58,13 @@ class ContinentService
         foreach ($continents as $continentData) {
             $continent = $this->continentFactory->getContinentFromObject($continentData);
 
-            $regions = $regionService->getAllRegionsByContinentId($continent->getId());
+            $regions = $regionService->getAllRegionsByContinentId($continent->getContinentId());
 
             foreach ($regions as $region) {
                 $continent->addRegionToRegionList($region);
             }
 
-            $continentArray[] = $continent;
+            $continentArray[$continent->getContinentId()->toString()] = $continent;
         }
 
         return $continentArray;

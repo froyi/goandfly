@@ -37,7 +37,8 @@ class NewsService
         $news = $this->newsRepository->getAllNews();
 
         foreach ($news as $newsData) {
-            $newsArray[] = $this->newsFactory->getNewsFromObject($newsData);
+            $singleNews = $this->newsFactory->getNewsFromObject($newsData);
+            $newsArray[$singleNews->getNewsId()->toString()] = $singleNews;
         }
 
         return $newsArray;

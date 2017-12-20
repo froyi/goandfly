@@ -37,7 +37,8 @@ class FrageService
         $fragen = $this->frageRepository->getAllFragen();
 
         foreach ($fragen as $fragenData) {
-            $fragenArray[] = $this->frageFactory->getFrageFromObject($fragenData);
+            $frage = $this->frageFactory->getFrageFromObject($fragenData);
+            $fragenArray[$frage->getFrageId()->toString()] = $frage;
         }
 
         return $fragenArray;

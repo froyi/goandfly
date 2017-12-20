@@ -37,7 +37,8 @@ class ReiseverlaufService
         $reiseverlaeufe = $this->reiseverlaufRepository->getAllReiseverlauf();
 
         foreach ($reiseverlaeufe as $reiseverlaufData) {
-            $reiseverlaufArray[] = $this->reiseverlaufFactory->getReiseverlaufFromObject($reiseverlaufData);
+            $reiseverlauf = $this->reiseverlaufFactory->getReiseverlaufFromObject($reiseverlaufData);
+            $reiseverlaufArray[$reiseverlauf->getReiseverlaufId()->toString()] = $reiseverlauf;
         }
 
         return $reiseverlaufArray;

@@ -35,7 +35,8 @@ class UserService
         $users = $this->userRepository->getAllUser();
 
         foreach ($users as $userData) {
-            $userArray[] = $this->userFactory->getUserFromObject($userData);
+            $user = $this->userFactory->getUserFromObject($userData);
+            $userArray[$user->getUserId()->toString()] = $user;
         }
 
         return $userArray;
