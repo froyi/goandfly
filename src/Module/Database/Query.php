@@ -231,7 +231,7 @@ class Query
      * @return string
      * @throws \RuntimeException
      */
-    protected function getTables(): string
+    public function getTables(): string
     {
         if (empty($this->tableArray)) {
             throw new \RuntimeException('Es wurde keine Tabelle angegeben!');

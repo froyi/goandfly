@@ -42,21 +42,6 @@ class Password
         if (strlen($password) < 5) {
             throw new \InvalidArgumentException('Dieser password ist zu kurz!', 1);
         }
-
-        $uppercase = preg_match('@[A-Z]@', $password);
-        if ($uppercase === false) {
-            throw new \InvalidArgumentException('Dieses Passwort hat keine Großbuchstaben!', 1);
-        }
-
-        $lowercase = preg_match('@[a-z]@', $password);
-        if ($lowercase === false) {
-            throw new \InvalidArgumentException('Dieses Passwort enthält keinen Kleinbuchstaben!', 1);
-        }
-
-        $number = preg_match('@\d@', $password);
-        if ($number === false) {
-            throw new \InvalidArgumentException('Dieses Passwort enthält keine Zahl!', 1);
-        }
     }
 
     /**
