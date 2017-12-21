@@ -21,6 +21,10 @@ return [
         'index' => [
             'controller' => 'IndexController',
             'action' => 'indexAction'
+        ],
+        'migrate' => [
+            'controller' => 'BackendController',
+            'action' => 'migrateAction'
         ]
     ]
 ];

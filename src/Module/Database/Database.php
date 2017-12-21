@@ -32,16 +32,20 @@ class Database
     /**
      * Database constructor.
      * @param Configuration $configuration
-     * @throws \InvalidArgumentException
+     * @param string|null $databaseName
      */
-    public function __construct(Configuration $configuration)
+    public function __construct(Configuration $configuration, string $databaseName = null)
     {
         $databaseConfiguration = $configuration->getEntryByName('database');
 
         $this->host = $databaseConfiguration['host'];
         $this->user = $databaseConfiguration['user'];
         $this->password = $databaseConfiguration['password'];
+
         $this->database = $databaseConfiguration['database'];
+        if ($databaseName !== null) {
+            $this->database = $databaseName;
+        }
 
         $this->connect();
     }
@@ -99,6 +103,14 @@ class Database
     {
         $query = new Query($table);
         $query->addType(Query::DELETE);
+
+        return $query;
+    }
+
+    public function getNewTruncatQuery(string $table): Query
+    {
+        $query = new Query($table);
+        $query->addType(Query::TRUNCATE);
 
         return $query;
     }

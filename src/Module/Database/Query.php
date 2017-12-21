@@ -16,6 +16,7 @@ class Query
     public const UPDATE = 'UPDATE ';
     public const INSERT = 'INSERT INTO' . ' ';
     public const DELETE = 'DELETE ';
+    public const TRUNCATE = 'TRUNCATE ';
     public const FROM = 'FROM ';
     public const WHERE = 'WHERE ';
     public const AND = 'AND ';
@@ -203,6 +204,10 @@ class Query
             case self::DELETE:
                 $queryString .= self::DELETE . self::FROM . $this->getTables();
                 $queryString .= $this->where;
+                break;
+            case self::TRUNCATE:
+                $queryString .= self::TRUNCATE . $this->getTables();
+                break;
         }
 
         return $queryString;
