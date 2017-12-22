@@ -85,7 +85,7 @@ class Migrate
             $gliederung = html_entity_decode(utf8_encode($singleData->gliederung));
             $tourismus = html_entity_decode(utf8_encode($singleData->tourismus));
             $klima = html_entity_decode(utf8_encode($singleData->klima));
-            $bild = $singleData->bild;
+            $bild = 'data/img/continent/' . $singleData->bild;
 
             $query = $this->newDatabase->getNewInsertQuery($table_new);
 
@@ -119,7 +119,7 @@ class Migrate
             $name = html_entity_decode(utf8_encode($singleData->titel));
             $beispiellaender = html_entity_decode(utf8_encode($singleData->beispiellaender));
             $beschreibung = str_replace('\'', '`', html_entity_decode(utf8_encode($singleData->beschreibung)));
-            $bild = $singleData->bild;
+            $bild = 'data/img/region/' . $singleData->bild;
 
             $query = $this->newDatabase->getNewInsertQuery($table_new);
 

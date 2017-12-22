@@ -49,11 +49,11 @@ class DefaultController
 
     protected function setDefaultData(): void
     {
-        /*$regionService = new RegionService($this->database);
+        $regionService = new RegionService($this->database);
         $this->viewRenderer->addViewConfig('regions', $regionService->getAllRegions());
 
         $continentService = new ContinentService($this->database);
-        $this->viewRenderer->addViewConfig('continents', $continentService->getAllContinentsWithRegionList($regionService));*/
+        $this->viewRenderer->addViewConfig('continents', $continentService->getAllContinentsWithRegionList($regionService));
     }
 
     /**

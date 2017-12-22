@@ -17,7 +17,7 @@
 
     <link rel="stylesheet" href="{{ templateDir }}/css/main.css">
     <link rel="stylesheet" href="{{ templateDir }}/css/fancybox.min.css">
-    <link rel="stylesheet" href="{{ templateDir }}/js/editor/minified/themes/default.min.css">
+    {#<link rel="stylesheet" href="{{ templateDir }}/js/editor/minified/themes/default.min.css">#}
 
     <script src="{{ templateDir }}/js/jquery-3.2.1.min.js"></script>
     <script src="{{ templateDir }}/js/responsiveSlides.min.js"></script>
@@ -31,18 +31,18 @@
 <body>
 
 <div id="fb-root"></div>
-<script>(function (d, s, id) {
+<script>/*(function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
         js = d.createElement(s);
         js.id = id;
         js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1&appId=292092680810799";
         fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    }(document, 'script', 'facebook-jssdk'));*/
 </script>
 
 <div id="wrapper">
-    <header>
+    <header id="header">
         <div class="container">
             <!-- Menü -->
             <a class="open" href="#nav"><img src="{{ templateDir }}/img/nav_world.png"  /></a>
@@ -66,51 +66,38 @@
             <!-- Navigation small -->
             <div id="navigation">
                 <div id="nav">
-                    {% for region in regions %}
-                        {{ region.getName }}
-                    {% endfor %}
                     {% for continent in continents %}
+                        {% set continentId = {'continentId': continent.getContinentId} %}
                         <div class="kontinent">
                             {{ continent.getFlaeche }}
-                            <a href="{{ route('index') }}index.php?konti_id=<?php echo $kontinente["id"]; ?>"><img src="img/smartphone/kontinente/<?php echo $kontinente["bild"]; ?>" width="220"/></a>
+                            <a href="{{ route('index', continentId) }}"><img src="{{ continent.getBild }}" width="220"/></a>
                             <table width="200">
-                                <?php
-						// Regionen holen
-						$count_re = 0;
-						$re = holeRegionen($kontinente["id"]);
-						while ($regionen = mysql_fetch_assoc($re))
-						{
-							if($count_re % 2 == 0)
-							{
-								// gerade Anzahl an Elementen
-								echo "<tr>";
-
-                                }
-                                ?>
-                                <td><a href="index.php?re_id=<?php echo $regionen["id"]; ?>"><?php echo $regionen["titel"]; ?></a></td>
-
-                                <?php
-						if($count_re % 2 != 0)
-						{
-							// gerade Anzahl an Elementen
-							echo "</tr>";
-
-                                }
-                                $count_re ++;
-                                } // while() Regionen ?>
-                                </tr>
+                                {% for region in continent.getRegionList %}
+                                    {% set regionId = {'regionId': region.getRegionId} %}
+                                    <tr>
+                                        <td><a href="{{ route('index', regionId) }}">{{ region.getName }}</a></td>
+                                    </tr>
+                                {% endfor %}
                             </table>
                         </div> <!-- .kontinent -->
                     {% endfor %}
-                    <?php
-					// Kontinente holen
-					$ko = holeKontinente();
-					while ($kontinente = mysql_fetch_assoc($ko))
-					{
-					?>
-
-                    <?php } // while() Kontinente ?>
                 </div> <!-- #nav -->
             </div> <!-- #navigation -->
         </div> <!-- .container -->
     </header>
+    <div id="teaser">
+        <!-- Navigation big -->
+        <div id="navigationBig">
+            <div class="left">
+                {% for continent in continents %}
+                    <p onClick="toggleRegionen('{{ continent.getContinentId }}');" onMouseOver="toggleKontinent('{{ continent.getBild }}');" id="kontinent_{{ continent.getContinentId }}">{{ continent.getName }}</p>
+                {% endfor %}
+            </div> <!-- .left -->
+
+            <div id="regionenAusgabe" class="left">
+                <!-- Platzhalter Welt einfügen -->
+                <img src="{{ templateDir }}/img/kategorie/world.png" width="800" style="margin-top:71px;" id="world_map" />
+            </div> <!-- #regionenAusgabe -->
+        </div> <!-- #navigationBig -->
+        <img src="{{ templateDir }}/img/{{ teaserBild }}" />
+    </div> <!-- #teaser -->
