@@ -45,6 +45,8 @@ class DefaultController
     protected function setDefaultViewConfig(): void
     {
         $this->viewRenderer->addViewConfig('page', 'notfound');
+        $this->viewRenderer->addViewConfig('teaserBild', 'partner_teaser.jpg');
+
     }
 
     protected function setDefaultData(): void

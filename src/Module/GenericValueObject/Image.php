@@ -32,7 +32,7 @@ class Image
      */
     protected function __construct(string $path)
     {
-        $this->image = new SimpleImage($path);
+        //$this->image = new SimpleImage($path);
         $this->imagePath = $path;
         // $this->image->autoOrient();
 

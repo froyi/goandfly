@@ -13,4 +13,30 @@ class IndexController extends DefaultController
     {
         $this->showStandardPage('home');
     }
+
+    public function ueberUnsAction(): void
+    {
+        $this->showStandardPage('ueberUns');
+    }
+
+    public function partnerAction(): void
+    {
+        $this->showStandardPage('partner');
+    }
+
+    public function kontaktAction(): void
+    {
+        $this->showStandardPage('kontakt');
+    }
+
+    public function impressumAction(): void
+    {
+        $this->showStandardPage('impressum');
+    }
+
+    public function diamirAction(): void
+    {
+        $this->showStandardPage('diamir');
+    }
+
 }
