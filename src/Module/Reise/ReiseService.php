@@ -4,6 +4,7 @@ declare (strict_types=1);
 namespace Project\Module\Reise;
 
 use Project\Module\Database\Database;
+use Project\Module\Tag\TagService;
 
 /**
  * Class ReiseService
@@ -59,5 +60,32 @@ class ReiseService
         }
 
         return $reisenArray;
+    }
+
+    public function getAllVisibleSortedCompleteReisen(TagService $tagService): array
+    {
+        $reisenArray = [];
+
+        $reisen = $this->reiseRepository->getAllVisibleSortedReisen();
+
+        foreach ($reisen as $reiseData) {
+            $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+
+            $tags = $tagService->getTagsByReiseId($reise->getReiseId());
+
+            $reise->setTagListeToTagListe($tags);
+
+            $reisenArray[$reise->getReiseId()->toString()] = $reise;
+        }
+
+        return $reisenArray;
+    }
+
+    /**
+     * @return ReiseContainer
+     */
+    public function getAllReisenInContainer(TagService $tagService): ReiseContainer
+    {
+        return new ReiseContainer($this->getAllVisibleSortedCompleteReisen($tagService));
     }
 }

@@ -4,6 +4,7 @@ declare (strict_types=1);
 namespace Project\Module\Reise;
 
 use Project\Module\Database\Database;
+use Project\Module\Database\Query;
 
 /**
  * Class ReiseRepository
@@ -42,6 +43,15 @@ class ReiseRepository
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);
         $query->where('sichtbar', '>=', date('Y-m-d'));
+
+        return $this->database->fetchAll($query);
+    }
+
+    public function getAllVisibleSortedReisen(): array
+    {
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->where('sichtbar', '>=', date('Y-m-d'));
+        $query->orderBy('bearbeitet', Query::DESC);
 
         return $this->database->fetchAll($query);
     }

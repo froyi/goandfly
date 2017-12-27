@@ -76,7 +76,7 @@ class Tools
             return $text;
         }
 
-        $newText = substr($text, 0, $amount);
+        $newText = preg_replace("/[^ ]*$/", '', substr($text, 0, $amount));
 
         if ($points === true) {
             $newText .= ' ...';

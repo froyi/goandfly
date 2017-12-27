@@ -72,7 +72,12 @@ class Personen
         $personenData = explode('-', $personen);
 
         $personenArray[0] = (int)$personenData[0];
-        $personenArray[1] = (int)$personenData[1];
+
+        if (isset($personenData[1])) {
+            $personenArray[1] = (int)$personenData[1];
+        } else {
+            $personenArray[1] = (int)$personenData[0];
+        }
 
         return $personenArray;
     }
@@ -86,7 +91,7 @@ class Personen
             return (string)$this->personen['min'];
         }
 
-        return $this->personen[0] . '-' . $this->personen[1];
+        return $this->personen['min'] . '-' . $this->personen['max'];
     }
 
     /**

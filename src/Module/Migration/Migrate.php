@@ -247,21 +247,24 @@ class Migrate
             $oldReiseId = $singleData->id;
 
             $id = Id::generateId()->toString();
-            $kurzbeschreibung = str_replace('\'', '`', html_entity_decode(utf8_encode($singleData->kurzbeschreibung)));
-            $beschreibung = str_replace('\'', '`', html_entity_decode(utf8_encode($singleData->beschreibung)));
-            $titel = str_replace('\'', '`', html_entity_decode(utf8_encode($singleData->titel)));
+            $kurzbeschreibung = str_replace('\'', '`', html_entity_decode($singleData->kurzbeschreibung));
+            $beschreibung = str_replace('\'', '`', html_entity_decode($singleData->beschreibung));
+            $titel = str_replace('\'', '`', html_entity_decode($singleData->titel));
             $personen = html_entity_decode(utf8_encode($singleData->personen));
             $reisedauer = (int)$singleData->zeit;
             $flugzeit = (int)$singleData->flug;
             $sprache = $singleData->sprache;
             $terrain = (int)$singleData->terrain;
+            if ($terrain < 1) {
+                $terrain = 1;
+            }
             $karte = $singleData->karte;
             $bearbeitet = $singleData->eingestellt;
             $teaser = $singleData->teaser;
 
             $sichtbar = $singleData->sichtbar;
             if ($singleData->sichtbar === '0000-00-00') {
-                $sichtbar = '2100-12-31';
+                $sichtbar = '2020-12-31';
             }
 
             $bild = $singleData->bild;

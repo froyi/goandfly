@@ -4,6 +4,7 @@ declare (strict_types=1);
 namespace Project\Module\Tag;
 
 use Project\Module\Database\Database;
+use Project\Module\GenericValueObject\Id;
 
 /**
  * Class TagService
@@ -34,6 +35,24 @@ class TagService
         $tagsArray = [];
 
         $tags = $this->tagRepository->getAllTags();
+
+        foreach ($tags as $tagData) {
+            $tag = $this->tagFactory->getTagFromObject($tagData);
+            $tagsArray[$tag->getTagId()->toString()] = $tag;
+        }
+
+        return $tagsArray;
+    }
+
+    /**
+     * @param Id $reiseId
+     * @return array
+     */
+    public function getTagsByReiseId(Id $reiseId): array
+    {
+        $tagsArray = [];
+
+        $tags = $this->tagRepository->getTagsByReiseId($reiseId);
 
         foreach ($tags as $tagData) {
             $tag = $this->tagFactory->getTagFromObject($tagData);

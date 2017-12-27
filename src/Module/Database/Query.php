@@ -89,10 +89,11 @@ class Query
      * @param string $entity
      * @param string $operator
      * @param $value
+     * @param bool $asParam
      */
-    public function where(string $entity, string $operator, $value): void
+    public function where(string $entity, string $operator, $value, bool $asParam = false): void
     {
-        if (\is_string($value) === true) {
+        if (\is_string($value) === true && $asParam === false) {
             $value = '\'' . $value . '\'';
         }
 

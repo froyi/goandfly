@@ -1,0 +1,18 @@
+{% if news|length > 0 %}
+    <div id="mainSidebar">
+        <img src="{{ templateDir }}/img/schildSidebar.png" id="schildSidebar"/>
+
+        <h3>Neuigkeiten</h3>
+
+        <div id="neuigkeitenContainer">
+            {% for singleNews in news %}
+                <div class="neuigkeit">
+                    <p class="left"><span>{{ singleNews.getTitel }}</span></p>
+
+                    <p class="clear">{{ singleNews.getText }}</p>
+                    <p class="whiteLine"></p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

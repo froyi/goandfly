@@ -32,8 +32,8 @@ class ReiseFactory
         $beschreibung = Text::fromString($object->beschreibung);
         $titel = Title::fromString($object->titel);
         $personen = Personen::fromValue($object->personen);
-        $reisedauer = Reisedauer::fromValue($object->reisedauer);
-        $flugzeit = Flugzeit::fromValue($object->flugzeit);
+        $reisedauer = Reisedauer::fromValue((int)$object->reisedauer);
+        $flugzeit = Flugzeit::fromValue((int)$object->flugzeit);
         $sprache = Text::fromString($object->sprache);
         $terrain = Terrain::fromValue((int)$object->terrain);
         $karte = Image::fromFile($object->karte);

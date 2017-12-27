@@ -14,6 +14,7 @@ use Project\Module\GenericValueObject\Reisedauer;
 use Project\Module\GenericValueObject\Terrain;
 use Project\Module\GenericValueObject\Text;
 use Project\Module\GenericValueObject\Title;
+use Project\Module\Tag\Tag;
 
 /**
  * Class Reise
@@ -66,6 +67,27 @@ class Reise
     /** @var Name $veranstalter */
     protected $veranstalter;
 
+    /** @var array $tagListe */
+    protected $tagListe = [];
+
+    /**
+     * Reise constructor.
+     * @param Id $reiseId
+     * @param Text $kurzbeschreibung
+     * @param Text $beschreibung
+     * @param Title $titel
+     * @param Personen $personen
+     * @param Reisedauer $reisedauer
+     * @param Flugzeit $flugzeit
+     * @param Text $sprache
+     * @param Terrain $terrain
+     * @param Image $karte
+     * @param Datetime $bearbeitet
+     * @param Image $teaser
+     * @param Date $sichtbar
+     * @param Image $bild
+     * @param Name $veranstalter
+     */
     public function __construct(Id $reiseId, Text $kurzbeschreibung, Text $beschreibung, Title $titel, Personen $personen, Reisedauer $reisedauer, Flugzeit $flugzeit, Text $sprache, Terrain $terrain, Image $karte, Datetime $bearbeitet, Image $teaser, Date $sichtbar, Image $bild, Name $veranstalter)
     {
         $this->reiseId = $reiseId;
@@ -83,6 +105,35 @@ class Reise
         $this->sichtbar = $sichtbar;
         $this->bild = $bild;
         $this->veranstalter = $veranstalter;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTagListe(): array
+    {
+        return $this->tagListe;
+    }
+
+    /**
+     * @param array $tagListe
+     */
+    public function setTagToTagListe(Tag $tag): void
+    {
+        $this->tagListe[$tag->getTagId()->toString()] = $tag;
+    }
+
+    public function resetTagListe(): void
+    {
+        $this->tagListe = [];
+    }
+
+    /**
+     * @param array $tagListe
+     */
+    public function setTagListeToTagListe(array $tagListe): void
+    {
+        $this->tagListe = $tagListe;
     }
 
     /**

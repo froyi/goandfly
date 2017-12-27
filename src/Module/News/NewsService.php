@@ -43,4 +43,18 @@ class NewsService
 
         return $newsArray;
     }
+
+    public function getAllNewsOrderByDate(): array
+    {
+        $newsArray = [];
+
+        $news = $this->newsRepository->getAllNewsOrderByDate();
+
+        foreach ($news as $newsData) {
+            $singleNews = $this->newsFactory->getNewsFromObject($newsData);
+            $newsArray[] = $singleNews;
+        }
+
+        return $newsArray;
+    }
 }

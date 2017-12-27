@@ -45,8 +45,12 @@ abstract class AbstractDatetime
     {
         $datetime = strtotime($datetime);
 
+        if ($datetime === "2016-06-13 00:00:00") {
+            $a = null;
+        }
+
         if ($datetime === false) {
-            throw new \InvalidArgumentException('Datetime konnte nicht umgewandelt werden');
+            throw new \InvalidArgumentException('Datetime "' . $datetime . '" konnte nicht umgewandelt werden');
         }
     }
 
