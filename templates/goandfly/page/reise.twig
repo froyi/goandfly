@@ -1,0 +1,226 @@
+{% if reise is defined %}
+    {% set reiseId = {'reiseId': reise.getReiseId} %}
+    <div id="reiseContainer">
+        <div class="left" id="reiseContent">
+            <div class="zurueck"><a href="{{ route('index') }}">Zurück zur Reiseauswahl</a></div>
+            <h3>{{ reise.getTitel }}</h3>
+            <div>{{ reise.getBeschreibung|raw }}</div>
+            <div id="reiseFormular">
+                <p>Wenn Sie sich für diese Reise interessieren, dann schreiben Sie uns:</p>
+                <form action="{{ route('kontakt-mailer') }}" method="post">
+                    <p><select name="anrede" required>
+                            <option value="0" selected>Bitte auswählen</option>
+                            <option value="Frau">Frau</option>
+                            <option value="Herr">Herr</option>
+                        </select>
+                    <p><input type="text" name="vorname" placeholder="Ihr Vorname" required/></p>
+                    <p><input type="text" name="name" placeholder="Ihr Name" required/></p>
+                    <p><input type="email" name="email" placeholder="Ihre E-Mail" required/></p>
+                    <p><input type="tel" name="telefon" placeholder="Ihre Telefonnummer" required/></p>
+                    <p><input type="text" name="adresse" placeholder="Ihre Straße und Hausnummer" required/></p>
+                    <p><input type="text" name="plz" placeholder="Ihre Postleitzahl" required/></p>
+                    <p><input type="text" name="ort" placeholder="Ihr Ort" required/></p>
+                    <p>
+                        <select name="termin">
+                            <option value="0" selected>Termin ist zweitrangig</option>
+                            {% if reise.getTerminListe|length > 0 %}
+                                {% for termin in reise.getTerminListe %}
+                                    <option value="{{ termin.getTerminId }}">{{ termin.getStart }}
+                                        - {{ termin.getEnde }} {{ termin.getPreis }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </p>
+                    <p><textarea name="anmerkung"
+                                 placeholder="Hier ist Platz für Ihre Anmerkungen bzw. Wünsche zu dieser Reise."></textarea>
+                    </p>
+                    <input type="hidden" name="titel" value="{{ reise.getTitel }}"/>
+                    <input type="hidden" name="seite" value="{{ route('reise', reiseId) }}"/>
+                    <p><input type="submit" name="submit" value="Nachricht absenden"/></p>
+                    {% if mailSent is same as (true) %}
+                        <p>Vielen Dank für Ihr Interesse. Wir werden uns schnellstmölichst mit Ihnen in Verbindung
+                            setzen.</p>
+                    {% endif %}
+                    <!--<p><input type="submit" name="submit" placeholder="Senden" /></p>-->
+                </form>
+            </div> <!-- #reiseFormular -->
+        </div>
+        <div class="right" id="reiseSidebar">
+            <div id="reiseSidebarKarte">
+                <a href="{{ templateDir }}/img/reise/karte/{{ reise.getKarte }}" class="fancybox"><img
+                            src="{{ templateDir }}/img/reise/karte/{{ reise.getKarte }}"/></a>
+            </div> <!-- #reiseSidebarKarte -->
+
+            <div id="reiseSidebarKurzinformation">
+                <table class="left">
+                    <tr>
+                        <td><img src="{{ templateDir }}/img/person.png" title="Personengruppen"/></td>
+                        <td><img src="{{ templateDir }}/img/zeit.png" title="Reisedauer"/></td>
+                        <td><img src="{{ templateDir }}/img/flug.png" title="Flugdauer bis zum ersten Ziel"/></td>
+                        <td><img src="{{ templateDir }}/img/sprache.png"
+                                 title="Die Reise wird in folgender Sprache gehalten."/></td>
+                    </tr>
+                    <tr>
+                        <td>{{ reise.getPersonen }}</td>
+                        <td>{{ reise.getReisedauer }}t</td>
+                        <td>{{ reise.getFlugzeit }}h</td>
+                        <td>{{ reise.getSprache }}</td>
+                    </tr>
+                </table>
+                <img class="left" src="{{ templateDir }}/img/terrain_{{ reise.getTerrain }}.png"
+                     title="Terrain Wertung - Beschreibt die körperliche Anstrengung bei dieser Reise"/>
+                <p class="clear"></p>
+            </div> <!-- #reiseSidebarKurzinformation -->
+
+            <div id="reiseSidebarReiseverlauf" class="reiseSidebarContainer">
+                <h3>Reiseverlauf</h3>
+                <p>Für mehr Details klicken Sie auf einen Reiseverlauf.</p>
+                <div id="reiseverlaufDetail">
+                    {% if reise.getReiseverlaufListe|length > 0 %}
+                        {% for reiseverlauf in reise.getReiseverlaufListe %}
+                            <p>
+                                    <span onClick="showVerlauf('{{ reiseverlauf.getReiseverlaufId }}');">{{ reiseverlauf.getTitel }}
+                                        : </span></p>
+                            <p style="display:none;" id="verlauf{{ reiseverlauf.getReiseverlaufId }}"
+                               class="verlauf">{{ reiseverlauf.getBeschreibung }}</p>
+                        {% endfor %}
+                    {% else %}
+                        <p class="no-data">Es sind noch keine Reiseverlaufsdaten verfügbar.</p>
+                    {% endif %}
+                </div> <!-- #reiseverlaufDetail -->
+                {% if reise.getReiseverlaufListe|length > 15 %}
+                    <style>
+                        #reiseverlaufDetail {
+                            height: 490px;
+                            overflow: hidden;
+                        }
+                    </style>
+                    <p onClick="showReiseverlauf();" id="reiseverlaufMehr">mehr ...</p>
+                {% endif %}
+            </div> <!-- #reiseSidebarReiseverlauf -->
+
+            <div class="reiseSidebarContainerAfter"></div>
+
+            <div id="reiseSidebarHotline">
+                <img src="{{ templateDir }}/img/hotlineSidebar.png"/>
+            </div> <!-- #reiseSidebarHotline -->
+
+            <div id="reiseSidebarTermine" class="reiseSidebarContainer">
+                <div id="reiseTerminContainer">
+                    <h3>Termine und Preise</h3>
+                    <table>
+                        {% if reise.getTerminListe|length > 0 %}
+                            {% for termin in reise.getTerminListe %}
+                                <tr>
+                                    <td>{{ termin.getStart }}</td>
+                                    <td> -</td>
+                                    <td>{{ termin.getEnde }}</td>
+                                    <td>{{ termin.getPreis }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <p class="no-data">Es stehen noch keine Termine fest.</p>
+                        {% endif %}
+                    </table>
+                </div> <!-- #reiseTerminContainer -->
+
+                {% if reise.getTerminListe|length > 10 %}
+                    <style>
+                        #reiseTerminContainer {
+                            height: 235px;
+                            overflow: hidden;
+                        }
+                    </style>
+                    <p onClick="showTermine();" id="termineMehr">mehr ...</p>
+                {% endif %}
+            </div> <!-- #reiseSidebarTermine -->
+            <div class="reiseSidebarContainerAfter"></div>
+
+            <div id="reiseSidebarLeistungen">
+                <h3>Leistungen</h3>
+                <div id="reiseSidebarLeistungenContainer">
+                    {% if reise.getLeistungListe|length > 0 %}
+                        {% for leistung in reise.getLeistungListe %}
+                            {{ leistung.getText|raw }}
+                        {% endfor %}
+                    {% else %}
+                        <p class="no-data">Es wurden noch keine Leistungen definiert.</p>
+                    {% endif %}
+
+                </div>
+                {% if reise.getLeistungListe|length > 0 %}
+                    {% for leistung in reise.getLeistungListe %}
+                        {% if leistung|length > 500 %}
+                            <p onClick="showLeistungen();" id="leistungenMehr">mehr ...</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div> <!-- #reiseSidebarLeistungen -->
+
+            <div id="reiseSidebarFragen" class="reiseSidebarContainer">
+                <h3>Fragen und Antworten</h3>
+
+                {% if reise.getFrageListe|length > 0 %}
+                    {% for frage in reise.getFrageListe %}
+                        <p><span>{{ frage.getFrageId }}</span><br/>{{ frage.getAntwort }}</p>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-data">Es gibt noch keine häufig gestellten Fragen.</p>
+                {% endif %}
+            </div> <!-- #reiseSidebarFragen-->
+            <div class="reiseSidebarContainerAfter"></div>
+        </div>
+        <p class="clear"></p>
+
+        {% if reiseRecommender|length > 0 %}
+            <div id="reiseRecommender">
+                <h2>Diese Reisen könnte Sie auch interessieren</h2>
+                <div id="reiseRecommenderContainer">
+                    <div class="container">
+                        {% for reise in reiseRecommender %}
+                            {% set reiseId = {'reiseId': reise.getReiseId} %}
+                            <div class="reise">
+                                <a href="{{ route('reise', reiseId) }}">
+                                    <img src="{{ templateDir }}/img/reise/{{ reise.getBild }}"/>
+                                </a>
+                                <h3><a href="{{ route('reise', reiseId) }}">{{ reise.getTitel }}</a></h3>
+                                <p>{{ shortener(reise.getKurzbeschreibung, 340, true) }}</p>
+                                {% if reise.getTagListe|length > 0 %}
+                                    <div class="tagListe">
+                                        {% for tag in reise.getTagListe %}
+                                            <div class="singleTag"><a href="#">#{{ tag.getName }}</a></div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <p class="whiteLine"></p>
+                                <div class="reiseKurzinformation">
+                                    <div>
+                                        <img src="{{ templateDir }}/img/person.png" title="Personengruppen"/>
+                                        <p>{{ reise.getPersonen }}</p>
+                                    </div> <!--personen-->
+                                    <div>
+                                        <img src="{{ templateDir }}/img/zeit.png" title="Reisedauer"/>
+                                        <p>{{ reise.getReisedauer }}t</p>
+                                    </div> <!--reisezeit-->
+                                    <div>
+                                        <img src="{{ templateDir }}/img/flug.png"
+                                             title="Flugdauer bis zum ersten Ziel"/>
+                                        <p>{{ reise.getFlugzeit }}h</p>
+                                    </div> <!--flug-->
+                                    <div>
+                                        <img src="{{ templateDir }}/img/terrain_{{ reise.getTerrain }}.png"
+                                             title="Terrain Wertung - Beschreibt die körperliche Anstrengung bei dieser Reise"/>
+                                    </div> <!--terrain-->
+                                    <p class="clear"></p>
+                                </div> <!-- #reiseKurzinformation -->
+                            </div> <!-- #reise -->
+                        {% endfor %}
+                        <p class="clear"></p>
+                    </div> <!-- #container -->
+                </div> <!-- #reiseRecommenderContainer -->
+            </div> <!-- #reiseRecommender -->
+        {% endif %}
+    </div> <!-- #reiseContainer -->
+{% else %}
+    Sie haben keine Reise Ausgewählt. Bitte gehen Sie zurück zur Startseite.
+{% endif %}

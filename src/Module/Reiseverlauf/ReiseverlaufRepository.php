@@ -3,6 +3,8 @@
 namespace Project\Module\Reiseverlauf;
 
 use Project\Module\Database\Database;
+use Project\Module\Database\Query;
+use Project\Module\GenericValueObject\Id;
 
 /**
  * Class ReiseverlaufRepository
@@ -22,7 +24,7 @@ class ReiseverlaufRepository
      */
     public function __construct(Database $database)
     {
-        $this->database;
+        $this->database = $database;
     }
 
     /**
@@ -31,6 +33,20 @@ class ReiseverlaufRepository
     public function getAllReiseverlauf(): array
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);
+
+        return $this->database->fetchAll($query);
+    }
+
+    /**
+     * @param Id $reiseId
+     *
+     * @return array
+     */
+    public function getReiseverlaufByReiseId(Id $reiseId): array
+    {
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->where('reiseId', '=', $reiseId->toString());
+        $query->orderBy('reisetag', Query::ASC);
 
         return $this->database->fetchAll($query);
     }

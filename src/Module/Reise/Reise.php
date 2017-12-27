@@ -14,6 +14,7 @@ use Project\Module\GenericValueObject\Reisedauer;
 use Project\Module\GenericValueObject\Terrain;
 use Project\Module\GenericValueObject\Text;
 use Project\Module\GenericValueObject\Title;
+use Project\Module\Region\Region;
 use Project\Module\Tag\Tag;
 
 /**
@@ -67,11 +68,27 @@ class Reise
     /** @var Name $veranstalter */
     protected $veranstalter;
 
+    /** @var  Region $region */
+    protected $region;
+
     /** @var array $tagListe */
     protected $tagListe = [];
 
+    /** @var array $terminListe */
+    protected $terminListe = [];
+
+    /** @var array $reiseverlaufListe */
+    protected $reiseverlaufListe = [];
+
+    /** @var array $leistungListe */
+    protected $leistungListe = [];
+    
+    /** @var array $frageListe */
+    protected $frageListe = [];
+
     /**
      * Reise constructor.
+     *
      * @param Id $reiseId
      * @param Text $kurzbeschreibung
      * @param Text $beschreibung
@@ -105,6 +122,86 @@ class Reise
         $this->sichtbar = $sichtbar;
         $this->bild = $bild;
         $this->veranstalter = $veranstalter;
+    }
+
+    /**
+     * @return Region
+     */
+    public function getRegion(): Region
+    {
+        return $this->region;
+    }
+
+    /**
+     * @param Region $region
+     */
+    public function setRegion(Region $region)
+    {
+        $this->region = $region;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFrageListe(): array
+    {
+        return $this->frageListe;
+    }
+
+    /**
+     * @param array $frageListe
+     */
+    public function setFrageListe(array $frageListe)
+    {
+        $this->frageListe = $frageListe;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLeistungListe(): array
+    {
+        return $this->leistungListe;
+    }
+
+    /**
+     * @param array $leistungListe
+     */
+    public function setLeistungListe(array $leistungListe)
+    {
+        $this->leistungListe = $leistungListe;
+    }
+
+    /**
+     * @return array
+     */
+    public function getReiseverlaufListe(): array
+    {
+        return $this->reiseverlaufListe;
+    }
+
+    /**
+     * @param array $reiseverlaufListe
+     */
+    public function setReiseverlaufListe(array $reiseverlaufListe)
+    {
+        $this->reiseverlaufListe = $reiseverlaufListe;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTerminListe(): array
+    {
+        return $this->terminListe;
+    }
+
+    /**
+     * @param array $terminListe
+     */
+    public function setTerminListe(array $terminListe)
+    {
+        $this->terminListe = $terminListe;
     }
 
     /**

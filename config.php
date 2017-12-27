@@ -42,9 +42,19 @@ return [
             'controller' => 'IndexController',
             'action' => 'diamirAction'
         ],
+        'reise' => [
+            'controller' => 'IndexController',
+            'action' => 'reiseAction'
+        ],
         'migrate' => [
             'controller' => 'BackendController',
             'action' => 'migrateAction'
+        ],
+        'filter-reisen' => [
+            'controller' => 'JsonController',
+            'action' => 'filterReisenAction'
         ]
-    ]
+    ],
+    'startpage-offer' => 20,
+    'reise-recommender-offer' => 3,
 ];

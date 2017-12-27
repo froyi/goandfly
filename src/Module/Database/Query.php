@@ -105,9 +105,9 @@ class Query
      * @param string $operator
      * @param $value
      */
-    public function andWhere(string $entity, string $operator, $value): void
+    public function andWhere(string $entity, string $operator, $value, bool $asParam = false): void
     {
-        if (\is_string($value) === true) {
+        if (\is_string($value) === true && $asParam === false) {
             $value = '\'' . $value . '\'';
         }
 
@@ -119,9 +119,9 @@ class Query
      * @param string $operator
      * @param $value
      */
-    public function orWhere(string $entity, string $operator, $value): void
+    public function orWhere(string $entity, string $operator, $value, bool $asParam = false): void
     {
-        if (\is_string($value) === true) {
+        if (\is_string($value) === true && $asParam === false) {
             $value = '\'' . $value . '\'';
         }
 

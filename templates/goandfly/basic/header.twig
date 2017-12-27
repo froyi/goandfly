@@ -45,8 +45,8 @@
     <header id="header">
         <div class="container">
             <!-- Menü -->
-            <a class="open" href="#nav"><img src="{{ templateDir }}/img/nav_world.png"  /></a>
-            <img id="menueBig" src="{{ templateDir }}/img/globus.png"  onClick="toggleMenue();" />
+            <a class="open" href="#nav"><img src="{{ templateDir }}/img/nav_world.png"/></a>
+            <img id="menueBig" src="{{ templateDir }}/img/globus.png" onClick="toggleMenue();"/>
 
             <!-- Logo -->
             <div id="logo">
@@ -59,7 +59,7 @@
 
             <!-- Hotline -->
             <div id="hotline" class="right">
-                <img src="{{ templateDir }}/img/hotline.png" />
+                <img src="{{ templateDir }}/img/hotline.png"/>
             </div>
             <p class="clear"></p>
 
@@ -90,14 +90,19 @@
         <div id="navigationBig">
             <div class="left">
                 {% for continent in continents %}
-                    <p onClick="toggleRegionen('{{ continent.getContinentId }}');" onMouseOver="toggleKontinent('{{ continent.getBild }}');" id="kontinent_{{ continent.getContinentId }}">{{ continent.getName }}</p>
+                    <p onClick="toggleRegionen('{{ continent.getContinentId }}');"
+                       onMouseOver="toggleKontinent('{{ continent.getBild }}');"
+                       id="kontinent_{{ continent.getContinentId }}">{{ continent.getName }}</p>
                 {% endfor %}
             </div> <!-- .left -->
 
             <div id="regionenAusgabe" class="left">
                 <!-- Platzhalter Welt einfügen -->
-                <img src="{{ templateDir }}/img/kategorie/world.png" width="800" style="margin-top:71px;" id="world_map" />
+                <img src="{{ templateDir }}/img/kategorie/world.png" width="800" style="margin-top:71px;"
+                     id="world_map"/>
             </div> <!-- #regionenAusgabe -->
         </div> <!-- #navigationBig -->
-        <img src="{{ templateDir }}/img/{{ teaserBild }}" />
+        <img src="{{ templateDir }}/img/{{ teaserBild }}"/>
     </div> <!-- #teaser -->
+
+    {{ include ('module/tagListe.twig') }}

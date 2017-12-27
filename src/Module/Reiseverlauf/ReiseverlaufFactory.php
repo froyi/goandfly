@@ -22,7 +22,7 @@ class ReiseverlaufFactory
     {
         $reiseverlaufId = Id::fromString($object->reiseverlaufId);
         $reiseId = Id::fromString($object->reiseId);
-        $reisetag = Reisetag::fromValue($object->reisetag);
+        $reisetag = Reisetag::fromValue((int)$object->reisetag);
         $titel = Title::fromString($object->titel);
         $beschreibung = Text::fromString($object->beschreibung);
 

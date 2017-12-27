@@ -3,6 +3,7 @@
 namespace Project\Module\Termin;
 
 use Project\Module\Database\Database;
+use Project\Module\GenericValueObject\Id;
 
 /**
  * Class TerminService
@@ -35,6 +36,25 @@ class TerminService
         $termineArray = [];
 
         $termine = $this->terminRepository->getAllTermine();
+
+        foreach ($termine as $termineData) {
+            $termin = $this->terminFactory->getTerminFromObject($termineData);
+            $termineArray[$termin->getTerminId()->toString()] = $termin;
+        }
+
+        return $termineArray;
+    }
+
+    /**
+     * @param Id $reiseId
+     *
+     * @return array
+     */
+    public function getTermineByReiseId(Id $reiseId): array
+    {
+        $termineArray = [];
+
+        $termine = $this->terminRepository->getTermineByReiseId($reiseId);
 
         foreach ($termine as $termineData) {
             $termin = $this->terminFactory->getTerminFromObject($termineData);

@@ -58,4 +58,20 @@ class RegionService
 
         return $regionsArray;
     }
+
+    /**
+     * @param Id $reiseId
+     *
+     * @return null|Region
+     */
+    public function getRegionByReiseId(Id $reiseId): ?Region
+    {
+        $regionData = $this->regionRepository->getRegionByReiseId($reiseId);
+
+        if ($regionData === false) {
+            return null;
+        }
+
+        return $this->regionFactory->getRegionFromObject($regionData);
+    }
 }

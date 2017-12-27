@@ -3,6 +3,7 @@
 namespace Project\Module\Leistung;
 
 use Project\Module\Database\Database;
+use Project\Module\GenericValueObject\Id;
 
 /**
  * Class LeistungService
@@ -35,6 +36,25 @@ class LeistungService
         $leistungenArray = [];
 
         $leistungen = $this->leistungRepository->getAllLeistungen();
+
+        foreach ($leistungen as $leistungData) {
+            $leistung = $this->leistungFactory->getLeistungFromObject($leistungData);
+            $leistungenArray[$leistung->getLeistungId()->toString()] = $leistung;
+        }
+
+        return $leistungenArray;
+    }
+
+    /**
+     * @param Id $reiseId
+     *
+     * @return array
+     */
+    public function getLeistungenByReiseId(Id $reiseId): array
+    {
+        $leistungenArray = [];
+
+        $leistungen = $this->leistungRepository->getLeistungenByReiseId($reiseId);
 
         foreach ($leistungen as $leistungData) {
             $leistung = $this->leistungFactory->getLeistungFromObject($leistungData);

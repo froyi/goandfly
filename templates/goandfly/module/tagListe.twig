@@ -1,0 +1,13 @@
+{% if tagListe|length > 0 %}
+    <div id="tagListe">
+        {% for tag in tagListe %}
+            {% if tag.getName is same as ('Busreisen') %}
+                <div class="tag">
+                    <a href="http://goandfly-bus.blueandwhite.de/">{{ tag.getName }}</a>
+                </div>
+            {% else %}
+                <div class="tag" data-tag-id="{{ tag.getTagId }}">{{ tag.getName }}</div>
+            {% endif %}
+        {% endfor %}
+    </div> <!-- #tagListe -->
+{% endif %}
