@@ -61,4 +61,35 @@ class TagService
 
         return $tagsArray;
     }
+
+    /**
+     * @param array $tagArray
+     * @return array
+     */
+    public function getTagsByTagIdArray(array $tagArray): array
+    {
+        $tagsArray = [];
+
+        foreach ($tagArray as $tagId) {
+            $tagId = Id::fromString($tagId);
+
+            $tagData = $this->tagRepository->getTagByTagId($tagId);
+            $tag = $this->tagFactory->getTagFromObject($tagData);
+
+            $tagsArray[$tag->getTagId()->toString()] = $tag;
+        }
+
+        return $tagsArray;
+    }
+
+    public function saveTagsToSession(array $tags = []): void
+    {
+        if (empty($tags)) {
+            unset($_SESSION['tagIds']);
+        } else {
+            foreach ($tags as $tag) {
+                $_SESSION['tagIds'][] = $tag->getTagId()->toString();
+            }
+        }
+    }
 }

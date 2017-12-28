@@ -74,4 +74,16 @@ class RegionService
 
         return $this->regionFactory->getRegionFromObject($regionData);
     }
+
+    /**
+     * @param Id|null $regionId
+     */
+    public function saveRegionToSession(Id $regionId = null): void
+    {
+        if ($regionId === null) {
+            unset($_SESSION['regionId']);
+        } else {
+            $_SESSION['regionId'] = $regionId;
+        }
+    }
 }

@@ -51,4 +51,16 @@ class TagRepository
 
         return $this->database->fetchAll($query);
     }
+
+    /**
+     * @param Id $tagId
+     * @return array
+     */
+    public function getTagByTagId(Id $tagId)
+    {
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->where('tagId', '=', $tagId->toString());
+
+        return $this->database->fetch($query);
+    }
 }

@@ -246,4 +246,29 @@ class ReiseService
 
         return $reiseRecommender;
     }
+
+    public function getAllTagAndRegionReisenInContainer(array $tags = [], Id $regionId = null, int $amount = null): ReiseContainer
+    {
+        $reisenArray = [];
+
+        $reisen = $this->reiseRepository->getReiseByTagsAndRegionId($tags, $regionId, $amount);
+
+        foreach ($reisen as $reiseData) {
+            $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+
+            $region = $this->regionService->getRegionByReiseId($reise->getReiseId());
+
+            if ($region !== null) {
+                $reise->setRegion($region);
+            }
+
+            $tags = $this->tagService->getTagsByReiseId($reise->getReiseId());
+
+            $reise->setTagListeToTagListe($tags);
+
+            $reisenArray[$reise->getReiseId()->toString()] = $reise;
+        }
+
+        return new ReiseContainer($reisenArray);
+    }
 }

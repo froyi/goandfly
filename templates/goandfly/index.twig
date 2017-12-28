@@ -1,6 +1,6 @@
 {% include ('basic/header.twig') %}
 
-<div class="main-content js-main-content" id="main">
+<div class="main-content js-main-content" id="main" data-page="{{ page }}">
     {% include ('page/' ~ page ~ '.twig') %}
 </div>
 

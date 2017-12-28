@@ -40,6 +40,9 @@ class Query
     /** @var  string $where */
     protected $where;
 
+    /** @var array $andOr */
+    protected $andOr = [];
+
     /** @var  string $orderBy */
     protected $orderBy;
 
@@ -100,10 +103,12 @@ class Query
         $this->where .= self::WHERE . $entity . ' ' . $operator . ' ' . $value . ' ';
     }
 
+
     /**
      * @param string $entity
      * @param string $operator
      * @param $value
+     * @param bool $asParam
      */
     public function andWhere(string $entity, string $operator, $value, bool $asParam = false): void
     {
@@ -126,6 +131,21 @@ class Query
         }
 
         $this->where .= self:: OR . $entity . ' ' . $operator . ' ' . $value . ' ';
+    }
+
+    /**
+     * @param string $entity
+     * @param string $operator
+     * @param $value
+     * @param bool $asParam
+     */
+    public function andOrWhere(string $entity, string $operator, $value, bool $asParam = false): void
+    {
+        if (\is_string($value) === true && $asParam === false) {
+            $value = '\'' . $value . '\'';
+        }
+
+        $this->andOr[] = $entity . ' ' . $operator . ' ' . $value . ' ';
     }
 
     /**
@@ -190,6 +210,8 @@ class Query
                 $queryString .= self::SELECT . $this->getEntities();
                 $queryString .= self::FROM . $this->getTables();
                 $queryString .= $this->where;
+                $queryString .= $this->getAndOr();
+
                 $queryString .= $this->orderBy;
                 $queryString .= $this->limit;
                 break;
@@ -239,6 +261,15 @@ class Query
         }
 
         return implode(',', $this->tableArray) . ' ';
+    }
+
+    protected function getAndOr(): string
+    {
+        if (empty($this->andOr)) {
+            return '';
+        }
+
+        return 'AND (' . implode(self::OR, $this->andOr) . ')';
     }
 
     /**

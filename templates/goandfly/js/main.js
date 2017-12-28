@@ -1,5 +1,12 @@
+$(document).ready(function() {
+    // $(".fancybox").fancybox();
+});
+
+
 $(document).on('click', '.tag', function () {
     var $clickedElement = $(this),
+        $mainContent = $('.js-main-content'),
+        page = $mainContent.data('page'),
         activeTags = [];
 
     if ($clickedElement.hasClass('active')) {
@@ -17,14 +24,16 @@ $(document).on('click', '.tag', function () {
         url: 'index.php?route=filter-reisen',
         dataType: 'json',
         data: {
-            tagIds: activeTags
+            tagIds: activeTags,
+            page: page
         },
-        success: function () {
-            debugger;
+        success: function (response) {
+            if (response.status === 'success') {
+                $('.js-main-content').html(response.view);
+            }
         },
         error: function () {
-            debugger;
+
         }
     });
-
 });

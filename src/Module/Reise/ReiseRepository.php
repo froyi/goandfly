@@ -17,6 +17,8 @@ class ReiseRepository
 
     protected const REISE_REGION_TABLE = 'reise_region';
 
+    protected const REISE_TAGS_TABLE = 'reise_tag';
+
     /** @var Database $database */
     protected $database;
 
@@ -97,6 +99,41 @@ class ReiseRepository
         $query->where('sichtbar', '>=', date('Y-m-d'));
         $query->andWhere('regionId', '=', $regionId->toString());
         $query->andWhere(self::TABLE . '.reiseId', '=', self::REISE_REGION_TABLE . '.reiseId', true);
+        $query->orderBy('bearbeitet', Query::DESC);
+
+        if ($amount !== null) {
+            $query->limit($amount);
+        }
+
+        return $this->database->fetchAll($query);
+    }
+
+    /**
+     * @param array $tags
+     * @param Id|null $regionId
+     * @param int|null $amount
+     * @return array
+     */
+    public function getReiseByTagsAndRegionId(array $tags = [], Id $regionId = null, int $amount = null): array
+    {
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+
+        $query->addTable(self::REISE_REGION_TABLE);
+        $query->addTable(self::REISE_TAGS_TABLE);
+
+        $query->where('sichtbar', '>=', date('Y-m-d'));
+
+        $query->andWhere(self::TABLE . '.reiseId', '=', self::REISE_REGION_TABLE . '.reiseId', true);
+        $query->andWhere(self::TABLE . '.reiseId', '=', self::REISE_TAGS_TABLE . '.reiseId', true);
+
+        if ($regionId !== null) {
+            $query->andWhere('regionId', '=', $regionId->toString());
+        }
+
+        foreach ($tags as $tag) {
+            $query->andOrWhere('tagId', '=', $tag->getTagId()->toString());
+        }
+
         $query->orderBy('bearbeitet', Query::DESC);
 
         if ($amount !== null) {

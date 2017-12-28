@@ -13,7 +13,7 @@ class Tools
 
     /**
      * @param string $name
-     * @return bool|string|int
+     * @return bool|string|int|array
      */
     public static function getValue(string $name)
     {

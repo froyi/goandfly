@@ -162,7 +162,7 @@
 
                 {% if reise.getFrageListe|length > 0 %}
                     {% for frage in reise.getFrageListe %}
-                        <p><span>{{ frage.getFrageId }}</span><br/>{{ frage.getAntwort }}</p>
+                        <p><span>{{ frage.getFrage }}</span><br/>{{ frage.getAntwort }}</p>
                     {% endfor %}
                 {% else %}
                     <p class="no-data">Es gibt noch keine häufig gestellten Fragen.</p>
