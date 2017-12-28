@@ -227,6 +227,7 @@ class Migrate
 
             $query->insert('tagId', $id);
             $query->insert('name', $name);
+            $query->insert('position', $oldTagId);
 
             if ($this->newDatabase->execute($query) === false) {
                 $this->errors[] = $query;

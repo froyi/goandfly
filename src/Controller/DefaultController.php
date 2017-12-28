@@ -6,7 +6,11 @@ namespace Project\Controller;
 use Project\Configuration;
 use Project\Module\Continent\ContinentService;
 use Project\Module\Database\Database;
+use Project\Module\News\NewsService;
 use Project\Module\Region\RegionService;
+use Project\Module\Reise\ReiseService;
+use Project\Module\Tag\TagService;
+use Project\Utilities\Tools;
 use Project\View\ViewRenderer;
 
 /**
@@ -59,10 +63,33 @@ class DefaultController
     }
 
     /**
-     * not found action
-     * @throws \Twig_Error_Syntax
+     * error action
      * @throws \InvalidArgumentException
-     * @throws \Twig_Error_Runtime
+     */
+    public function errorPageAction(): void
+    {
+        $this->showStandardPage('error');
+    }
+
+    /**
+     * @param string $name
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function showStandardPage(string $name): void
+    {
+        try {
+            $this->viewRenderer->addViewConfig('page', $name);
+
+            $this->viewRenderer->renderTemplate();
+        } catch (\InvalidArgumentException $error) {
+            $this->notFoundAction();
+        }
+    }
+
+    /**
+     * not found action
+     * @throws \InvalidArgumentException
      */
     public function notFoundAction(): void
     {
@@ -75,33 +102,54 @@ class DefaultController
         }
     }
 
-    /**
-     * error action
-     * @throws \Twig_Error_Runtime
-     * @throws \InvalidArgumentException
-     * @throws \Twig_Error_Syntax
-     * @throws \Twig_Error_Loader
-     */
-    public function errorPageAction(): void
+    protected function getNews(): void
     {
-        $this->showStandardPage('error');
+        $newsService = new NewsService($this->database);
+        $news = $newsService->getAllNewsOrderByDate();
+
+        $this->viewRenderer->addViewConfig('news', $news);
     }
 
-    /**
-     * @param string $name
-     * @throws \InvalidArgumentException
-     * @throws \Twig_Error_Syntax
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Loader
-     */
-    protected function showStandardPage(string $name): void
+    protected function getTagListe(): void
     {
-        try {
-            $this->viewRenderer->addViewConfig('page', $name);
+        $tagService = new TagService($this->database);
+        $tags = $tagService->getAllTags();
 
-            $this->viewRenderer->renderTemplate();
-        } catch (\InvalidArgumentException $error) {
-            $this->notFoundAction();
+        $this->viewRenderer->addViewConfig('tagListe', $tags);
+    }
+
+    protected function getReisenContainer(): void
+    {
+        // Tags
+        $tagService = new TagService($this->database);
+
+        $tagIds = Tools::getValue('tagIds');
+
+        $tags = [];
+        if ($tagIds !== false) {
+            $tags = $tagService->getTagsByTagIdArray($tagIds);
         }
+
+        $tagService->saveTagsToSession($tags);
+
+        // Region
+        $regionId = null;
+        if (Tools::getValue('regionId') !== false) {
+            $regionId = Tools::getValue('regionId');
+        }
+
+        $regionService = new RegionService($this->database);
+        $regionService->saveRegionToSession($regionId);
+
+        $startpageOfferAmount = null;
+        if (empty($tags) && empty($regionId)) {
+            $startpageOfferAmount = $this->configuration->getEntryByName('startpage-offer');
+        }
+
+        $reiseService = new ReiseService($this->database);
+        $reiseContainer = $reiseService->getAllTagAndRegionReisenInContainer($tags, $regionId, $startpageOfferAmount);
+
+        $this->viewRenderer->addViewConfig('teaserReisen', $reiseContainer->getTeaserReiseListe());
+        $this->viewRenderer->addViewConfig('bottomReisen', $reiseContainer->getBottomReiseListe());
     }
 }

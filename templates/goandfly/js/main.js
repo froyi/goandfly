@@ -33,7 +33,7 @@ $(document).on('click', '.tag', function () {
             }
         },
         error: function () {
-
         }
     });
 });
+

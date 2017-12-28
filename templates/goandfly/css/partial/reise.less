@@ -1,0 +1,72 @@
+.reise {
+  .tagListe {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 5px 10px;
+
+    .singleTag {
+      font-family: 'cooper_lt_btlight', Arial, Helvetica, sans-serif;
+      font-size: 0.8em;
+      color: @color-3;
+      margin-right: 15px;
+    }
+  }
+
+  .reiseKurzinformation {
+    float: none;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid @color-1;
+    padding-top: 5px;
+    margin: 0 10px;
+    width: 95%;
+
+    > div {
+      margin: 5px 0;
+      float: none;
+      cursor: default;
+      width: inherit;
+      text-align: center;
+
+      p {
+        padding-left: 3px;
+      }
+    }
+  }
+}
+
+.reise-quer {
+  display: flex;
+  justify-content: flex-start;
+
+  .beschreibung {
+    width: 55%;
+
+    .tagListe {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      cursor: default;
+    }
+  }
+
+  .image {
+    width: 45%;
+
+    img {
+      margin-left: 0;
+      max-width: 340px;
+      min-width: 150px;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .reiseKurzinformation {
+    min-width: 70px;
+    width: 5%;
+    display: block;
+    border: none;
+    border-left: 1px solid @color-1;
+  }
+}

@@ -3,6 +3,7 @@
 namespace Project\Module\Tag;
 
 use Project\Module\Database\Database;
+use Project\Module\Database\Query;
 use Project\Module\GenericValueObject\Id;
 
 /**
@@ -34,12 +35,14 @@ class TagRepository
     public function getAllTags(): array
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->orderBy('position', Query::ASC);
 
         return $this->database->fetchAll($query);
     }
 
     /**
      * @param Id $reiseId
+     *
      * @return array
      */
     public function getTagsByReiseId(Id $reiseId): array
@@ -48,18 +51,21 @@ class TagRepository
         $query->addTable(self::TABLE);
         $query->where(self::TABLE . '.tagId', '=', self::REISE_TAG_TABLE . '.tagId', true);
         $query->andWhere('reiseId', '=', $reiseId->toString());
+        $query->orderBy('position', Query::ASC);
 
         return $this->database->fetchAll($query);
     }
 
     /**
      * @param Id $tagId
+     *
      * @return array
      */
     public function getTagByTagId(Id $tagId)
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);
         $query->where('tagId', '=', $tagId->toString());
+        $query->orderBy('position', Query::ASC);
 
         return $this->database->fetch($query);
     }

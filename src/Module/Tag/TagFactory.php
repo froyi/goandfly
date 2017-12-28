@@ -4,6 +4,7 @@ namespace Project\Module\Tag;
 
 use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Name;
+use Project\Module\GenericValueObject\Position;
 
 /**
  * Class TagFactory
@@ -24,6 +25,9 @@ class TagFactory
         /** @var Name $name */
         $name = Name::fromString($object->name);
 
-        return new Tag($tagId, $name);
+        /** @var Position $position */
+        $position = Position::fromValue((int)$object->position);
+
+        return new Tag($tagId, $name, $position);
     }
 }

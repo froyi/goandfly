@@ -1,40 +1,8 @@
 {% if teaserReisen|length > 0 %}
     {% for reise in teaserReisen %}
         {% set reiseId = {'reiseId': reise.getReiseId} %}
-        <div class="reise">
-            <a href="{{ route('reise', reiseId) }}">
-                <img src="{{ templateDir }}/img/reise/{{ reise.getBild }}" />
-            </a>
-            <h3><a href="{{ route('reise', reiseId) }}">{{ reise.getTitel }}</a></h3>
-            <p>{{ shortener(reise.getKurzbeschreibung, 340, true) }}</p>
-            {% if reise.getTagListe|length > 0 %}
-                <div class="tagListe">
-                    {% for tag in reise.getTagListe %}
-                        <div class="singleTag"><a href="#">#{{ tag.getName }}</a></div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            <p class="whiteLine"></p>
-            <div class="reiseKurzinformation">
-                <div>
-                    <img src="{{ templateDir }}/img/person.png" title="Personengruppen"/>
-                    <p>{{ reise.getPersonen }}</p>
-                </div> <!--personen-->
-                <div>
-                    <img src="{{ templateDir }}/img/zeit.png" title="Reisedauer"/>
-                    <p>{{ reise.getReisedauer }}t</p>
-                </div> <!--reisezeit-->
-                <div>
-                    <img src="{{ templateDir }}/img/flug.png" title="Flugdauer bis zum ersten Ziel"/>
-                    <p>{{ reise.getFlugzeit }}</p>
-                </div> <!--flug-->
-                <div>
-                    <img src="{{ templateDir }}/img/terrain_{{ reise.getTerrain }}.png" title="Terrain Wertung -
-                        Beschreibt die körperliche Anstrengung bei dieser Reise" />
-                </div> <!--terrain-->
-                <p class="clear"></p>
-            </div> <!-- #reiseKurzinformation -->
-        </div> <!-- #reise -->
+
+        {{ include ('partial/reise_top_down.twig') }}
     {% endfor %}
 {% else %}
     <div id="keineReise">

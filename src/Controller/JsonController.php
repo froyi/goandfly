@@ -4,12 +4,7 @@ declare (strict_types=1);
 namespace Project\Controller;
 
 use Project\Configuration;
-use Project\Module\GenericValueObject\Id;
-use Project\Module\News\NewsService;
-use Project\Module\Region\RegionService;
-use Project\Module\Reise\ReiseService;
-use Project\Module\Tag\TagService;
-use Project\Utilities\Tools;
+
 use Project\View\JsonModel;
 
 /**
@@ -34,34 +29,11 @@ class JsonController extends DefaultController
 
     public function filterReisenAction()
     {
-        $tagService = new TagService($this->database);
+        // News for template
+        $this->getNews();
 
-        $tagIds = Tools::getValue('tagIds');
-
-        $tags = [];
-        if ($tagIds !== false) {
-            $tags = $tagService->getTagsByTagIdArray($tagIds);
-        }
-        $tagService->saveTagsToSession($tags);
-
-        $regionId = null;
-        if (Tools::getValue('regionId') !== false) {
-            $regionId = Tools::getValue('regionId');
-        }
-
-        $regionService = new RegionService($this->database);
-        $regionService->saveRegionToSession($regionId);
-
-        $newsService = new NewsService($this->database);
-        $news = $newsService->getAllNewsOrderByDate();
-
-        $this->viewRenderer->addViewConfig('news', $news);
-
-        $reiseService = new ReiseService($this->database);
-        $reiseContainer = $reiseService->getAllTagAndRegionReisenInContainer($tags, $regionId);
-
-        $this->viewRenderer->addViewConfig('teaserReisen', $reiseContainer->getTeaserReiseListe());
-        $this->viewRenderer->addViewConfig('bottomReisen', $reiseContainer->getBottomReiseListe());
+        // Reisen for Template
+        $this->getReisenContainer();
 
         $this->jsonModel->addJsonConfig('view', $this->viewRenderer->renderJsonView('page/home.twig'));
 
