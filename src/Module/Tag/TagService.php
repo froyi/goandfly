@@ -46,6 +46,7 @@ class TagService
 
     /**
      * @param Id $reiseId
+     *
      * @return array
      */
     public function getTagsByReiseId(Id $reiseId): array
@@ -64,6 +65,7 @@ class TagService
 
     /**
      * @param array $tagArray
+     *
      * @return array
      */
     public function getTagsByTagIdArray(array $tagArray): array
@@ -82,14 +84,20 @@ class TagService
         return $tagsArray;
     }
 
+    /**
+     * @param array $tags
+     */
     public function saveTagsToSession(array $tags = []): void
     {
-        if (empty($tags)) {
-            unset($_SESSION['tagIds']);
-        } else {
-            foreach ($tags as $tag) {
-                $_SESSION['tagIds'][] = $tag->getTagId()->toString();
-            }
+        $this->unsetTagsInSession();
+
+        foreach ($tags as $tag) {
+            $_SESSION['tagIds'][$tag->getTagId()->toString()] = $tag->getTagId()->toString();
         }
+    }
+
+    public function unsetTagsInSession(): void
+    {
+        unset($_SESSION['tagIds']);
     }
 }

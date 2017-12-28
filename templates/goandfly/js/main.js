@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // $(".fancybox").fancybox();
 });
 
@@ -6,8 +6,7 @@ $(document).ready(function() {
 $(document).on('click', '.tag', function () {
     var $clickedElement = $(this),
         $mainContent = $('.js-main-content'),
-        page = $mainContent.data('page'),
-        activeTags = [];
+        page = $mainContent.data('page');
 
     if ($clickedElement.hasClass('active')) {
         $clickedElement.removeClass('active');
@@ -15,9 +14,7 @@ $(document).on('click', '.tag', function () {
         $clickedElement.addClass('active');
     }
 
-    $('.tag.active').each(function() {
-       activeTags.push($(this).data('tagId'));
-    });
+    var activeTags = getActiveTags();
 
     $.ajax({
         type: 'POST',
@@ -31,9 +28,17 @@ $(document).on('click', '.tag', function () {
             if (response.status === 'success') {
                 $('.js-main-content').html(response.view);
             }
-        },
-        error: function () {
         }
     });
 });
+
+function getActiveTags() {
+    var activeTags = [];
+
+    $('.tag.active').each(function () {
+        activeTags.push($(this).data('tagId'));
+    });
+
+    return activeTags;
+}
 

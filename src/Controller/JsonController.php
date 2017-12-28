@@ -33,7 +33,7 @@ class JsonController extends DefaultController
         $this->getNews();
 
         // Reisen for Template
-        $this->getReisenContainer();
+        $this->getReisenContainer(true);
 
         $this->jsonModel->addJsonConfig('view', $this->viewRenderer->renderJsonView('page/home.twig'));
 

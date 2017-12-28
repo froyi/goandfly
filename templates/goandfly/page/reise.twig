@@ -47,8 +47,9 @@
         </div>
         <div class="right" id="reiseSidebar">
             <div id="reiseSidebarKarte">
-                <a href="{{ templateDir }}/img/reise/karte/{{ reise.getKarte }}" class="fancybox"><img
-                            src="{{ templateDir }}/img/reise/karte/{{ reise.getKarte }}"/></a>
+                <a href="{{ templateDir }}/img/reise/karte/{{ reise.getKarte }}" data-fancybox>
+                    <img src="{{ templateDir }}/img/reise/karte/{{ reise.getKarte }}"/>
+                </a>
             </div> <!-- #reiseSidebarKarte -->
 
             <div id="reiseSidebarKurzinformation">

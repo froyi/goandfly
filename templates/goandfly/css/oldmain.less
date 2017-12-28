@@ -389,8 +389,7 @@ strong
   }
   #wrapper
   {
-    background:url(../img/wrapper_bg.jpg) top left repeat-x;
-
+    /*background:url(../img/wrapper_bg.jpg) top left repeat-x;*/
   }
   #header, #main, #teaser, #tagListe
   {
@@ -430,7 +429,7 @@ strong
     max-height:366px;
     max-width:1096px;
     overflow: hidden;
-
+    padding-top: 69px;
   }
   #teaser img
   {
@@ -1453,8 +1452,8 @@ strong
     z-index:100;
     display:inherit;
     position:absolute;
-    top:29px;
-    left:48.5%;
+    left:50%;
+    margin-left: -82px;
     content:url(../img/globus.png);
 
     cursor:pointer;
@@ -1465,11 +1464,12 @@ strong
     max-width:1096px;
     height: 560px;
     background: rgba(0,0,0,0.87);
-    position: absolute;
+    position: fixed;
     border-left: 2px solid #C90019;
     border-right: 2px solid #C90019;
     border-bottom: 2px solid #C90019;
     margin-left: -2px;
+    z-index: 1;
   }
   #navigationBig img
   {

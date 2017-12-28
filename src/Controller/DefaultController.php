@@ -118,10 +118,15 @@ class DefaultController
         $this->viewRenderer->addViewConfig('tagListe', $tags);
     }
 
-    protected function getReisenContainer(): void
+    protected function getReisenContainer(bool $isJson = false): void
     {
         // Tags
         $tagService = new TagService($this->database);
+
+        // unset data for new requested ones
+        if ($isJson === true) {
+            $tagService->unsetTagsInSession();
+        }
 
         $tagIds = Tools::getValue('tagIds');
 
@@ -131,6 +136,7 @@ class DefaultController
         }
 
         $tagService->saveTagsToSession($tags);
+        $this->viewRenderer->addViewConfig('activeTags', $tagIds);
 
         // Region
         $regionId = null;

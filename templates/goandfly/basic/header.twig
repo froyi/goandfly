@@ -26,8 +26,7 @@
 
     <script src="{{ templateDir }}/ckeditor/ckeditor.js"></script>
 
-    <link rel="stylesheet" href="{{ templateDir }}/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
-    <script type="text/javascript" src="{{ templateDir }}/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script src="{{ templateDir }}/js/fancybox.min.js"></script>
 </head>
 <body>
 
@@ -93,7 +92,7 @@
                 {% for continent in continents %}
                     <p onClick="toggleRegionen('{{ continent.getContinentId }}');"
                        onMouseOver="toggleKontinent('{{ continent.getBild }}');"
-                       id="kontinent_{{ continent.getContinentId }}">{{ continent.getName }}</p>
+                       id="kontinent_{{ continent.getContinentId }}">{{ continent.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}</p>
                 {% endfor %}
             </div> <!-- .left -->
 

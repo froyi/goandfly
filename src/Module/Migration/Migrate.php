@@ -80,7 +80,7 @@ class Migrate
             $oldContinentId = $singleData->id;
 
             $id = Id::generateId()->toString();
-            $name = html_entity_decode(utf8_decode($singleData->name));
+            $name = html_entity_decode(utf8_encode($singleData->name));
             $flaeche = html_entity_decode(utf8_encode($singleData->flaeche));
             $gliederung = html_entity_decode(utf8_encode($singleData->gliederung));
             $tourismus = html_entity_decode(utf8_encode($singleData->tourismus));
@@ -221,7 +221,7 @@ class Migrate
             $oldTagId = $singleData->id;
 
             $id = Id::generateId()->toString();
-            $name = html_entity_decode($singleData->name);
+            $name = html_entity_decode(utf8_encode($singleData->name));
 
             $query = $this->newDatabase->getNewInsertQuery($table_new);
 
