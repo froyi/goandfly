@@ -6,6 +6,7 @@ namespace Project\Controller;
 use Project\Configuration;
 use Project\Module\Continent\ContinentService;
 use Project\Module\Database\Database;
+use Project\Module\GenericValueObject\Id;
 use Project\Module\News\NewsService;
 use Project\Module\Region\RegionService;
 use Project\Module\Reise\Reise;
@@ -32,7 +33,8 @@ class DefaultController
 
     /**
      * DefaultController constructor.
-     * @throws \InvalidArgumentException
+     *
+     * @param Configuration $configuration
      */
     public function __construct(Configuration $configuration)
     {
@@ -61,7 +63,7 @@ class DefaultController
         $this->viewRenderer->addViewConfig('regions', $regionService->getAllRegions());
 
         $continentService = new ContinentService($this->database);
-        $this->viewRenderer->addViewConfig('continents', $continentService->getAllContinentsWithRegionList($regionService));
+        $this->viewRenderer->addViewConfig('continents', $continentService->getAllContinentsWithRegionList());
     }
 
     /**
@@ -139,6 +141,8 @@ class DefaultController
         $tags = [];
         if ($tagIds !== false) {
             $tags = $tagService->getTagsByTagIdArray($tagIds);
+        } else {
+            $tagIds = [];
         }
 
         $tagService->saveTagsToSession($tags);
@@ -147,7 +151,7 @@ class DefaultController
         // Region
         $regionId = null;
         if (Tools::getValue('regionId') !== false) {
-            $regionId = Tools::getValue('regionId');
+            $regionId = Id::fromString(Tools::getValue('regionId'));
         }
 
         $regionService = new RegionService($this->database);
@@ -170,12 +174,15 @@ class DefaultController
     protected function generateTeaserBildByReiseContainer(ReiseContainer $reiseContainer): void
     {
         $reiseListe = $reiseContainer->getReiseListe();
-        $key = array_rand($reiseListe);
 
-        /** @var Reise $reise */
-        $reise = $reiseListe[$key];
+        if (empty($reiseListe) === false) {
+            $key = array_rand($reiseListe);
 
-        $this->setTeaserBild($reise);
+            /** @var Reise $reise */
+            $reise = $reiseListe[$key];
+
+            $this->setTeaserBild($reise);
+        }
     }
 
     protected function setTeaserBild(Reise $reise): void

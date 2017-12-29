@@ -83,7 +83,7 @@ class RegionService
         if ($regionId === null) {
             unset($_SESSION['regionId']);
         } else {
-            $_SESSION['regionId'] = $regionId;
+            $_SESSION['regionId'] = $regionId->toString();
         }
     }
 }

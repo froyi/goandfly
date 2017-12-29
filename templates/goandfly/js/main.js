@@ -1,7 +1,3 @@
-$(document).ready(function () {
-    // $(".fancybox").fancybox();
-});
-
 $(document).on('click', '.tag', function () {
     var $clickedElement = $(this),
         $mainContent = $('.js-main-content'),
@@ -13,6 +9,15 @@ $(document).on('click', '.tag', function () {
         $clickedElement.addClass('active');
     }
 
+    handleAngebote(page);
+});
+
+$(document).on('click', '#menueBig', function() {
+    $("#navigationBig").fadeToggle(500);
+});
+
+function handleAngebote(page, regionId)
+{
     var activeTags = getActiveTags();
 
     $.ajax({
@@ -21,7 +26,8 @@ $(document).on('click', '.tag', function () {
         dataType: 'json',
         data: {
             tagIds: activeTags,
-            page: page
+            page: page,
+            regionId: regionId
         },
         success: function (response) {
             if (response.status === 'success') {
@@ -29,7 +35,7 @@ $(document).on('click', '.tag', function () {
             }
         }
     });
-});
+}
 
 /**
  * @todo error case necessary?
@@ -37,9 +43,13 @@ $(document).on('click', '.tag', function () {
 $(document).on('click', '.continent', function () {
     var $continent = $(this),
         actualContinentId = $continent.data('continentId'),
-        $regionenAusgabe = $('#regionenAusgabe');
+        $regionenAusgabe = $('#regionenAusgabe'),
+        $mainContent = $('.js-main-content'),
+        page = $mainContent.data('page');
 
     $regionenAusgabe.html('');
+
+    var activeTags = getActiveTags();
 
     $.ajax({
         type: 'POST',
@@ -59,6 +69,29 @@ $(document).on('click', '.continent', function () {
             }
         }
     });
+});
+
+$(document).on('mouseover', '.js-region', function () {
+    var $thisElement = $(this),
+        regionBild = $thisElement.data('regionBild'),
+        regionBeschreibung = $thisElement.data('regionBeschreibung');
+
+    $('#navigationBild').attr('src', regionBild);
+    $('#kontinentInformation').html(regionBeschreibung);
+});
+
+$(document).on('click', '.js-region', function () {
+    var $thisElement = $(this),
+        $mainContent = $('.js-main-content'),
+        regionId = $thisElement.data('regionId');
+
+    if ($mainContent.data('page') !== 'home') {
+        $(location).attr('href','index.php?route=index&regionId=' + regionId);
+    } else {
+        handleAngebote($mainContent.data('page'), regionId);
+
+        $('#menueBig').trigger('click');
+    }
 });
 
 $(document).on('mouseover', '.continent', function () {

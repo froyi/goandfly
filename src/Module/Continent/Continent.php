@@ -33,23 +33,30 @@ class Continent
     /** @var Text $klima */
     protected $klima;
 
-    /** @var Image */
+    /** @var Image $bild */
     protected $bild;
+
+    /** @var  Image $categoryBild */
+    protected $categoryBild;
 
     /** @var array $regionList */
     protected $regionList = [];
 
     /**
      * Continent constructor.
-     * @param Id $id
+     *
+     * @param Id $continentId
      * @param Name $name
      * @param Text $flaeche
      * @param Text $gliederung
      * @param Text $tourismus
      * @param Text $klima
      * @param Image $bild
+     * @param Image $categoryBild
+     *
+     * @internal param Id $id
      */
-    public function __construct(Id $continentId, Name $name, Text $flaeche, Text $gliederung, Text $tourismus, Text $klima, Image $bild)
+    public function __construct(Id $continentId, Name $name, Text $flaeche, Text $gliederung, Text $tourismus, Text $klima, Image $bild, Image $categoryBild)
     {
         $this->continentId = $continentId;
         $this->name = $name;
@@ -58,6 +65,7 @@ class Continent
         $this->tourismus = $tourismus;
         $this->klima = $klima;
         $this->bild = $bild;
+        $this->categoryBild = $categoryBild;
     }
 
     /**
@@ -77,11 +85,27 @@ class Continent
     }
 
     /**
+     * @param Text $flaeche
+     */
+    public function setFlaeche(Text $flaeche): void
+    {
+        $this->flaeche = $flaeche;
+    }
+
+    /**
      * @return Text
      */
     public function getGliederung(): Text
     {
         return $this->gliederung;
+    }
+
+    /**
+     * @param Text $gliederung
+     */
+    public function setGliederung(Text $gliederung): void
+    {
+        $this->gliederung = $gliederung;
     }
 
     /**
@@ -93,11 +117,27 @@ class Continent
     }
 
     /**
+     * @param Text $tourismus
+     */
+    public function setTourismus(Text $tourismus): void
+    {
+        $this->tourismus = $tourismus;
+    }
+
+    /**
      * @return Text
      */
     public function getKlima(): Text
     {
         return $this->klima;
+    }
+
+    /**
+     * @param Text $klima
+     */
+    public function setKlima(Text $klima): void
+    {
+        $this->klima = $klima;
     }
 
     /**
@@ -114,38 +154,6 @@ class Continent
     public function setBild(Image $bild): void
     {
         $this->bild = $bild;
-    }
-
-    /**
-     * @param Text $flaeche
-     */
-    public function setFlaeche(Text $flaeche): void
-    {
-        $this->flaeche = $flaeche;
-    }
-
-    /**
-     * @param Text $gliederung
-     */
-    public function setGliederung(Text $gliederung): void
-    {
-        $this->gliederung = $gliederung;
-    }
-
-    /**
-     * @param Text $tourismus
-     */
-    public function setTourismus(Text $tourismus): void
-    {
-        $this->tourismus = $tourismus;
-    }
-
-    /**
-     * @param Text $klima
-     */
-    public function setKlima(Text $klima): void
-    {
-        $this->klima = $klima;
     }
 
     /**
@@ -186,5 +194,21 @@ class Continent
     public function resetRegionList(): void
     {
         $this->regionList = [];
+    }
+
+    /**
+     * @return Image
+     */
+    public function getCategoryBild(): Image
+    {
+        return $this->categoryBild;
+    }
+
+    /**
+     * @param Image $categoryBild
+     */
+    public function setCategoryBild(Image $categoryBild)
+    {
+        $this->categoryBild = $categoryBild;
     }
 }

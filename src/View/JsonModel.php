@@ -27,5 +27,6 @@ class JsonModel
         $this->jsonConfig['status'] = $status;
 
         echo json_encode($this->jsonConfig);
+        exit;
     }
 }

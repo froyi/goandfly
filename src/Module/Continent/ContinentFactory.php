@@ -35,7 +35,9 @@ class ContinentFactory
         $klima = Text::fromString($object->klima);
         /** @var Image $bild */
         $bild = Image::fromFile($object->bild);
+        /** @var Image $categoryBild */
+        $categoryBild = Image::fromFile($object->categoryBild);
 
-        return new Continent($id, $name, $flaeche, $gliederung, $tourismus, $klima, $bild);
+        return new Continent($id, $name, $flaeche, $gliederung, $tourismus, $klima, $bild, $categoryBild);
     }
 }

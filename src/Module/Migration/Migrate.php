@@ -86,6 +86,7 @@ class Migrate
             $tourismus = html_entity_decode(utf8_encode($singleData->tourismus));
             $klima = html_entity_decode(utf8_encode($singleData->klima));
             $bild = 'data/img/continent/' . $singleData->bild;
+            $categoryBild = 'data/img/region/' . $singleData->bild;
 
             $query = $this->newDatabase->getNewInsertQuery($table_new);
 
@@ -96,6 +97,7 @@ class Migrate
             $query->insert('tourismus', $tourismus);
             $query->insert('klima', $klima);
             $query->insert('bild', $bild);
+            $query->insert('categoryBild', $categoryBild);
 
             if ($this->newDatabase->execute($query) === false) {
                 $this->errors[] = $query;
