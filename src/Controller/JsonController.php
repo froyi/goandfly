@@ -39,4 +39,12 @@ class JsonController extends DefaultController
 
         $this->jsonModel->send();
     }
+
+    public function navigationRegionsAction()
+    {
+
+        $this->jsonModel->addJsonConfig('view', $this->viewRenderer->renderJsonView('page/home.twig'));
+
+        $this->jsonModel->send();
+    }
 }

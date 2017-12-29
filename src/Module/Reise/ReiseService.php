@@ -216,20 +216,20 @@ class ReiseService
         return $reise;
     }
 
-    /**
-     * @param Id $regionId
-     * @param int|null $amount
-     *
-     * @return array
-     */
-    public function getReiseRecommenderByRegionId(Id $regionId, int $amount = null): array
+    public function getReiseRecommenderByReise(Reise $reiseVergleich, int $amount = null): array
     {
         $reiseRecommender = [];
 
-        $reisen = $this->reiseRepository->getAllVisibleReisenByRegionId($regionId, $amount);
+        $reisen = $this->reiseRepository->getAllVisibleReisenByRegionId($reiseVergleich->getRegion()->getRegionId());
+
+        shuffle($reisen);
 
         foreach ($reisen as $reiseData) {
             $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+
+            if ($reise->getReiseId()->toString() === $reiseVergleich->getReiseId()->toString()) {
+                continue;
+            }
 
             $region = $this->regionService->getRegionByReiseId($reise->getReiseId());
 
@@ -242,6 +242,10 @@ class ReiseService
             $reise->setTagListeToTagListe($tags);
 
             $reiseRecommender[$reise->getReiseId()->toString()] = $reise;
+
+            if (count($reiseRecommender) >= $amount) {
+                break;
+            }
         }
 
         return $reiseRecommender;

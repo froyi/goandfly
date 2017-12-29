@@ -90,9 +90,7 @@
         <div id="navigationBig">
             <div class="left">
                 {% for continent in continents %}
-                    <p onClick="toggleRegionen('{{ continent.getContinentId }}');"
-                       onMouseOver="toggleKontinent('{{ continent.getBild }}');"
-                       id="kontinent_{{ continent.getContinentId }}">{{ continent.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}</p>
+                    <p class="continent" data-continent-id="{{ continent.getContinentId }}" data-continent-bild="{{ continent.getBild }}">{{ continent.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}</p>
                 {% endfor %}
             </div> <!-- .left -->
 
@@ -102,7 +100,7 @@
                      id="world_map"/>
             </div> <!-- #regionenAusgabe -->
         </div> <!-- #navigationBig -->
-        <img src="{{ templateDir }}/img/{{ teaserBild }}"/>
+        <img src="{{ teaserBild }}"/>
     </div> <!-- #teaser -->
 
     {{ include ('module/tagListe.twig') }}

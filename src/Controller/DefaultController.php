@@ -8,6 +8,8 @@ use Project\Module\Continent\ContinentService;
 use Project\Module\Database\Database;
 use Project\Module\News\NewsService;
 use Project\Module\Region\RegionService;
+use Project\Module\Reise\Reise;
+use Project\Module\Reise\ReiseContainer;
 use Project\Module\Reise\ReiseService;
 use Project\Module\Tag\TagService;
 use Project\Utilities\Tools;
@@ -49,7 +51,7 @@ class DefaultController
     protected function setDefaultViewConfig(): void
     {
         $this->viewRenderer->addViewConfig('page', 'notfound');
-        $this->viewRenderer->addViewConfig('teaserBild', 'partner_teaser.jpg');
+        $this->viewRenderer->addViewConfig('teaserBild', 'templates/goandfly/img/partner_teaser.jpg');
 
     }
 
@@ -118,7 +120,11 @@ class DefaultController
         $this->viewRenderer->addViewConfig('tagListe', $tags);
     }
 
-    protected function getReisenContainer(bool $isJson = false): void
+    /**
+     * @param bool $isJson
+     * @return ReiseContainer
+     */
+    protected function getReisenContainer(bool $isJson = false): ReiseContainer
     {
         // Tags
         $tagService = new TagService($this->database);
@@ -157,5 +163,23 @@ class DefaultController
 
         $this->viewRenderer->addViewConfig('teaserReisen', $reiseContainer->getTeaserReiseListe());
         $this->viewRenderer->addViewConfig('bottomReisen', $reiseContainer->getBottomReiseListe());
+
+        return $reiseContainer;
+    }
+
+    protected function generateTeaserBildByReiseContainer(ReiseContainer $reiseContainer): void
+    {
+        $reiseListe = $reiseContainer->getReiseListe();
+        $key = array_rand($reiseListe);
+
+        /** @var Reise $reise */
+        $reise = $reiseListe[$key];
+
+        $this->setTeaserBild($reise);
+    }
+
+    protected function setTeaserBild(Reise $reise): void
+    {
+        $this->viewRenderer->addViewConfig('teaserBild', $reise->getTeaser()->toString());
     }
 }

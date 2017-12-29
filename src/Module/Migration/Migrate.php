@@ -242,6 +242,9 @@ class Migrate
         $table_old = 'reise';
         $table_new = 'reise';
 
+        $teaserPath = 'data/img/reise/';
+        $kartePath = $teaserPath . 'karte/';
+
         $data = $this->oldDatabase->fetchAll($this->oldDatabase->getNewSelectQuery($table_old));
 
         foreach ($data as $singleData) {
@@ -259,16 +262,16 @@ class Migrate
             if ($terrain < 1) {
                 $terrain = 1;
             }
-            $karte = $singleData->karte;
+            $karte = $kartePath . $singleData->karte;
             $bearbeitet = $singleData->eingestellt;
-            $teaser = $singleData->teaser;
+            $teaser = $teaserPath . $singleData->teaser;
 
             $sichtbar = $singleData->sichtbar;
             if ($singleData->sichtbar === '0000-00-00') {
                 $sichtbar = '2020-12-31';
             }
 
-            $bild = $singleData->bild;
+            $bild = $teaserPath . $singleData->bild;
             $veranstalter = html_entity_decode(utf8_encode($singleData->veranstalter));
 
             $query = $this->newDatabase->getNewInsertQuery($table_new);

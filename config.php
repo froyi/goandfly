@@ -53,6 +53,10 @@ return [
         'filter-reisen' => [
             'controller' => 'JsonController',
             'action' => 'filterReisenAction'
+        ],
+        'navigation-regions' => [
+            'controller' => 'JsonController',
+            'action' => 'navigationRegionsAction'
         ]
     ],
     'startpage-offer' => 20,

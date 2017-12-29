@@ -22,7 +22,9 @@ class IndexController extends DefaultController
         $this->getTagListe();
 
         // Reisen
-        $this->getReisenContainer();
+        $reiseContainer = $this->getReisenContainer();
+
+        $this->generateTeaserBildByReiseContainer($reiseContainer);
 
         $this->viewRenderer->addViewConfig('page', 'home');
         $this->viewRenderer->renderTemplate();
@@ -43,12 +45,14 @@ class IndexController extends DefaultController
             $this->notFoundAction();
         }
 
+        $this->setTeaserBild($reise);
+
         $this->viewRenderer->addViewConfig('reise', $reise);
 
 
         if ($reise->getRegion() !== null) {
             $reiseRecommenderAmount = $this->configuration->getEntryByName('reise-recommender-offer');
-            $reiseRecommender = $reiseService->getReiseRecommenderByRegionId($reise->getRegion()->getRegionId(), $reiseRecommenderAmount);
+            $reiseRecommender = $reiseService->getReiseRecommenderByReise($reise, $reiseRecommenderAmount);
 
             if ($reiseRecommender !== null) {
                 $this->viewRenderer->addViewConfig('reiseRecommender', $reiseRecommender);
