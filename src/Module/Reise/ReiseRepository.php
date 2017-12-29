@@ -142,4 +142,45 @@ class ReiseRepository
 
         return $this->database->fetchAll($query);
     }
+
+    /**
+     * @param Id $regionId
+     *
+     * @return array
+     */
+    public function getAllReisenByRegionId(Id $regionId): array
+    {
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->addTable(self::REISE_REGION_TABLE);
+
+        $query->where(self::TABLE . '.reiseId', '=', self::REISE_REGION_TABLE . '.reiseId', true);
+
+        $query->andWhere('regionId', '=', $regionId->toString());
+
+        $query->orderBy('bearbeitet', Query::DESC);
+
+        return $this->database->fetchAll($query);
+    }
+
+    /**
+     * @param Reiseveranstalter $reiseveranstalter
+     *
+     * @return array
+     */
+    public function getAllReisenByVeranstalter(Reiseveranstalter $reiseveranstalter): array
+    {
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->where('veranstalter', '=', $reiseveranstalter->getReiseveranstalter()->getName());
+        $query->orderBy('bearbeitet', Query::DESC);
+
+        return $this->database->fetchAll($query);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllVeranstalter(): array
+    {
+        return $this->database->fetchAllQuery('SELECT DISTINCT veranstalter FROM reise');
+    }
 }

@@ -57,6 +57,18 @@ return [
         'navigation-regions' => [
             'controller' => 'JsonController',
             'action' => 'navigationRegionsAction'
+        ],
+        'login' => [
+            'controller' => 'IndexController',
+            'action' => 'loginAction'
+        ],
+        'login-redirect' => [
+            'controller' => 'IndexController',
+            'action' => 'loginRedirectAction'
+        ],
+        'loggedin' => [
+            'controller' => 'BackendController',
+            'action' => 'loggedInAction'
         ]
     ],
     'startpage-offer' => 20,

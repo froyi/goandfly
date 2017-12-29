@@ -13,6 +13,8 @@ use Project\Module\Reise\Reise;
 use Project\Module\Reise\ReiseContainer;
 use Project\Module\Reise\ReiseService;
 use Project\Module\Tag\TagService;
+use Project\Module\User\User;
+use Project\Module\User\UserService;
 use Project\Utilities\Tools;
 use Project\View\ViewRenderer;
 
@@ -31,6 +33,12 @@ class DefaultController
     /** @var Database $database */
     protected $database;
 
+    /** @var  User $loggedInUser */
+    protected $loggedInUser;
+
+    /** @var UserService $userService */
+    protected $userService;
+
     /**
      * DefaultController constructor.
      *
@@ -41,6 +49,12 @@ class DefaultController
         $this->configuration = $configuration;
         $this->viewRenderer = new ViewRenderer($this->configuration);
         $this->database = new Database($this->configuration);
+        $this->userService = new UserService($this->database);
+
+        if (Tools::getValue('userId') !== false) {
+            $userId = Id::fromString(Tools::getValue('userId'));
+            $this->loggedInUser = $this->userService->getLogedInUserByUserId($userId);
+        }
 
         $this->setDefaultViewConfig();
 

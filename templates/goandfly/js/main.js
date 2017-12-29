@@ -12,12 +12,11 @@ $(document).on('click', '.tag', function () {
     handleAngebote(page);
 });
 
-$(document).on('click', '#menueBig', function() {
+$(document).on('click', '#menueBig', function () {
     $("#navigationBig").fadeToggle(500);
 });
 
-function handleAngebote(page, regionId)
-{
+function handleAngebote(page, regionId) {
     var activeTags = getActiveTags();
 
     $.ajax({
@@ -86,7 +85,7 @@ $(document).on('click', '.js-region', function () {
         regionId = $thisElement.data('regionId');
 
     if ($mainContent.data('page') !== 'home') {
-        $(location).attr('href','index.php?route=index&regionId=' + regionId);
+        $(location).attr('href', 'index.php?route=index&regionId=' + regionId);
     } else {
         handleAngebote($mainContent.data('page'), regionId);
 
@@ -107,4 +106,12 @@ function getActiveTags() {
 
     return activeTags;
 }
+
+$(document).on('click', '.js-create-reise', function () {
+    $('#erstelleReiseContainer').fadeToggle(500);
+});
+
+$(document).on('submit', '#holeReisedatenRegionForm', function () {
+    debugger;
+});
 

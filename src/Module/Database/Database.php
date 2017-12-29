@@ -60,6 +60,16 @@ class Database
     }
 
     /**
+     * @param string $queryString
+     */
+    public function fetchAllQuery(string $queryString)
+    {
+        $sql = $this->connection->query($queryString);
+
+        return $sql->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    /**
      * @param string $table
      * @return Query
      */

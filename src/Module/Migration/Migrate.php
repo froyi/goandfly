@@ -275,6 +275,9 @@ class Migrate
 
             $bild = $teaserPath . $singleData->bild;
             $veranstalter = html_entity_decode(utf8_encode($singleData->veranstalter));
+            if (empty($veranstalter)){
+                $veranstalter = 'Sonstige';
+            }
 
             $query = $this->newDatabase->getNewInsertQuery($table_new);
 

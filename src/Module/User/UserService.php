@@ -1,44 +1,52 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace Project\Module\User;
 
 use Project\Module\Database\Database;
+use Project\Module\GenericValueObject\Email;
+use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Password;
 
-/**
- * Class UserService
- * @package Project\Module\User
- */
 class UserService
 {
-    /** @var  UserFactory $userFactory */
+    /** @var  UserFactory $newsFactory */
     protected $userFactory;
 
     /** @var  UserRepository $userRepository */
     protected $userRepository;
 
-    /**
-     * UserService constructor.
-     */
+
     public function __construct(Database $database)
     {
         $this->userFactory = new UserFactory();
         $this->userRepository = new UserRepository($database);
     }
 
-    /**
-     * @return array
-     */
-    public function getAllUsers(): array
+    public function getLogedInUserByEmailAndPassword(Email $email, Password $password): ?User
     {
-        $userArray = [];
+        $userResult = $this->userRepository->getUserByEmail($email);
 
-        $users = $this->userRepository->getAllUser();
-
-        foreach ($users as $userData) {
-            $user = $this->userFactory->getUserFromObject($userData);
-            $userArray[$user->getUserId()->toString()] = $user;
+        if (empty($userResult)) {
+            return null;
         }
 
-        return $userArray;
+        return $this->userFactory->getLoggedInUserByPassword($userResult, $password);
+    }
+
+    public function getLogedInUserByUserId(Id $userId): ?User
+    {
+        $userResult = $this->userRepository->getUserByUserId($userId);
+
+        if (empty($userResult)) {
+            return null;
+        }
+
+        return $this->userFactory->getLoggedInUserByUserId($userResult);
+    }
+
+    public function logoutUser(User $user): bool
+    {
+        return $user->logout();
     }
 }

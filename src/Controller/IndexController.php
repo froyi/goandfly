@@ -3,7 +3,9 @@ declare (strict_types=1);
 
 namespace Project\Controller;
 
+use Project\Module\GenericValueObject\Email;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Password;
 use Project\Module\Reise\ReiseService;
 use Project\Utilities\Tools;
 
@@ -86,5 +88,35 @@ class IndexController extends DefaultController
     public function diamirAction(): void
     {
         $this->showStandardPage('diamir');
+    }
+
+    public function loginRedirectAction(): void
+    {
+        if ($this->loggedInUser === null) {
+            $password = Password::fromString(Tools::getValue('password'));
+            $email = Email::fromString(Tools::getValue('email'));
+            $this->loggedInUser = $this->userService->getLogedInUserByEmailAndPassword($email, $password);
+        }
+
+        if ($this->loggedInUser !== null) {
+            $this->redirectToLoggedInPage();
+        } else {
+            $parameter = ['notificationCode' => 'loginError', 'notificationStatus' => 'error'];
+            header('Location: ' . Tools::getRouteUrl('login', $parameter));
+        }
+    }
+
+    public function loginAction(): void
+    {
+        if ($this->loggedInUser !== null) {
+            $this->redirectToLoggedInPage();
+        } else {
+            $this->showStandardPage('login');
+        }
+    }
+
+    protected function redirectToLoggedInPage(): void
+    {
+        header('Location: ' . Tools::getRouteUrl('loggedin'));
     }
 }

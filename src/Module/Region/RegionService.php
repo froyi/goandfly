@@ -5,6 +5,7 @@ namespace Project\Module\Region;
 
 use Project\Module\Database\Database;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\Reise\ReiseService;
 
 /**
  * Class RegionService
@@ -20,29 +21,13 @@ class RegionService
 
     /**
      * RegionService constructor.
+     *
      * @param Database $database
      */
     public function __construct(Database $database)
     {
         $this->regionFactory = new RegionFactory();
         $this->regionRepository = new RegionRepository($database);
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllRegions(): array
-    {
-        $regionsArray = [];
-
-        $regions = $this->regionRepository->getAllRegions();
-
-        foreach ($regions as $regionData) {
-            $region = $this->regionFactory->getRegionFromObject($regionData);
-            $regionsArray[$region->getRegionId()->toString()] = $region;
-        }
-
-        return $regionsArray;
     }
 
     public function getAllRegionsByContinentId(Id $continentId): array
@@ -85,5 +70,45 @@ class RegionService
         } else {
             $_SESSION['regionId'] = $regionId->toString();
         }
+    }
+
+    /**
+     * @param ReiseService $reiseService
+     *
+     * @return array
+     */
+    public function getAllRegionsWithReisen(ReiseService $reiseService): array
+    {
+        $regionArray = [];
+
+        $regions = $this->getAllRegions();
+
+        /** @var Region $region */
+        foreach ($regions as $region) {
+            $reisen = $reiseService->getAllReisenByRegionId($region->getRegionId());
+
+            $region->setReisenList($reisen);
+
+            $regionArray[$region->getRegionId()->toString()] = $region;
+        }
+
+        return $regionArray;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllRegions(): array
+    {
+        $regionsArray = [];
+
+        $regions = $this->regionRepository->getAllRegions();
+
+        foreach ($regions as $regionData) {
+            $region = $this->regionFactory->getRegionFromObject($regionData);
+            $regionsArray[$region->getRegionId()->toString()] = $region;
+        }
+
+        return $regionsArray;
     }
 }

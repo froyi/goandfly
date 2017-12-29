@@ -275,4 +275,75 @@ class ReiseService
 
         return new ReiseContainer($reisenArray);
     }
+
+    /**
+     * @param Id $regionId
+     *
+     * @return array
+     */
+    public function getAllReisenByRegionId(Id $regionId): array
+    {
+        $reisenArray = [];
+
+        $reisen = $this->reiseRepository->getAllReisenByRegionId($regionId);
+
+        foreach ($reisen as $reiseData) {
+            $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+
+            $reisenArray[$reise->getReiseId()->toString()] = $reise;
+        }
+
+        return $reisenArray;
+    }
+
+    /**
+     * @param Reiseveranstalter $reiseveranstalter
+     *
+     * @return array
+     */
+    public function getAllReisenByVeranstalter(Reiseveranstalter $reiseveranstalter): array
+    {
+        $reisenArray = [];
+
+        $reisen = $this->reiseRepository->getAllReisenByVeranstalter($reiseveranstalter);
+
+        foreach ($reisen as $reiseData) {
+            $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+
+            $region = $this->regionService->getRegionByReiseId($reise->getReiseId());
+
+            if ($region !== null) {
+                $reise->setRegion($region);
+            }
+
+            $reisenArray[$reise->getReiseId()->toString()] = $reise;
+        }
+
+        return $reisenArray;
+    }
+
+
+
+    /**
+     * @return array
+     */
+    public function getVeranstalterWithReisen(): array
+    {
+        $veranstalterArray = [];
+
+        $veranstalterListe = $this->reiseRepository->getAllVeranstalter();
+
+        foreach ($veranstalterListe as $veranstalterData) {
+            /** @var Reiseveranstalter $veranstalter */
+            $veranstalter = $this->reiseFactory->getVeranstalterFromObject($veranstalterData);
+
+            $reisen = $this->getAllReisenByVeranstalter($veranstalter);
+
+            $veranstalter->setReiseList($reisen);
+
+            $veranstalterArray[] = $veranstalter;
+        }
+
+        return $veranstalterArray;
+    }
 }

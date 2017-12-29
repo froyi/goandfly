@@ -41,7 +41,7 @@ class Name
     protected static function ensureNameIsValid(string $name): void
     {
         if (strlen($name) < 2) {
-            throw new \InvalidArgumentException('Dieser name ist zu kurz!', 1);
+            throw new \InvalidArgumentException('Dieser name "' . $name . '" ist zu kurz!', 1);
         }
     }
 

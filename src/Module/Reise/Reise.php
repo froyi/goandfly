@@ -127,7 +127,7 @@ class Reise
     /**
      * @return Region
      */
-    public function getRegion(): Region
+    public function getRegion(): ?Region
     {
         return $this->region;
     }

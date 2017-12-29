@@ -1,0 +1,39 @@
+<form action="{{ route('verwalte-reise') }}" name="verwalteReiseForm" method="post" enctype="multipart/form-data">
+    <div class="left">
+        <p>Titel: <br/><input type="text" name="titel" required placeholder="Titel der Reise" /></p>
+        <p>Beschreibung der Reise:<br/><textarea name="editorCKE" placeholder="Beschreibung der Reise" required>Beschreibung der Reise</textarea></p>
+        <p>Kurzbeschreibung der Reise:<br/><textarea name="kurzbeschreibung" id="erstelleReiseFormKurzbeschreibung" placeholder="Kurzbeschreibung der Reise" required></textarea></p>
+        <p>Reiseveranstalter der Reise:<br/><input type="text" name="veranstalter" placeholder="Reiseveranstalter" /></p>
+    </div> <!-- .left -->
+
+    <div class="right">
+        <p>Personenanzahl:<br/><input type="text" name="personen" required placeholder="Personenanzahl Bsp.: 4-6" /></p>
+        <p>Reisedauer in Tagen:<br/><input type="text" name="zeit" required placeholder="Reisedauer in Tagen Bsp.: 14" /></p>
+        <p>Flugdauer zum ersten Ziel:<br/><input type="text" name="flug" required placeholder="Flugdauer zum ersten Ziel in Stunden Bsp.: 4" /></p>
+        <p>Sprache der Reise:<br/><input type="text" name="sprache" required placeholder="Sprache der Reise Bsp.: deutsch / englisch" /></p>
+        <div class="terrainWertung">
+            <p class="left"><img src="{{ templateDir }}/img/terrain_1.png"/><br/><input type="radio" name="terrain" value="1" /></p>
+            <p class="left"><img src="{{ templateDir }}/img/terrain_2.png"/><br/><input type="radio" name="terrain" value="2" /></p>
+            <p class="left"><img src="{{ templateDir }}/img/terrain_3.png"/><br/><input type="radio" name="terrain" value="3"  /></p>
+            <p class="left"><img src="{{ templateDir }}/img/terrain_4.png"/><br/><input type="radio" name="terrain" value="4" /></p>
+            <p class="left"><img src="{{ templateDir }}/img/terrain_5.png"/><br/><input type="radio" name="terrain" value="5"  /></p>
+            <p class="clear"></p>
+        </div> <!-- .terrainWertung -->
+        <p>Vorschau Bild auswählen:<br/><input type="file" name="vorschauBild" /></p>
+
+        <p>Reiseregionen hinzufügen:<br/>
+            <select class="multipleSelect" name="region[]" multiple size="5" required>
+                {% for continent in continents %}
+                    <optgroup label="{{ continent.getName }}">
+                        {% for region in continent.getRegionList %}
+                            <option value="{{ region.getRegionId }}">{{ region.getName }}</option>
+                        {% endfor %}
+                    </optgroup>
+                {% endfor %}
+            </select>
+        </p>
+        <p>Sichtbar bis:<br/>
+            <input type="date" name="sichtbar" placeholder="Sichtbar bis (Format: yyy-mm-dd)" /></p>
+    </div> <!-- .right -->
+    <p class="clear"><input type="submit" name="submit" value="Absenden" /></p>
+</form>

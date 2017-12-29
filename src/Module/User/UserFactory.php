@@ -1,33 +1,46 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace Project\Module\User;
 
 use Project\Module\GenericValueObject\Email;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Password;
 use Project\Module\GenericValueObject\PasswordHash;
 
-/**
- * Class UserFactory
- * @package Project\Module\User
- */
 class UserFactory
 {
-    /**
-     * @param $object
-     *
-     * @return User
-     */
-    public function getUserFromObject($object): User
+    public function getLoggedInUserByPassword($object, Password $password): ?User
     {
-        /** @var Id $userId */
         $userId = Id::fromString($object->userId);
 
-        /** @var Email $email */
         $email = Email::fromString($object->email);
 
-        /** @var PasswordHash $passwordHash */
         $passwordHash = PasswordHash::fromString($object->passwordHash);
 
-        return new User($userId, $email, $passwordHash);
+        $user = new User($userId, $email, $passwordHash);
+
+        if ($user->loginUser($password) === false) {
+            return null;
+        }
+
+        return $user;
+    }
+
+    public function getLoggedInUserByUserId($object): ?User
+    {
+        $userId = Id::fromString($object->userId);
+
+        $email = Email::fromString($object->email);
+
+        $passwordHash = PasswordHash::fromString($object->passwordHash);
+
+        $user = new User($userId, $email, $passwordHash);
+
+        if ($user->loginUserBySession() === false) {
+            return null;
+        }
+
+        return $user;
     }
 }

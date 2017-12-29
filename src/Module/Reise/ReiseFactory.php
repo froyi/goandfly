@@ -45,4 +45,16 @@ class ReiseFactory
 
         return new Reise($reiseId, $kurzbeschreibung, $beschreibung, $titel, $personen, $reisedauer, $flugzeit, $sprache, $terrain, $karte, $bearbeitet, $teaser, $sichtbar, $bild, $veranstalter);
     }
+
+    /**
+     * @param $object
+     *
+     * @return Reiseveranstalter
+     */
+    public function getVeranstalterFromObject($object): Reiseveranstalter
+    {
+        $name = Name::fromString($object->veranstalter);
+
+        return new Reiseveranstalter($name);
+    }
 }

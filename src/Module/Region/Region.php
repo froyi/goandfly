@@ -32,6 +32,25 @@ class Region
     /** @var Image $bild */
     protected $bild;
 
+    /** @var  array $reisenList */
+    protected $reisenList = [];
+
+    /**
+     * @return array
+     */
+    public function getReisenList(): array
+    {
+        return $this->reisenList;
+    }
+
+    /**
+     * @param array $reisenList
+     */
+    public function setReisenList(array $reisenList)
+    {
+        $this->reisenList = $reisenList;
+    }
+
     /**
      * Region constructor.
      * @param Id $regionId

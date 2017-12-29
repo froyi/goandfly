@@ -1,0 +1,11 @@
+<div id="login">
+    <form action="{{ route('login-redirect') }}" method="post" name="loginForm">
+        <p>E-Mail:<br/><input type="email" name="email" placeholder="E-Mail Adresse"/></p>
+        <p>Passwort:<br/><input type="password" name="password" placeholder="Passwort eingeben"/></p>
+        <p><input type="submit" name="submit" value="Login"/></p>
+
+        {% if error is defined %}
+            <p>Die Anmeldedaten stimmen so nicht überein. Bitte versuchen Sie es erneut.</p>
+        {% endif %}
+    </form>
+</div>
