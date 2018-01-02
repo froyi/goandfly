@@ -9,7 +9,7 @@ namespace Project;
  */
 class Routing
 {
-    protected const ERROR_ROUTE = 'notfound';
+    public const ERROR_ROUTE = 'notfound';
 
     /** @var array $routeConfiguration */
     protected $routeConfiguration;

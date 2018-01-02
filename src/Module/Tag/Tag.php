@@ -21,6 +21,25 @@ class Tag
     /** @var Position $position */
     protected $position;
 
+    /** @var array $reiseList */
+    protected $reiseList = [];
+
+    /**
+     * @return array
+     */
+    public function getReiseList(): array
+    {
+        return $this->reiseList;
+    }
+
+    /**
+     * @param array $reiseList
+     */
+    public function setReiseList(array $reiseList): void
+    {
+        $this->reiseList = $reiseList;
+    }
+
     /**
      * Tag constructor.
      *

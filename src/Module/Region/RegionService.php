@@ -30,6 +30,10 @@ class RegionService
         $this->regionRepository = new RegionRepository($database);
     }
 
+    /**
+     * @param Id $continentId
+     * @return array
+     */
     public function getAllRegionsByContinentId(Id $continentId): array
     {
         $regionsArray = [];
@@ -49,15 +53,17 @@ class RegionService
      *
      * @return null|Region
      */
-    public function getRegionByReiseId(Id $reiseId): ?Region
+    public function getRegionsByReiseId(Id $reiseId): array
     {
-        $regionData = $this->regionRepository->getRegionByReiseId($reiseId);
+        $regionsArray = [];
+        $regions = $this->regionRepository->getRegionsByReiseId($reiseId);
 
-        if ($regionData === false) {
-            return null;
+        foreach ($regions as $regionData) {
+            $region = $this->regionFactory->getRegionFromObject($regionData);
+            $regionsArray[$region->getRegionId()->toString()] = $region;
         }
 
-        return $this->regionFactory->getRegionFromObject($regionData);
+        return $regionsArray;
     }
 
     /**
@@ -110,5 +116,20 @@ class RegionService
         }
 
         return $regionsArray;
+    }
+
+    /**
+     * @param Id $regionId
+     * @return null|Region
+     */
+    public function getRegionByRegionId(Id $regionId): ?Region
+    {
+        $regionData = $this->regionRepository->getRegionByRegionId($regionId);
+
+        if (empty($regionData)) {
+            return null;
+        }
+
+        return $this->regionFactory->getRegionFromObject($regionData);
     }
 }

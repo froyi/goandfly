@@ -69,8 +69,31 @@ return [
         'loggedin' => [
             'controller' => 'BackendController',
             'action' => 'loggedInAction'
+        ],
+        'erstelle-reise' => [
+            'controller' => 'BackendController',
+            'action' => 'erstelleReiseAction'
+        ],
+        'erstelle-neuigkeiten' => [
+            'controller' => 'BackendController',
+            'action' => 'erstelleNeuigkeitenAction'
+        ],
+        'ajax-bearbeite-neuigkeiten' => [
+            'controller' => 'JsonController',
+            'action' => 'bearbeiteNeuigkeitenAction'
+        ],
+        'bearbeite-neuigkeiten' => [
+            'controller' => 'BackendController',
+            'action' => 'bearbeiteNeuigkeitenAction'
         ]
     ],
     'startpage-offer' => 20,
     'reise-recommender-offer' => 3,
+    'notification' => [
+        'reiseInsertSuccess' => 'Die Reise wurde erfolgreich angelegt.',
+        'reiseInsertError' => 'Bei der Erstellung der Reise gab es einen Fehler.',
+        'newsInsertSuccess' => 'Die Neuigkeit wurde erfolgreich angelegt.',
+        'newsInsertError' => 'Bei der Erstellung der Neuigkeit gab es einen Fehler.',
+        'newsDeleteSuccess' => 'Die Neuigkeit wurde erfolgreich gelöscht.',
+    ],
 ];

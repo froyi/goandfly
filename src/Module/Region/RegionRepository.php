@@ -54,12 +54,24 @@ class RegionRepository
     /**
      * @param Id $reiseId
      */
-    public function getRegionByReiseId(Id $reiseId)
+    public function getRegionsByReiseId(Id $reiseId): array
     {
         $query = $this->database->getNewSelectQuery(self::REISE_REGION_TABLE);
         $query->addTable(self::TABLE);
         $query->where(self::TABLE . '.regionId', '=', self::REISE_REGION_TABLE . '.regionId', true);
         $query->andWhere('reiseId', '=', $reiseId->toString());
+
+        return $this->database->fetchAll($query);
+    }
+
+    /**
+     * @param Id $regionId
+     * @return mixed
+     */
+    public function getRegionByRegionId(Id $regionId)
+    {
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->where('regionId', '=', $regionId->toString());
 
         return $this->database->fetch($query);
     }

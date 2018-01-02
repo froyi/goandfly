@@ -30,14 +30,14 @@ class News
      * News constructor.
      * @param Id $newsId
      * @param Title $titel
-     * @param Date $date
+     * @param Date $datum
      * @param Text $text
      */
-    public function __construct(Id $newsId, Title $titel, Date $date, Text $text)
+    public function __construct(Id $newsId, Title $titel, Date $datum, Text $text)
     {
         $this->newsId = $newsId;
         $this->titel = $titel;
-        $this->date = $date;
+        $this->datum = $datum;
         $this->text = $text;
     }
 

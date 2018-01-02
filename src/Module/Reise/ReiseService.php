@@ -5,8 +5,10 @@ namespace Project\Module\Reise;
 
 use Project\Module\Database\Database;
 use Project\Module\Frage\FrageService;
+use Project\Module\GenericValueObject\Datetime;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\Leistung\LeistungService;
+use Project\Module\Region\Region;
 use Project\Module\Region\RegionService;
 use Project\Module\Reiseverlauf\ReiseverlaufService;
 use Project\Module\Tag\TagService;
@@ -72,10 +74,10 @@ class ReiseService
         foreach ($reisen as $reiseData) {
             $reise = $this->reiseFactory->getReiseFromObject($reiseData);
 
-            $region = $this->regionService->getRegionByReiseId($reise->getReiseId());
+            $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
 
-            if ($region !== null) {
-                $reise->setRegion($region);
+            if (count($regions) > 0) {
+                $reise->setRegionList($regions);
             }
 
             $reisenArray[$reise->getReiseId()->toString()] = $reise;
@@ -96,10 +98,10 @@ class ReiseService
         foreach ($reisen as $reiseData) {
             $reise = $this->reiseFactory->getReiseFromObject($reiseData);
 
-            $region = $this->regionService->getRegionByReiseId($reise->getReiseId());
+            $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
 
-            if ($region !== null) {
-                $reise->setRegion($region);
+            if (count($regions) > 0) {
+                $reise->setRegionList($regions);
             }
 
             $reisenArray[$reise->getReiseId()->toString()] = $reise;
@@ -132,10 +134,10 @@ class ReiseService
         foreach ($reisen as $reiseData) {
             $reise = $this->reiseFactory->getReiseFromObject($reiseData);
 
-            $region = $this->regionService->getRegionByReiseId($reise->getReiseId());
+            $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
 
-            if ($region !== null) {
-                $reise->setRegion($region);
+            if (count($regions) > 0) {
+                $reise->setRegionList($regions);
             }
 
             $tags = $this->tagService->getTagsByReiseId($reise->getReiseId());
@@ -178,44 +180,49 @@ class ReiseService
         /** @var Reise $reise */
         $reise = $this->reiseFactory->getReiseFromObject($reiseData);
 
-        // Region
-        $region = $this->regionService->getRegionByReiseId($reise->getReiseId());
+        $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
 
-        if ($region !== null) {
-            $reise->setRegion($region);
+        if (count($regions) > 0) {
+            $reise->setRegionList($regions);
         }
 
         // Termine
         $termine = $this->terminService->getTermineByReiseId($reise->getReiseId());
 
-        if (count($termine) > 0) {
+        if (\count($termine) > 0) {
             $reise->setTerminListe($termine);
         }
 
         // Reiseverlauf
         $reiseverlauf = $this->reiseverlaufService->getReiseverlaufByReiseId($reise->getReiseId());
 
-        if (count($reiseverlauf) > 0) {
+        if (\count($reiseverlauf) > 0) {
             $reise->setReiseverlaufListe($reiseverlauf);
         }
 
         // Leistungen
         $leistungen = $this->leistungService->getLeistungenByReiseId($reise->getReiseId());
 
-        if (count($leistungen) > 0) {
+        if (\count($leistungen) > 0) {
             $reise->setLeistungListe($leistungen);
         }
 
         // Fragen
         $fragen = $this->frageService->getFragenByReiseId($reise->getReiseId());
 
-        if (count($fragen) > 0) {
+        if (\count($fragen) > 0) {
             $reise->setFrageListe($fragen);
         }
 
         return $reise;
     }
 
+    /**
+     * @param Reise $reiseVergleich
+     * @param int|null $amount
+     * @return array
+     * @todo convert to regionlist
+     */
     public function getReiseRecommenderByReise(Reise $reiseVergleich, int $amount = null): array
     {
         $reiseRecommender = [];
@@ -231,10 +238,10 @@ class ReiseService
                 continue;
             }
 
-            $region = $this->regionService->getRegionByReiseId($reise->getReiseId());
+            $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
 
-            if ($region !== null) {
-                $reise->setRegion($region);
+            if (count($regions) > 0) {
+                $reise->setRegionList($regions);
             }
 
             $tags = $this->tagService->getTagsByReiseId($reise->getReiseId());
@@ -243,7 +250,7 @@ class ReiseService
 
             $reiseRecommender[$reise->getReiseId()->toString()] = $reise;
 
-            if (count($reiseRecommender) >= $amount) {
+            if (\count($reiseRecommender) >= $amount) {
                 break;
             }
         }
@@ -251,8 +258,17 @@ class ReiseService
         return $reiseRecommender;
     }
 
-    public function getAllTagAndRegionReisenInContainer(array $tags = [], Id $regionId = null, int $amount = null): ReiseContainer
-    {
+    /**
+     * @param array $tags
+     * @param Id|null $regionId
+     * @param int|null $amount
+     * @return ReiseContainer
+     */
+    public function getAllTagAndRegionReisenInContainer(
+        array $tags = [],
+        Id $regionId = null,
+        int $amount = null
+    ): ReiseContainer {
         $reisenArray = [];
 
         $reisen = $this->reiseRepository->getReiseByTagsAndRegionId($tags, $regionId, $amount);
@@ -260,10 +276,10 @@ class ReiseService
         foreach ($reisen as $reiseData) {
             $reise = $this->reiseFactory->getReiseFromObject($reiseData);
 
-            $region = $this->regionService->getRegionByReiseId($reise->getReiseId());
+            $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
 
-            if ($region !== null) {
-                $reise->setRegion($region);
+            if (count($regions) > 0) {
+                $reise->setRegionList($regions);
             }
 
             $tags = $this->tagService->getTagsByReiseId($reise->getReiseId());
@@ -271,6 +287,10 @@ class ReiseService
             $reise->setTagListeToTagListe($tags);
 
             $reisenArray[$reise->getReiseId()->toString()] = $reise;
+
+            if ($amount !== null && count($reisenArray) >= $amount) {
+                break;
+            }
         }
 
         return new ReiseContainer($reisenArray);
@@ -310,10 +330,10 @@ class ReiseService
         foreach ($reisen as $reiseData) {
             $reise = $this->reiseFactory->getReiseFromObject($reiseData);
 
-            $region = $this->regionService->getRegionByReiseId($reise->getReiseId());
+            $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
 
-            if ($region !== null) {
-                $reise->setRegion($region);
+            if (count($regions) > 0) {
+                $reise->setRegionList($regions);
             }
 
             $reisenArray[$reise->getReiseId()->toString()] = $reise;
@@ -321,8 +341,6 @@ class ReiseService
 
         return $reisenArray;
     }
-
-
 
     /**
      * @return array
@@ -345,5 +363,76 @@ class ReiseService
         }
 
         return $veranstalterArray;
+    }
+
+    /**
+     * @param Id $tagId
+     * @return array
+     */
+    public function getAllReisenByTagId(Id $tagId): array
+    {
+        $reisenArray = [];
+
+        $reisen = $this->reiseRepository->getAllReisenByTagId($tagId);
+
+        foreach ($reisen as $reiseData) {
+            $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+
+            $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
+
+            if (count($regions) > 0) {
+                $reise->setRegionList($regions);
+            }
+
+            $reisenArray[$reise->getReiseId()->toString()] = $reise;
+        }
+
+        return $reisenArray;
+    }
+
+    /**
+     * @param array $parameter
+     * @return Reise
+     */
+    public function getReiseByParams(array $parameter, RegionService $regionService): Reise
+    {
+        if (empty($parameter['reiseId'])) {
+            $parameter['reiseId'] = Id::generateId()->toString();
+        }
+
+        if (empty($parameter['bearbeitet'])) {
+            $parameter['bearbeitet'] = Datetime::fromValue('now')->toString();
+        }
+
+        $reise = $this->reiseFactory->getReiseFromUploadedData($parameter);
+
+        foreach ($parameter['region'] as $regionIdData) {
+            $regionId = Id::fromString($regionIdData);
+
+            $region = $regionService->getRegionByRegionId($regionId);
+
+            $reise->addRegionToRegionList($region);
+        }
+
+        return $reise;
+    }
+
+    /**
+     * @param Reise $reise
+     * @return bool
+     */
+    public function saveReiseToDatabase(Reise $reise): bool
+    {
+        if ($this->reiseRepository->saveReiseToDatabase($reise)) {
+            /** @var Region $region */
+            foreach ($reise->getRegionList() as $region)
+            {
+                $this->reiseRepository->saveReiseRegionToDatabase($reise, $region);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

@@ -11,8 +11,18 @@ use claviska\SimpleImage;
  */
 class Image
 {
+    public const TYPE_JPG = 'jpg';
+    public const TYPE_PNG = 'png';
+
     public const PATH_NEWS = 'data/img/news/';
     public const PATH_ALBUM = 'data/img/galerie/';
+    public const PATH_REISE = 'data/img/reise/';
+    public const PATH_KARTE = 'data/img/reise/karte/';
+
+    public const IMAGE_MAPPING = [
+        "image/jpeg" => self::TYPE_JPG,
+        "image/png" => self::TYPE_PNG
+    ];
 
     protected const SAVE_QUALITY = 50;
     protected const MAX_LENGTH = 1200;
@@ -62,13 +72,25 @@ class Image
     public static function fromUploadWithSave(array $uploadedFile, string $path): ?self
     {
         $image = self::fromFile($uploadedFile['tmp_name']);
-        $filePath = $path . $uploadedFile['name'];
 
-        if ($image->saveToPath($filePath) === true) {
-            return $image;
+        $simpleImage = new SimpleImage($uploadedFile['tmp_name']);
+        $simpleImage->autoOrient();
+
+        if ($simpleImage->getAspectRatio() >= 1) {
+            $simpleImage->fitToWidth(self::MAX_LENGTH);
+        } else {
+            $simpleImage->fitToHeight(self::MAX_LENGTH);
         }
 
-        return null;
+        $simpleImage->sharpen();
+
+        $filePath = $path . Filename::generateFilename(Filename::TYPE_IMAGE_MAPPING[$uploadedFile['type']]);
+
+        $simpleImage->toFile($filePath, null, self::SAVE_QUALITY);
+
+        $image->setImagePath($filePath);
+
+        return $image;
     }
 
     /**
@@ -119,5 +141,13 @@ class Image
         $this->imagePath = $path;
 
         return true;
+    }
+
+    /**
+     * @param string $imagePath
+     */
+    public function setImagePath(string $imagePath)
+    {
+        $this->imagePath = $imagePath;
     }
 }

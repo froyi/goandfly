@@ -43,7 +43,8 @@ class ReiseFactory
         $bild = Image::fromFile($object->bild);
         $veranstalter = Name::fromString($object->veranstalter);
 
-        return new Reise($reiseId, $kurzbeschreibung, $beschreibung, $titel, $personen, $reisedauer, $flugzeit, $sprache, $terrain, $karte, $bearbeitet, $teaser, $sichtbar, $bild, $veranstalter);
+        return new Reise($reiseId, $kurzbeschreibung, $beschreibung, $titel, $personen, $reisedauer, $flugzeit,
+            $sprache, $terrain, $karte, $bearbeitet, $teaser, $sichtbar, $bild, $veranstalter);
     }
 
     /**
@@ -56,5 +57,34 @@ class ReiseFactory
         $name = Name::fromString($object->veranstalter);
 
         return new Reiseveranstalter($name);
+    }
+
+    /**
+     * @param array $parameter
+     * @return null|Reise
+     * @todo add bearbeitet to parameter
+     */
+    public function getReiseFromUploadedData(array $parameter): ?Reise
+    {
+        $object = (object)$parameter;
+
+        $reiseId = Id::fromString($object->reiseId);
+        $kurzbeschreibung = Text::fromString($object->kurzbeschreibung);
+        $beschreibung = Text::fromString($object->beschreibung);
+        $titel = Title::fromString($object->titel);
+        $personen = Personen::fromValue($object->personen);
+        $reisedauer = Reisedauer::fromValue((int)$object->reisedauer);
+        $flugzeit = Flugzeit::fromValue((int)$object->flugzeit);
+        $sprache = Text::fromString($object->sprache);
+        $terrain = Terrain::fromValue((int)$object->terrain);
+        $karte = $object->kartenBild;
+        $bearbeitet = Datetime::fromValue($object->bearbeitet);
+        $teaser = $object->teaserBild;
+        $sichtbar = Date::fromValue($object->sichtbar);
+        $bild = $object->vorschauBild;
+        $veranstalter = Name::fromString($object->veranstalter);
+
+        return new Reise($reiseId, $kurzbeschreibung, $beschreibung, $titel, $personen, $reisedauer, $flugzeit,
+            $sprache, $terrain, $karte, $bearbeitet, $teaser, $sichtbar, $bild, $veranstalter);
     }
 }

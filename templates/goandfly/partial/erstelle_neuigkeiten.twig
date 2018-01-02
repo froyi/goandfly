@@ -1,0 +1,7 @@
+<form action="{{ route('erstelle-neuigkeiten') }}" method="post" name="erstelleNeuigkeitForm">
+    <p>Titel der Neuigkeit:<br/>
+        <input type="text" name="titel" required placeholder="Titel der Neuigkeit" /></p>
+    <p>Beschreibung der Neuigkeit:<br/>
+        <textarea name="text" class="neuigkeitBeschreibung" required placeholder="Beschreibung der Neuigkeit"></textarea></p>
+    <p><input type="submit" name="submit" value="Absenden" /></p>
+</form>

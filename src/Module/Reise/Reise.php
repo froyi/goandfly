@@ -68,8 +68,32 @@ class Reise
     /** @var Name $veranstalter */
     protected $veranstalter;
 
-    /** @var  Region $region */
-    protected $region;
+    /** @var  array $regionList */
+    protected $regionList = [];
+
+    /**
+     * @return array
+     */
+    public function getRegionList(): array
+    {
+        return $this->regionList;
+    }
+
+    /**
+     * @param array $regionList
+     */
+    public function setRegionList(array $regionList): void
+    {
+        $this->regionList = $regionList;
+    }
+
+    /**
+     * @param Region $region
+     */
+    public function addRegionToRegionList(Region $region): void
+    {
+        $this->regionList[$region->getRegionId()->toString()] = $region;
+    }
 
     /** @var array $tagListe */
     protected $tagListe = [];
@@ -82,7 +106,7 @@ class Reise
 
     /** @var array $leistungListe */
     protected $leistungListe = [];
-    
+
     /** @var array $frageListe */
     protected $frageListe = [];
 
@@ -105,8 +129,23 @@ class Reise
      * @param Image $bild
      * @param Name $veranstalter
      */
-    public function __construct(Id $reiseId, Text $kurzbeschreibung, Text $beschreibung, Title $titel, Personen $personen, Reisedauer $reisedauer, Flugzeit $flugzeit, Text $sprache, Terrain $terrain, Image $karte, Datetime $bearbeitet, Image $teaser, Date $sichtbar, Image $bild, Name $veranstalter)
-    {
+    public function __construct(
+        Id $reiseId,
+        Text $kurzbeschreibung,
+        Text $beschreibung,
+        Title $titel,
+        Personen $personen,
+        Reisedauer $reisedauer,
+        Flugzeit $flugzeit,
+        Text $sprache,
+        Terrain $terrain,
+        Image $karte,
+        Datetime $bearbeitet,
+        Image $teaser,
+        Date $sichtbar,
+        Image $bild,
+        Name $veranstalter
+    ) {
         $this->reiseId = $reiseId;
         $this->kurzbeschreibung = $kurzbeschreibung;
         $this->beschreibung = $beschreibung;
@@ -122,22 +161,6 @@ class Reise
         $this->sichtbar = $sichtbar;
         $this->bild = $bild;
         $this->veranstalter = $veranstalter;
-    }
-
-    /**
-     * @return Region
-     */
-    public function getRegion(): ?Region
-    {
-        return $this->region;
-    }
-
-    /**
-     * @param Region $region
-     */
-    public function setRegion(Region $region)
-    {
-        $this->region = $region;
     }
 
     /**
@@ -220,6 +243,9 @@ class Reise
         $this->tagListe[$tag->getTagId()->toString()] = $tag;
     }
 
+    /**
+     *
+     */
     public function resetTagListe(): void
     {
         $this->tagListe = [];

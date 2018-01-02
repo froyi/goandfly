@@ -31,4 +31,28 @@ class NewsFactory
 
         return new News($newsId, $titel, $datum, $text);
     }
+
+    /**
+     * @param $object
+     * @return bool
+     */
+    public function isObjectValid($object): bool
+    {
+        try {
+            /** @var Id $newsId */
+            $newsId = Id::fromString($object->newsId);
+            /** @var Title $titel */
+            $titel = Title::fromString($object->titel);
+            /** @var Date $datum */
+            $datum = Date::fromValue($object->datum);
+            /** @var Text $text */
+            $text = Text::fromString($object->text);
+
+            new News($newsId, $titel, $datum, $text);
+        } catch (\InvalidArgumentException $error) {
+            return false;
+        }
+
+        return true;
+    }
 }

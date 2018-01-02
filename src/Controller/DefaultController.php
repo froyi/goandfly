@@ -15,6 +15,7 @@ use Project\Module\Reise\ReiseService;
 use Project\Module\Tag\TagService;
 use Project\Module\User\User;
 use Project\Module\User\UserService;
+use Project\Utilities\Notification;
 use Project\Utilities\Tools;
 use Project\View\ViewRenderer;
 
@@ -39,6 +40,9 @@ class DefaultController
     /** @var UserService $userService */
     protected $userService;
 
+    /** @var  Notification $notification */
+    protected $notification;
+
     /**
      * DefaultController constructor.
      *
@@ -50,6 +54,7 @@ class DefaultController
         $this->viewRenderer = new ViewRenderer($this->configuration);
         $this->database = new Database($this->configuration);
         $this->userService = new UserService($this->database);
+        $this->notification = new Notification($this->configuration);
 
         if (Tools::getValue('userId') !== false) {
             $userId = Id::fromString(Tools::getValue('userId'));
@@ -59,6 +64,8 @@ class DefaultController
         $this->setDefaultViewConfig();
 
         $this->setDefaultData();
+
+        $this->setNotifications();
     }
 
     /**
@@ -78,6 +85,13 @@ class DefaultController
 
         $continentService = new ContinentService($this->database);
         $this->viewRenderer->addViewConfig('continents', $continentService->getAllContinentsWithRegionList());
+
+        /**
+         * Logged In User
+         */
+        if ($this->loggedInUser !== null) {
+            $this->viewRenderer->addViewConfig('loggedInUser', $this->loggedInUser);
+        }
     }
 
     /**
@@ -202,5 +216,19 @@ class DefaultController
     protected function setTeaserBild(Reise $reise): void
     {
         $this->viewRenderer->addViewConfig('teaserBild', $reise->getTeaser()->toString());
+    }
+
+    /**
+     *  adding notifications to the template
+     */
+    protected function setNotifications(): void
+    {
+        if (Tools::getValue('notificationStatus') !== false && Tools::getValue('notificationCode') !== false) {
+            $this->notification->setNotificationCode(Tools::getValue('notificationCode'));
+            $this->notification->setNotificationStatus(Tools::getValue('notificationStatus'));
+
+            $this->viewRenderer->addViewConfig('notificationStatus', $this->notification->getNotificationStatus());
+            $this->viewRenderer->addViewConfig('notificationMessage', $this->notification->getNotificationMessage());
+        }
     }
 }

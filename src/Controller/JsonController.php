@@ -8,6 +8,7 @@ use Project\Configuration;
 use Project\Module\Continent\Continent;
 use Project\Module\Continent\ContinentService;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\News\NewsService;
 use Project\Utilities\Tools;
 use Project\View\JsonModel;
 
@@ -70,5 +71,30 @@ class JsonController extends DefaultController
         $continentService = new ContinentService($this->database);
 
         return $continentService->getContinentByContinentId($continentId);
+    }
+
+    public function bearbeiteNeuigkeitenAction()
+    {
+        $newsId = Tools::getValue('newsId');
+
+        if ($newsId === false) {
+            $this->jsonModel->send('error');
+        }
+
+        $newsId = Id::fromString($newsId);
+
+        $newsService = new NewsService($this->database);
+
+        $news = $newsService->getNewsByNewsId($newsId);
+
+        if ($news === null) {
+            $this->jsonModel->send('error');
+        }
+
+        $this->viewRenderer->addViewConfig('bearbeiteNews', $news);
+
+        $this->jsonModel->addJsonConfig('view',
+            $this->viewRenderer->renderJsonView('partial/bearbeite_neuigkeiten.twig'));
+        $this->jsonModel->send();
     }
 }

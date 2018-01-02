@@ -5,6 +5,7 @@ namespace Project\Module\Tag;
 
 use Project\Module\Database\Database;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\Reise\ReiseService;
 
 /**
  * Class TagService
@@ -92,12 +93,36 @@ class TagService
         $this->unsetTagsInSession();
 
         foreach ($tags as $tag) {
-            $_SESSION['tagIds'][$tag->getTagId()->toString()] = $tag->getTagId()->toString();
+            /** @var Id $tagId */
+            $tagId = $tag->getTagId()->toString();
+            $_SESSION['tagIds'][$tagId] = $tagId;
         }
     }
 
     public function unsetTagsInSession(): void
     {
         unset($_SESSION['tagIds']);
+    }
+
+    /**
+     * @param ReiseService $reiseService
+     * @return array
+     */
+    public function getTagsWithReisen(ReiseService $reiseService): array
+    {
+        $tagsArray = [];
+
+        $tags = $this->getAllTags();
+
+        /** @var Tag $tag */
+        foreach ($tags as $tag) {
+            $reisen = $reiseService->getAllReisenByTagId($tag->getTagId());
+
+            $tag->setReiseList($reisen);
+
+            $tagsArray[$tag->getTagId()->toString()] = $tag;
+        }
+
+        return $tagsArray;
     }
 }

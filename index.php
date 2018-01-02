@@ -4,6 +4,9 @@ namespace Project;
 
 use Project\Controller\IndexController;
 use Project\Utilities\Tools;
+ini_set ('gd.jpeg_ignore_warning', 1);
+
+
 
 session_start();
 

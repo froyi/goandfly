@@ -111,7 +111,37 @@ $(document).on('click', '.js-create-reise', function () {
     $('#erstelleReiseContainer').fadeToggle(500);
 });
 
+$(document).on('click', '.js-create-neuigkeiten', function () {
+    $('#erstelleNeuigkeitenContainer').fadeToggle(500);
+});
+
 $(document).on('submit', '#holeReisedatenRegionForm', function () {
     debugger;
 });
+
+$(document).on('submit', '#bearbeiteNeuigkeitForm', function (event) {
+    event.preventDefault();
+
+    var neuigkeitenId = $(this).find('.holeNeuigkeiten').val(),
+        $bearbeiteNeuigkeitenContainer = $('.js-bearbeite-neuigkeiten');
+
+    $.ajax({
+        type: 'POST',
+        url: 'index.php?route=ajax-bearbeite-neuigkeiten',
+        dataType: 'json',
+        data: {
+            newsId: neuigkeitenId
+        },
+        success: function (response) {
+            if (response.status === 'success') {
+                $bearbeiteNeuigkeitenContainer.html(response.view);
+            }
+        }
+    });
+});
+
+$(document).ready(function () {
+    CKEDITOR.replace('editorCKE');
+});
+
 
