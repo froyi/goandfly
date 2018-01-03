@@ -82,6 +82,10 @@ return [
             'controller' => 'JsonController',
             'action' => 'bearbeiteNeuigkeitenAction'
         ],
+        'ajax-bearbeite-reise' => [
+            'controller' => 'JsonController',
+            'action' => 'bearbeiteReiseAction'
+        ],
         'bearbeite-neuigkeiten' => [
             'controller' => 'BackendController',
             'action' => 'bearbeiteNeuigkeitenAction'

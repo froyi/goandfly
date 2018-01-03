@@ -9,6 +9,7 @@ use Project\Module\Continent\Continent;
 use Project\Module\Continent\ContinentService;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\News\NewsService;
+use Project\Module\Reise\ReiseService;
 use Project\Utilities\Tools;
 use Project\View\JsonModel;
 
@@ -95,6 +96,27 @@ class JsonController extends DefaultController
 
         $this->jsonModel->addJsonConfig('view',
             $this->viewRenderer->renderJsonView('partial/bearbeite_neuigkeiten.twig'));
+        $this->jsonModel->send();
+    }
+
+    public function bearbeiteReiseAction(): void
+    {
+        $reiseId = Tools::getValue('reiseId');
+
+        if ($reiseId === false) {
+            $this->jsonModel->send('error');
+        }
+
+        $reiseId = Id::fromString($reiseId);
+
+        $reiseService = new ReiseService($this->database);
+
+        $reise = $reiseService->getCompleteReiseByReiseId($reiseId);
+
+        $this->viewRenderer->addViewConfig('bearbeiteReise', $reise);
+
+        $this->jsonModel->addJsonConfig('view',
+            $this->viewRenderer->renderJsonView('partial/bearbeite_reise.twig'));
         $this->jsonModel->send();
     }
 }

@@ -63,7 +63,7 @@ class DefaultController
 
         $this->setDefaultViewConfig();
 
-        $this->setDefaultData();
+        // $this->setDefaultData();
 
         $this->setNotifications();
     }

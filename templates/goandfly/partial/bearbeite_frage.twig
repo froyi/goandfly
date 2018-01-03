@@ -1,0 +1,12 @@
+{% if bearbeiteFrage|length > 0 %}
+    <form action="#" name="bearbeiteFragenReise" method="post" class="js-bearbeite-reise">
+        <p><input type="text" name="frage" required placeholder="Stellen Sie hier Ihre Frage"
+                  value="{{ bearbeiteFrage.getFrage }}" /></p>
+        <p><textarea name="antwort" required
+                     placeholder="Hier steht Ihre Antwort">{{ bearbeiteFrage.getAntwort }}</textarea></p>
+        <p><input type="checkbox" name="frageDelete"/> Möchten Sie diese Frage löschen?</p>
+        <p><input type="submit" name="submit" value="Absenden"/></p>
+
+        <input type="hidden" name="frageId" value="{{ bearbeiteFrage.getFrageId }}"/>
+    </form>
+{% endif %}

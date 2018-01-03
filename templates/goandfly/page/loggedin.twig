@@ -24,10 +24,10 @@
         {% endif %}
 
         <div class="reise-auswahl">
-            <form id="holeReisedatenRegionForm" name="holeReisedatenRegionForm" method="post" action="#">
+            <form id="holeReisedatenRegionForm" class="hole-reise" name="holeReisedatenRegionForm" method="post" action="#">
                 <p>
                     <label for="reiseAuswahl">Reise nach Region auswählen:</label><br/>
-                    <select name="reiseAuswahl" id="holeReisedatenformAuswahl">
+                    <select name="reiseAuswahl" class="js-hole-reisedaten-select" id="holeReisedatenformAuswahl">
                         <option value="0">Bitte wählen Sie eine Reise aus</option>
 
                         {% for region in regionsWithReisen %}
@@ -47,10 +47,10 @@
         </div>
 
         <div class="reise-auswahl">
-            <form name="holeReisedatenVeranstalterForm" method="post" action="#">
+            <form name="holeReisedatenVeranstalterForm" class="hole-reise" method="post" action="#">
                 <p>
                     <label for="reiseAuswahl">Reise nach Veranstalter auswählen:</label><br/>
-                    <select name="reiseAuswahl" id="holeReisedatenformAuswahl">
+                    <select name="reiseAuswahl" class="js-hole-reisedaten-select" id="holeReisedatenformAuswahl">
                         <option value="0">Bitte wählen Sie eine Reise aus</option>
 
                         {% for veranstalter in veranstalterWithReisen %}
@@ -70,10 +70,10 @@
         </div>
 
         <div class="reise-auswahl">
-            <form name="holeReisedatenTagForm" method="post" action="#">
+            <form name="holeReisedatenTagForm" method="post" class="hole-reise" action="#">
                 <p>
                     <label for="reiseAuswahl">Reise nach Kategorien auswählen:</label><br/>
-                    <select name="reiseAuswahl" id="holeReisedatenformAuswahl">
+                    <select name="reiseAuswahl" class="js-hole-reisedaten-select" id="holeReisedatenformAuswahl">
                         <option value="0">Bitte wählen Sie eine Reise aus</option>
 
                         {% for tag in tagsWithReisen %}

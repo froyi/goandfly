@@ -14,11 +14,10 @@
         <p>Flugdauer zum ersten Ziel:<br/><input type="text" name="flugzeit" required placeholder="Flugdauer zum ersten Ziel in Stunden Bsp.: 4" /></p>
         <p>Sprache der Reise:<br/><input type="text" name="sprache" required placeholder="Sprache der Reise Bsp.: deutsch / englisch" /></p>
         <div class="terrainWertung">
-            <p class="left"><img src="{{ templateDir }}/img/terrain_1.png"/><br/><input type="radio" name="terrain" value="1" /></p>
-            <p class="left"><img src="{{ templateDir }}/img/terrain_2.png"/><br/><input type="radio" name="terrain" value="2" /></p>
-            <p class="left"><img src="{{ templateDir }}/img/terrain_3.png"/><br/><input type="radio" name="terrain" value="3"  /></p>
-            <p class="left"><img src="{{ templateDir }}/img/terrain_4.png"/><br/><input type="radio" name="terrain" value="4" /></p>
-            <p class="left"><img src="{{ templateDir }}/img/terrain_5.png"/><br/><input type="radio" name="terrain" value="5"  /></p>
+            {% for i in 1..5 %}
+                <p class="left"><img src="{{ templateDir }}/img/terrain_{{ i }}.png"/><br/>
+                    <input type="radio" name="terrain" value="{{ i }}" /></p>
+            {% endfor %}
             <p class="clear"></p>
         </div> <!-- .terrainWertung -->
         <p>Vorschau Bild auswählen:<br/><input type="file" name="vorschauBild" /></p>

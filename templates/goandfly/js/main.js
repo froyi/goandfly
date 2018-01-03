@@ -140,8 +140,30 @@ $(document).on('submit', '#bearbeiteNeuigkeitForm', function (event) {
     });
 });
 
+$(document).on('submit', '.hole-reise', function (event) {
+    event.preventDefault();
+
+    var reiseIdData = $(this).find('.js-hole-reisedaten-select').val(),
+        $bearbeiteReiseContainer = $('.js-bearbeite-reise');
+
+    $.ajax({
+        type: 'POST',
+        url: 'index.php?route=ajax-bearbeite-reise',
+        dataType: 'json',
+        data: {
+            reiseId: reiseIdData
+        },
+        success: function (response) {
+            if (response.status === 'success') {
+                $bearbeiteReiseContainer.html(response.view);
+            }
+        }
+    });
+});
+
 $(document).ready(function () {
     CKEDITOR.replace('editorCKE');
+    CKEDITOR.replace('ReiseEditorCKE');
 });
 
 
