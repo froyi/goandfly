@@ -7,6 +7,7 @@ use Project\Module\Database\Database;
 use Project\Module\Frage\FrageService;
 use Project\Module\GenericValueObject\Datetime;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\Leistung\Leistung;
 use Project\Module\Leistung\LeistungService;
 use Project\Module\Region\Region;
 use Project\Module\Region\RegionService;
@@ -201,11 +202,15 @@ class ReiseService
         }
 
         // Leistungen
-        $leistungen = $this->leistungService->getLeistungenByReiseId($reise->getReiseId());
+        $leistung = $this->leistungService->getLeistungByReiseId($reise->getReiseId());
 
-        if (\count($leistungen) > 0) {
-            $reise->setLeistungListe($leistungen);
+        if ($leistung instanceof Leistung) {
+            $reise->setLeistung($leistung);
         }
+
+        $tags = $this->tagService->getTagsByReiseId($reise->getReiseId());
+
+        $reise->setTagListeToTagListe($tags);
 
         // Fragen
         $fragen = $this->frageService->getFragenByReiseId($reise->getReiseId());
@@ -220,38 +225,42 @@ class ReiseService
     /**
      * @param Reise $reiseVergleich
      * @param int|null $amount
+     *
      * @return array
-     * @todo convert to regionlist
      */
     public function getReiseRecommenderByReise(Reise $reiseVergleich, int $amount = null): array
     {
         $reiseRecommender = [];
 
-        $reisen = $this->reiseRepository->getAllVisibleReisenByRegionId($reiseVergleich->getRegion()->getRegionId());
+        if (count($reiseVergleich->getRegionList()) > 0) {
+            $regions = $reiseVergleich->getRegionList();
+            $firstRegion = reset($regions);
+            $reisen = $this->reiseRepository->getAllVisibleReisenByRegionId($firstRegion->getRegionId());
 
-        shuffle($reisen);
+            shuffle($reisen);
 
-        foreach ($reisen as $reiseData) {
-            $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+            foreach ($reisen as $reiseData) {
+                $reise = $this->reiseFactory->getReiseFromObject($reiseData);
 
-            if ($reise->getReiseId()->toString() === $reiseVergleich->getReiseId()->toString()) {
-                continue;
-            }
+                if ($reise->getReiseId()->toString() === $reiseVergleich->getReiseId()->toString()) {
+                    continue;
+                }
 
-            $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
+                $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
 
-            if (count($regions) > 0) {
-                $reise->setRegionList($regions);
-            }
+                if (count($regions) > 0) {
+                    $reise->setRegionList($regions);
+                }
 
-            $tags = $this->tagService->getTagsByReiseId($reise->getReiseId());
+                $tags = $this->tagService->getTagsByReiseId($reise->getReiseId());
 
-            $reise->setTagListeToTagListe($tags);
+                $reise->setTagListeToTagListe($tags);
 
-            $reiseRecommender[$reise->getReiseId()->toString()] = $reise;
+                $reiseRecommender[$reise->getReiseId()->toString()] = $reise;
 
-            if (\count($reiseRecommender) >= $amount) {
-                break;
+                if (\count($reiseRecommender) >= $amount) {
+                    break;
+                }
             }
         }
 
@@ -262,13 +271,15 @@ class ReiseService
      * @param array $tags
      * @param Id|null $regionId
      * @param int|null $amount
+     *
      * @return ReiseContainer
      */
     public function getAllTagAndRegionReisenInContainer(
         array $tags = [],
         Id $regionId = null,
         int $amount = null
-    ): ReiseContainer {
+    ): ReiseContainer
+    {
         $reisenArray = [];
 
         $reisen = $this->reiseRepository->getReiseByTagsAndRegionId($tags, $regionId, $amount);
@@ -317,6 +328,29 @@ class ReiseService
     }
 
     /**
+     * @return array
+     */
+    public function getVeranstalterWithReisen(): array
+    {
+        $veranstalterArray = [];
+
+        $veranstalterListe = $this->reiseRepository->getAllVeranstalter();
+
+        foreach ($veranstalterListe as $veranstalterData) {
+            /** @var Reiseveranstalter $veranstalter */
+            $veranstalter = $this->reiseFactory->getVeranstalterFromObject($veranstalterData);
+
+            $reisen = $this->getAllReisenByVeranstalter($veranstalter);
+
+            $veranstalter->setReiseList($reisen);
+
+            $veranstalterArray[] = $veranstalter;
+        }
+
+        return $veranstalterArray;
+    }
+
+    /**
      * @param Reiseveranstalter $reiseveranstalter
      *
      * @return array
@@ -343,30 +377,8 @@ class ReiseService
     }
 
     /**
-     * @return array
-     */
-    public function getVeranstalterWithReisen(): array
-    {
-        $veranstalterArray = [];
-
-        $veranstalterListe = $this->reiseRepository->getAllVeranstalter();
-
-        foreach ($veranstalterListe as $veranstalterData) {
-            /** @var Reiseveranstalter $veranstalter */
-            $veranstalter = $this->reiseFactory->getVeranstalterFromObject($veranstalterData);
-
-            $reisen = $this->getAllReisenByVeranstalter($veranstalter);
-
-            $veranstalter->setReiseList($reisen);
-
-            $veranstalterArray[] = $veranstalter;
-        }
-
-        return $veranstalterArray;
-    }
-
-    /**
      * @param Id $tagId
+     *
      * @return array
      */
     public function getAllReisenByTagId(Id $tagId): array
@@ -392,6 +404,7 @@ class ReiseService
 
     /**
      * @param array $parameter
+     *
      * @return Reise
      */
     public function getReiseByParams(array $parameter, RegionService $regionService): Reise
@@ -419,14 +432,14 @@ class ReiseService
 
     /**
      * @param Reise $reise
+     *
      * @return bool
      */
     public function saveReiseToDatabase(Reise $reise): bool
     {
         if ($this->reiseRepository->saveReiseToDatabase($reise)) {
             /** @var Region $region */
-            foreach ($reise->getRegionList() as $region)
-            {
+            foreach ($reise->getRegionList() as $region) {
                 $this->reiseRepository->saveReiseRegionToDatabase($reise, $region);
             }
 

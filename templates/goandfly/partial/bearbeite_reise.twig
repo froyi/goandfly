@@ -38,7 +38,7 @@
                 {% for i in 1..5 %}
                     <p class="left"><img src="{{ templateDir }}/img/terrain_{{ i }}.png"/><br/>
                         <input type="radio" name="terrain" value="{{ i }}"
-                               {% if bearbeiteReise.getTerrain == i %}checked{% endif %}
+                               {% if bearbeiteReise.getTerrain.getTerrain is same as (i) %}checked{% endif %}
                         /></p>
                 {% endfor %}
                 <p class="clear"></p>
@@ -53,17 +53,19 @@
                         <optgroup label="{{ continent.getName }}">
                             {% for region in continent.getRegionList %}
                                 <option value="{{ region.getRegionId }}"
-                                        {% if region.getRegionId in bearbeiteReise.getRegionList|keys %}selected{% endif %}>{{ region.getName }}</option>
+
+                                        {% if region.getRegionId.toString in bearbeiteReise.getRegionList|keys %}selected{% endif %}>{{ region.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}</option>
                             {% endfor %}
                         </optgroup>
                     {% endfor %}
                 </select>
             </p>
 
+
             <p>Sichtbar bis:<br/>
                 <input type="date" name="sichtbar" placeholder="Sichtbar bis (Format: yyy-mm-dd)"
-                       value="{{ bearbeiteReise.getSichtbar }}"/></p>
-            <input type="hidden" name="reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
+                       value="{{ bearbeiteReise.getSichtbar.toString }}"/></p>
+            <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
 
             <p><input type="checkbox" name="deleteReise"/> Wollen Sie diese Reise komplett löschen?</p>
 
@@ -79,13 +81,12 @@
 
         <div id="erstelleFragen">
             <form action="#" method="post" class="js-erstelle-frage" name="erstelleFragenReise">
-                <p>Stellen Sie hier Ihre Frage:<br/><input type="text" name="frage" required
+                <p>Stellen Sie hier Ihre Frage:<br/><input type="text" name="frage" class="js-frage" required
                                                            placeholder="Stellen Sie hier Ihre Frage"/></p>
-                <p>Hier steht Ihre Antwort:<br/><textarea name="antwort" required
+                <p>Hier steht Ihre Antwort:<br/><textarea name="antwort" class="js-antwort" required
                                                           placeholder="Hier steht Ihre Antwort"></textarea></p>
                 <p><input type="submit" name="submit" value="Absenden"/></p>
-                <input type="hidden" name="reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
-                <input type="hidden" name="modus" value="fragenErstellen"/>
+                <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
             </form>
         </div>    <!-- #erstelleFragen -->
 
@@ -110,219 +111,107 @@
 
                 <p><input type="submit" name="submit" value="Absenden"/></p>
 
-                <input type="hidden" name="reiseId" value="{{ bearbeiteReise.getReiseId }}" />
+                <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
             </form>
 
             <div class="bearbeite-frage-container"></div>
         </div>    <!-- #erstelleFragen -->
-        <?php } // Bearbeite Fragen vorhanden??? ?>
-        <?php // Erstelle Leistungen ?>
+
         <p>Hier erstellen Sie Reiseleistungen zu Ihrer Reise aus der Sidebar.</p>
-        <?php
-                if(isset($_GET["did"]) && $_GET["did"] == "5")
-				{?>
-        <p class="errorLog">Die Leistung wurde erfolgreich eingetragen.</p>
-        <?php } ?>
+
+        <div class="js-erstelle-leistung-status"></div>
+
         <div id="erstelleLeistungen">
-            <?php
-					// Reiseleistung aus der Datenbank holen, falls vorhanden
-					$lei = holeReiseleistungen($bearbeiteReise["id"]);
-					?>
-            <form action="sc.php/admin.sc.php" method="post" name="erstelleLeistungenForm">
-                <p><textarea name="editorCKE3" id="editorCKE3" required
-                             placeholder="Tragen Sie die Reiseleistung hier ein"><?php echo $lei["text"]; ?></textarea>
+            <form action="#" method="post" name="erstelleLeistungenForm" class="js-erstelle-leistungen">
+                <p><textarea name="leistung" id="editorCKE3" required
+                             placeholder="Tragen Sie die Reiseleistung hier ein">{{ bearbeiteReise.getLeistung.getText }}</textarea>
                 </p>
                 <p><input type="submit" name="submit" value="Absenden"/></p>
-                <input type="hidden" name="seite" value="<?php echo $seite; ?>"/>
-                <input type="hidden" name="reiseId" value="<?php echo $bearbeiteReise[" id"]; ?>"/>
+                <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
             </form>
         </div> <!-- #erstelleLeistungen -->
 
-        <?php // Erstelle Reiseverlauf ?>
+
         <p>Hier erstellen Sie den Reiseverlauf zu Ihrer Reise aus der Sidebar.</p>
-        <?php
-                if(isset($_GET["did"]) && $_GET["did"] == "6")
-				{?>
-        <p class="errorLog">Der Reiseverlauf wurde erfolgreich eingetragen.</p>
-        <?php } ?>
+
+        <div class="js-erstelle-reiseverlauf-status"></div>
+
         <div id="erstelleReiseverlauf">
-            <form action="sc.php/admin.sc.php" method="post" name="erstelleReiseverlaufForm">
+            <form action="#" method="post" name="erstelleReiseverlaufForm" class="js-erstelle-reiseverlauf">
+                <p><input type="number" name="reisetag" min="1" required placeholder="Position in der Liste (Sortierung)"/></p>
                 <p><input type="text" name="titel" required placeholder="Titel (Bsp.: Tag 1 - Ankunft)"/></p>
                 <p><textarea name="beschreibung" required placeholder="Beschreibung des Reiseverlaufes"></textarea></p>
                 <p><input type="submit" name="submit" value="Absenden"/></p>
-                <input type="hidden" name="seite" value="<?php echo $seite; ?>"/>
-                <input type="hidden" name="reiseId" value="<?php echo $bearbeiteReise[" id"]; ?>"/>
-                <input type="hidden" name="reiseVerlauf" value="true"/>
+                <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
             </form>
         </div> <!-- #erstelleReiseverlauf -->
 
-        <?php // bearbeite und lösche den Reiseverlauf ?>
         <div id="bearbeiteReiseverlauf">
             <p>Hier bearbeiten Sie Ihre Reiseverlauf</p>
-            <form action="admin.php#bearbeiteReiseverlauf" method="post" name="bearbeiteReiseverlaufReise">
-                <p><select name="verlaufListe">
+            <form action="#" method="post" name="bearbeiteReiseverlaufReise" class="js-bearbeite-reiseverlauf">
+                <p>
+                    <select name="verlaufListe">
                         <option value="0">Bitte wählen Sie eine Reiseverlauf aus</option>
-                        <?php
-								$ver = holeReiseverlauf($bearbeiteReise["id"]);
-								  while($verlauf = mysql_fetch_assoc($ver))
-								  {
-                            ?>
-                        <option value="<?php echo $verlauf[" id
-                        "]; ?>"
-                        <?php
-							if((isset($_GET["verlaufListe"]) && $_GET["verlaufListe"] == $verlauf["id"]) || (isset($_POST["verlaufListe"]) && $_POST["verlaufListe"] == $verlauf["id"]))
-							{
-								echo "selected";
-							}
-							?>
-                        ><?php echo $verlauf["titel"]; ?></option>
-                        <?php
-								  }
-							?>
-                    </select></p>
-                <p><input type="submit" name="submit" value="Absenden"/></p>
-                <input type="hidden" name="reiseAuswahl" value="<?php echo $bearbeiteReise[" id"]; ?>" />
-            </form>
-            <?php
-                    if(isset($_GET["verlaufListe"]) || isset($_POST["verlaufListe"]))
-					{
-						if(isset($_GET["verlaufListe"]))
-						{
-							$holeVerlauf = holeReiseverlauf($bearbeiteReise["id"],$_GET["verlaufListe"]);
-						}
-						else
-						{
 
-							$holeVerlauf = holeReiseverlauf($bearbeiteReise["id"],$_POST["verlaufListe"]);
-						}
-
-
-                ?>
-            <form action="sc.php/admin.sc.php" method="post" name="bearbeiteReiseverlaufForm">
-                <p><input type="text" name="leistungTitel" value="<?php echo $holeVerlauf[" titel"]; ?>"/></p>
-                <p><textarea name="leistungBeschreibung" required
-                             placeholder="Beschreibung des Reiseverlaufes"><?php echo $holeVerlauf["beschreibung"]; ?></textarea>
+                        {% for reiseverlauf in bearbeiteReise.getReiseverlaufListe %}
+                            <option value="{{ reiseverlauf.getReiseverlaufId }}">{{ reiseverlauf.getTitel }}</option>
+                        {% endfor %}
+                    </select>
                 </p>
-                <p><input type="checkbox" name="loescheVerlauf"/> Möchten Sie diese Reiseleistung löschen?</p>
-
-                <input type="submit" name="submit" value="Absenden"/>
-                <input type="hidden" name="seite" value="<?php echo $seite; ?>"/>
-                <input type="hidden" name="verlaufId" value="<?php echo $holeVerlauf[" id"]; ?>"/>
-                <input type="hidden" name="reiseId" value="<?php echo $bearbeiteReise[" id"]; ?>"/>
-                <input type="hidden" name="reiseVerlaufBearbeiten" value="true"/>
+                <p><input type="submit" name="submit" value="Absenden"/></p>
+                <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}" />
             </form>
-            <?php } ?>
+
+            <div class="js-bearbeite-reiseverlauf-container"></div>
         </div> <!-- #bearbeiteReiseverlauf -->
 
         <p>Hier erstellen Sie Reisetermine und die dazugehörigen Preise aus der Sidebar.</p>
-        <?php
-                if(isset($_GET["did"]) && $_GET["did"] == "7")
-				{?>
-        <p class="errorLog">Der Termin wurde erfolgreich eingetragen.</p>
-        <?php } ?>
+
+        <div class="js-erstelle-reisetermin-status"></div>
 
         <div id="erstelleTermine">
-            <form action="sc.php/admin.sc.php" method="post" name="erstelleTermineForm">
+            <form action="#" method="post" name="erstelleTermineForm" class="js-erstelle-reisetermin">
                 <p><input type="date" name="start" placeholder="Startdatum Format: yyy-mm-dd" required/></p>
                 <p><input type="date" name="ende" required placeholder="Enddatum Format: yyy-mm-dd"/></p>
                 <p><input type="text" name="preis" required placeholder="Preis in € (Bsp.: 1.999€)"/></p>
                 <p><input type="submit" name="submit" value="Absenden"/></p>
-                <input type="hidden" name="seite" value="<?php echo $seite; ?>"/>
-                <input type="hidden" name="reiseId" value="<?php echo $bearbeiteReise[" id"]; ?>"/>
-                <input type="hidden" name="erstelleTermine" value="true"/>
-
+                <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
             </form>
         </div> <!-- #erstelleTermine -->
 
-        <?php // bearbeite und lösche der Termine ?>
         <div id="bearbeiteReisetermine">
             <p>Hier bearbeiten Sie Ihre Reisetermine</p>
-            <form action="admin.php#bearbeiteReisetermine" method="post" name="bearbeiteReisetermineReise">
+            <form action="#" method="post" name="bearbeiteReisetermineReise" class="js-bearbeite-reisetermin">
                 <p><select name="termineListe">
                         <option value="0">Bitte wählen Sie einn Reisetermin aus</option>
-                        <?php
-								$ter = holeTermine($bearbeiteReise["id"]);
-								  while($termin = mysql_fetch_assoc($ter))
-								  {
-                            ?>
-                        <option value="<?php echo $termin[" id
-                        "]; ?>"
-                        <?php
-							if((isset($_GET["termineListe"]) && $_GET["termineListe"] == $termin["id"]) || (isset($_POST["termineListe"]) && $_POST["termineListe"] == $termin["id"]))
-							{
-								echo "selected";
-							}
-							?>
-                        ><?php echo dbDatumAusgabe($termin["start"])." - ".dbDatumAusgabe($termin["ende"]).": ".$termin["preis"]; ?></option>
-                        <?php
-								  }
-							?>
+
+                        {% for reisetermin in bearbeiteReise.getTerminListe %}
+                            <option value="{{ reisetermin.getTerminId }}">{{ reisetermin.getStart }} - {{ reisetermin.getEnde }} | {{ reisetermin.getPreis }}</option>
+                        {% endfor %}
                     </select></p>
                 <p><input type="submit" name="submit" value="Absenden"/></p>
-                <input type="hidden" name="reiseAuswahl" value="<?php echo $bearbeiteReise[" id"]; ?>" />
+                <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}" />
             </form>
-            <?php
-                    if(isset($_GET["termineListe"]) || isset($_POST["termineListe"]))
-					{
-						if(isset($_GET["termineListe"]))
-						{
-							$holeTermine = holeTermine($bearbeiteReise["id"],$_GET["termineListe"]);
-						}
-						else
-						{
 
-							$holeTermine = holeTermine($bearbeiteReise["id"],$_POST["termineListe"]);
-						}
-
-
-                ?>
-            <form action="sc.php/admin.sc.php" method="post" name="bearbeiteReisetermineForm">
-                <p>Startdatum:<br/><input type="date" name="start" value="<?php echo $holeTermine[" start"]; ?>"/></p>
-                <p>Enddatum:<br/><input type="date" name="ende" value="<?php echo $holeTermine[" ende"]; ?>"/></p>
-                <p>Preis:<br/><input type="text" name="preis" value="<?php echo $holeTermine[" preis"]; ?>"/></p>
-                <p><input type="checkbox" name="loescheTermin"/> Möchten Sie diesen Termin löschen?</p>
-
-                <input type="submit" name="submit" value="Absenden"/>
-                <input type="hidden" name="seite" value="<?php echo $seite; ?>"/>
-                <input type="hidden" name="terminId" value="<?php echo $holeTermine[" id"]; ?>"/>
-                <input type="hidden" name="reiseId" value="<?php echo $bearbeiteReise[" id"]; ?>"/>
-                <input type="hidden" name="reiseTerminBearbeiten" value="true"/>
-            </form>
-            <?php } ?>
+            <div class="js-bearbeite-reisetermin-container"></div>
         </div> <!-- #bearbeiteReiseverlauf -->
 
 
         <p>Hier erstellen Sie die Tagzugehörigkeit der Reise für die Selektion auf der Startseite:</p>
-        <?php
-                if(isset($_GET["did"]) && $_GET["did"] == "8")
-				{?>
-        <p class="errorLog">Die Tags wurden erfolgreich eingetragen.</p>
-        <?php } ?>
-        <div id="erstelleTags">
-            <form action="sc.php/admin.sc.php" method="post" name="erstelleTermineForm">
-                <p>Tags hinzufügen:<br/>
-                    <select name="tagAuswahl[]" multiple size="5" class="multipleSelect">
-                        <?php
-							// alle tags holen und ausgeben
-							$tag = holeTag();
 
-							while($tags = mysql_fetch_assoc($tag))
-							{
-							?>
-                        <option value="<?php echo $tags[" id
-                        "]; ?>" <?php
-							$tagReise = tagReise($bearbeiteReise["id"]);
-							while($tagR = mysql_fetch_assoc($tagReise))
-							{
-								if($tagR["tags_id"] == $tags["id"])echo "selected";
-							}?>><?php echo $tags["name"]; ?></option>
-                        <?php } // while($tags) ?>
+        <div class="js-erstelle-tag-status"></div>
+
+        <div id="erstelleTags">
+            <form action="#" method="post" name="erstelleTermineForm" class="js-erstelle-reisetermin">
+                <p>Tags hinzufügen:<br/>
+                    <select name="tagAuswahl[]" multiple size="8" class="multipleSelect">
+                        {% for tag in tagListe %}
+                            <option value="{{ tag.getTagId }}" {% if tag.getTagId.toString in bearbeiteReise.getTagListe|keys %}selected{% endif %}>{{ tag.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}</option>
+                            {% endfor %}
                     </select>
                 </p>
                 <p><input type="submit" name="submit" value="Absenden"/></p>
-                <input type="hidden" name="seite" value="<?php echo $seite; ?>"/>
-                <input type="hidden" name="reiseId" value="<?php echo $bearbeiteReise[" id"]; ?>"/>
-                <input type="hidden" name="erstelleTags" value="true"/>
+                <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
             </form>
         </div> <!-- #erstelleTags -->
     </div> <!-- .right -->

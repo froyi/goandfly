@@ -29,7 +29,7 @@ class BackendController extends DefaultController
         parent::__construct($configuration);
 
         if ($this->loggedInUser === null) {
-            // $this->showStandardPage(Routing::ERROR_ROUTE);
+            $this->showStandardPage(Routing::ERROR_ROUTE);
         }
     }
     public function migrateAction(): void

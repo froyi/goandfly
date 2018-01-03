@@ -25,9 +25,9 @@
         <p>Reiseregionen hinzufügen:<br/>
             <select class="multipleSelect" name="region[]" multiple size="5" required>
                 {% for continent in continents %}
-                    <optgroup label="{{ continent.getName }}">
+                    <optgroup label="{{ continent.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}">
                         {% for region in continent.getRegionList %}
-                            <option value="{{ region.getRegionId }}">{{ region.getName }}</option>
+                            <option value="{{ region.getRegionId }}">{{ region.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}</option>
                         {% endfor %}
                     </optgroup>
                 {% endfor %}

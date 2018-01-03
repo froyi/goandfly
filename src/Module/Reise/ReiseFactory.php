@@ -62,7 +62,6 @@ class ReiseFactory
     /**
      * @param array $parameter
      * @return null|Reise
-     * @todo add bearbeitet to parameter
      */
     public function getReiseFromUploadedData(array $parameter): ?Reise
     {

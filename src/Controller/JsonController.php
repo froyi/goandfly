@@ -7,6 +7,8 @@ use Project\Configuration;
 
 use Project\Module\Continent\Continent;
 use Project\Module\Continent\ContinentService;
+use Project\Module\Frage\Frage;
+use Project\Module\Frage\FrageService;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\News\NewsService;
 use Project\Module\Reise\ReiseService;
@@ -115,8 +117,28 @@ class JsonController extends DefaultController
 
         $this->viewRenderer->addViewConfig('bearbeiteReise', $reise);
 
+        $this->getTagListe();
+
         $this->jsonModel->addJsonConfig('view',
             $this->viewRenderer->renderJsonView('partial/bearbeite_reise.twig'));
         $this->jsonModel->send();
+    }
+
+    public function erstelleFrageAction(): void
+    {
+        $frageService = new FrageService($this->database);
+
+        $frage = $frageService->getFrageByParams($_POST);
+
+        if ($frage === null) {
+            $this->jsonModel->send('error');
+        }
+
+        if ($frageService->saveFrageToDatabase($frage) === true) {
+            $this->jsonModel->addJsonConfig('frage', $frage);
+            $this->jsonModel->send();
+        }
+
+        $this->jsonModel->send('error');
     }
 }

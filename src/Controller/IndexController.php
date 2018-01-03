@@ -52,7 +52,7 @@ class IndexController extends DefaultController
         $this->viewRenderer->addViewConfig('reise', $reise);
 
 
-        if ($reise->getRegion() !== null) {
+        if ($reise->getRegionList() !== null) {
             $reiseRecommenderAmount = $this->configuration->getEntryByName('reise-recommender-offer');
             $reiseRecommender = $reiseService->getReiseRecommenderByReise($reise, $reiseRecommenderAmount);
 

@@ -64,4 +64,35 @@ class FrageService
 
         return $fragenArray;
     }
+
+    /**
+     * @param array $parameter
+     *
+     * @return null|Frage
+     */
+    public function getFrageByParams(array $parameter): ?Frage
+    {
+        /** @var \stdClass $object */
+        $object = (object)$parameter;
+
+        if (empty($object->frageId)) {
+            $object->frageId = Id::generateId()->toString();
+        }
+
+        if ($this->frageFactory->isObjectValid($object) === true) {
+            return $this->frageFactory->getFrageFromObject($object);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param Frage $frage
+     *
+     * @return bool
+     */
+    public function saveFrageToDatabase(Frage $frage): bool
+    {
+        return $this->frageRepository->saveFrageToDatabase($frage);
+    }
 }

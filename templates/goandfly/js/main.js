@@ -36,9 +36,6 @@ function handleAngebote(page, regionId) {
     });
 }
 
-/**
- * @todo error case necessary?
- */
 $(document).on('click', '.continent', function () {
     var $continent = $(this),
         actualContinentId = $continent.data('continentId'),
@@ -115,10 +112,6 @@ $(document).on('click', '.js-create-neuigkeiten', function () {
     $('#erstelleNeuigkeitenContainer').fadeToggle(500);
 });
 
-$(document).on('submit', '#holeReisedatenRegionForm', function () {
-    debugger;
-});
-
 $(document).on('submit', '#bearbeiteNeuigkeitForm', function (event) {
     event.preventDefault();
 
@@ -156,6 +149,8 @@ $(document).on('submit', '.hole-reise', function (event) {
         success: function (response) {
             if (response.status === 'success') {
                 $bearbeiteReiseContainer.html(response.view);
+                CKEDITOR.replace('ReiseEditorCKE');
+                CKEDITOR.replace('editorCKE3');
             }
         }
     });
@@ -163,7 +158,43 @@ $(document).on('submit', '.hole-reise', function (event) {
 
 $(document).ready(function () {
     CKEDITOR.replace('editorCKE');
-    CKEDITOR.replace('ReiseEditorCKE');
 });
+
+
+$(document).on('submit', '.js-erstelle-frage', function (event) {
+    event.preventDefault();
+
+    var $this = $(this),
+        reiseIdData = $this.find('.js-reiseId').val(),
+        $frageStatus = $('.js-erstelle-frage-status'),
+        $frage = $this.find('.js-frage'),
+        $antwort = $this.find('.js-antwort');
+
+    $.ajax({
+        type: 'POST',
+        url: 'index.php?route=ajax-erstelle-frage',
+        dataType: 'json',
+        data: {
+            reiseId: reiseIdData,
+            frage: $frage.val(),
+            antwort: $antwort.val()
+        },
+        success: function (response) {
+            if (response.status === 'success') {
+                debugger;
+                $frageStatus.html('Die Frage wurde gespeichert.');
+                $frage.val('');
+                $antwort.val('');
+
+            } else {
+                $frageStatus.html('Die Frage konnte nicht gespeichert werden');
+            }
+        },
+        error: function(response) {
+            $frageStatus.html('Die Frage konnte nicht gespeichert werden');
+        }
+    });
+});
+
 
 

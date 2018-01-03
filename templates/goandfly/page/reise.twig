@@ -140,21 +140,15 @@
             <div id="reiseSidebarLeistungen">
                 <h3>Leistungen</h3>
                 <div id="reiseSidebarLeistungenContainer">
-                    {% if reise.getLeistungListe|length > 0 %}
-                        {% for leistung in reise.getLeistungListe %}
-                            {{ leistung.getText|raw }}
-                        {% endfor %}
+                    {% if reise.getLeistung|length > 0 %}
+                        {{ reise.getLeistung.getText|raw }}
                     {% else %}
                         <p class="no-data">Es wurden noch keine Leistungen definiert.</p>
                     {% endif %}
 
                 </div>
-                {% if reise.getLeistungListe|length > 0 %}
-                    {% for leistung in reise.getLeistungListe %}
-                        {% if leistung|length > 500 %}
-                            <p onClick="showLeistungen();" id="leistungenMehr">mehr ...</p>
-                        {% endif %}
-                    {% endfor %}
+                {% if reise.getLeistung.getText|length > 500 %}
+                    <p onClick="showLeistungen();" id="leistungenMehr">mehr ...</p>
                 {% endif %}
             </div> <!-- #reiseSidebarLeistungen -->
 

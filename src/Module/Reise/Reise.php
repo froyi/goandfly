@@ -14,6 +14,7 @@ use Project\Module\GenericValueObject\Reisedauer;
 use Project\Module\GenericValueObject\Terrain;
 use Project\Module\GenericValueObject\Text;
 use Project\Module\GenericValueObject\Title;
+use Project\Module\Leistung\Leistung;
 use Project\Module\Region\Region;
 use Project\Module\Tag\Tag;
 
@@ -70,43 +71,14 @@ class Reise
 
     /** @var  array $regionList */
     protected $regionList = [];
-
-    /**
-     * @return array
-     */
-    public function getRegionList(): array
-    {
-        return $this->regionList;
-    }
-
-    /**
-     * @param array $regionList
-     */
-    public function setRegionList(array $regionList): void
-    {
-        $this->regionList = $regionList;
-    }
-
-    /**
-     * @param Region $region
-     */
-    public function addRegionToRegionList(Region $region): void
-    {
-        $this->regionList[$region->getRegionId()->toString()] = $region;
-    }
-
     /** @var array $tagListe */
     protected $tagListe = [];
-
     /** @var array $terminListe */
     protected $terminListe = [];
-
     /** @var array $reiseverlaufListe */
     protected $reiseverlaufListe = [];
-
-    /** @var array $leistungListe */
-    protected $leistungListe = [];
-
+    /** @var Leistung $leistung */
+    protected $leistung;
     /** @var array $frageListe */
     protected $frageListe = [];
 
@@ -145,7 +117,8 @@ class Reise
         Date $sichtbar,
         Image $bild,
         Name $veranstalter
-    ) {
+    )
+    {
         $this->reiseId = $reiseId;
         $this->kurzbeschreibung = $kurzbeschreibung;
         $this->beschreibung = $beschreibung;
@@ -161,6 +134,30 @@ class Reise
         $this->sichtbar = $sichtbar;
         $this->bild = $bild;
         $this->veranstalter = $veranstalter;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRegionList(): array
+    {
+        return $this->regionList;
+    }
+
+    /**
+     * @param array $regionList
+     */
+    public function setRegionList(array $regionList): void
+    {
+        $this->regionList = $regionList;
+    }
+
+    /**
+     * @param Region $region
+     */
+    public function addRegionToRegionList(Region $region): void
+    {
+        $this->regionList[$region->getRegionId()->toString()] = $region;
     }
 
     /**
@@ -182,17 +179,17 @@ class Reise
     /**
      * @return array
      */
-    public function getLeistungListe(): array
+    public function getLeistung(): Leistung
     {
-        return $this->leistungListe;
+        return $this->leistung;
     }
 
     /**
      * @param array $leistungListe
      */
-    public function setLeistungListe(array $leistungListe)
+    public function setLeistung(Leistung $leistungListe)
     {
-        $this->leistungListe = $leistungListe;
+        $this->leistung = $leistungListe;
     }
 
     /**

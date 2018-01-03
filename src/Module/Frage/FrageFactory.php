@@ -25,4 +25,15 @@ class FrageFactory
 
         return new Frage($frageId, $reiseId, $frage, $antwort);
     }
+
+    public function isObjectValid($object): bool
+    {
+        try {
+            $this->getFrageFromObject($object);
+        } catch (\InvalidArgumentException $error) {
+            return false;
+        }
+
+        return true;
+    }
 }

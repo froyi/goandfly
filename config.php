@@ -89,6 +89,10 @@ return [
         'bearbeite-neuigkeiten' => [
             'controller' => 'BackendController',
             'action' => 'bearbeiteNeuigkeitenAction'
+        ],
+        'ajax-erstelle-frage' => [
+            'controller' => 'JsonController',
+            'action' => 'erstelleFrageAction'
         ]
     ],
     'startpage-offer' => 20,

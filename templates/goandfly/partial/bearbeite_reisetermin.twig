@@ -1,0 +1,11 @@
+{% if bearbeiteReisetermin|length > 0 %}
+    <form action="sc.php/admin.sc.php" method="post" name="bearbeiteReisetermineForm">
+        <p>Startdatum:<br/><input type="date" name="start" value="{{ bearbeiteReisetermin.getStart }}"/></p>
+        <p>Enddatum:<br/><input type="date" name="ende" value="{{ bearbeiteReisetermin.getEnde }}"/></p>
+        <p>Preis:<br/><input type="text" name="preis" value="{{ bearbeiteReisetermin.getPreis }}"/></p>
+        <p><input type="checkbox" name="loescheTermin"/> Möchten Sie diesen Termin löschen?</p>
+
+        <input type="submit" name="submit" value="Absenden"/>
+        <input type="hidden" name="terminId" value="{{ bearbeiteReisetermin.getTerminId }}"/>
+    </form>
+{% endif %}

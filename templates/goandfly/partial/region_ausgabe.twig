@@ -3,7 +3,7 @@
     {% for region in continent.getRegionList %}
         <div class="region js-region" data-region-id="{{ region.getRegionId }}" data-region-bild="{{ region.getBild }}"
              data-region-beschreibung="{{ region.getBeschreibung }}">
-                <p>{{ region.getName }}</p>
+                <p>{{ region.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}</p>
                 <span>{{ region.getBeispiellaender }}</span>
         </div>
     {% endfor %}
@@ -14,7 +14,7 @@
     <img id="navigationBild" src="{{ continent.getCategoryBild }}"/>
 
     <div id="kontinentInformation">
-        <h2>{{ continent.getName }}</h2>
+        <h2>{{ continent.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}</h2>
         <p><span>Fläche:</span><br/>{{ continent.getFlaeche }}</p>
         <p><span>Gliederung:</span><br/>{{ continent.getGliederung }}</p>
         <p><span>Tourismus:</span><br/>{{ continent.getTourismus }}</p>

@@ -39,14 +39,12 @@ class LeistungRepository
 
     /**
      * @param Id $reiseId
-     *
-     * @return array
      */
-    public function getLeistungenByReiseId(Id $reiseId): array
+    public function getLeistungByReiseId(Id $reiseId)
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);
         $query->where('reiseId', '=', $reiseId->toString());
 
-        return $this->database->fetchAll($query);
+        return $this->database->fetch($query);
     }
 }

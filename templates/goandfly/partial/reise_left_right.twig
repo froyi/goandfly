@@ -33,7 +33,7 @@
         <div class="tagListe">
             {% if reise.getTagListe|length > 0 %}
                 {% for tag in reise.getTagListe %}
-                    <div class="singleTag">#{{ tag.getName }}</div>
+                    <div class="singleTag">#{{ tag.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}</div>
                 {% endfor %}
             {% endif %}
         </div>

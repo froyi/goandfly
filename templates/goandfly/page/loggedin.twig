@@ -56,9 +56,8 @@
                         {% for veranstalter in veranstalterWithReisen %}
                             <optgroup label="{{ veranstalter.getReiseveranstalter }}">
                                 {% for reise in veranstalter.getReiseList %}
-                                    <option value="{{ reise.getReiseId }}">
-                                        {{ reise.getRegion.getName }} - {{ reise.getTitel }} - erstellt
-                                        am {{ reise.getBearbeitet }}
+                                    <option value="{{ reise.getReiseId }}">{{ reise.getTitel }} - erstellt
+                                        am {{ reise.getBearbeitet.getDateString }}
                                     </option>
                                 {% endfor %}
                             </optgroup>

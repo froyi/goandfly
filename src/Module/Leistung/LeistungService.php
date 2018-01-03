@@ -48,19 +48,16 @@ class LeistungService
     /**
      * @param Id $reiseId
      *
-     * @return array
+     * @return null|Leistung
      */
-    public function getLeistungenByReiseId(Id $reiseId): array
+    public function getLeistungByReiseId(Id $reiseId): ?Leistung
     {
-        $leistungenArray = [];
+        $leistung = $this->leistungRepository->getLeistungByReiseId($reiseId);
 
-        $leistungen = $this->leistungRepository->getLeistungenByReiseId($reiseId);
-
-        foreach ($leistungen as $leistungData) {
-            $leistung = $this->leistungFactory->getLeistungFromObject($leistungData);
-            $leistungenArray[$leistung->getLeistungId()->toString()] = $leistung;
+        if (empty($leistung) || $leistung === false) {
+            return null;
         }
 
-        return $leistungenArray;
+        return $this->leistungFactory->getLeistungFromObject($leistung);
     }
 }
