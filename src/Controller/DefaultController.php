@@ -48,7 +48,7 @@ class DefaultController
      *
      * @param Configuration $configuration
      */
-    public function __construct(Configuration $configuration)
+    public function __construct(Configuration $configuration, string $routeName)
     {
         $this->configuration = $configuration;
         $this->viewRenderer = new ViewRenderer($this->configuration);
@@ -61,7 +61,7 @@ class DefaultController
             $this->loggedInUser = $this->userService->getLogedInUserByUserId($userId);
         }
 
-        $this->setDefaultViewConfig();
+        $this->setDefaultViewConfig($routeName);
 
         $this->setDefaultData();
 
@@ -71,9 +71,10 @@ class DefaultController
     /**
      * Sets default view parameter for sidebar etc.
      */
-    protected function setDefaultViewConfig(): void
+    protected function setDefaultViewConfig(string $routeName): void
     {
         $this->viewRenderer->addViewConfig('page', 'notfound');
+        $this->viewRenderer->addViewConfig('route', $routeName);
         $this->viewRenderer->addViewConfig('teaserBild', 'templates/goandfly/img/partner_teaser.jpg');
 
     }

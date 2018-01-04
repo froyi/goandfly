@@ -7,7 +7,6 @@ use Project\Configuration;
 
 use Project\Module\Continent\Continent;
 use Project\Module\Continent\ContinentService;
-use Project\Module\Frage\Frage;
 use Project\Module\Frage\FrageService;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\News\NewsService;
@@ -29,9 +28,9 @@ class JsonController extends DefaultController
      *
      * @param Configuration $configuration
      */
-    public function __construct(Configuration $configuration)
+    public function __construct(Configuration $configuration, string $routeName)
     {
-        parent::__construct($configuration);
+        parent::__construct($configuration, $routeName);
 
         $this->jsonModel = new JsonModel();
     }

@@ -18,13 +18,12 @@
 
         <div id="kontaktform">
             <h3>Kontaktformular</h3>
-            <form name="kontakt" method="post" action="{{ route('mailer') }}">{#inc.php/mail.sc.php#}
+            <form name="kontakt" method="post" action="{{ route('footer-contact') }}">{#inc.php/mail.sc.php#}
                 <input type="text" name="name" required placeholder="Name"><br/>
                 <input type="email" name="email" required placeholder="E-Mail"><br/>
                 <textarea name="nachricht" placeholder="Nachricht" required></textarea><br/>
-                <input type="hidden" name="seite" value="<?php echo $seite; ?>">
                 <input type="submit" name="submit" value="Senden">
-                <input type="hidden" name="footerForm" value="true" />
+                <input type="hidden" name="route" value="{{ route }}" />
             </form>
             {% if mailSent is same as (true) %}
                 <p>Vielen Dank für Ihr Interesse, wir werden uns bei Ihnen melden.</p>

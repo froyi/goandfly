@@ -8,11 +8,24 @@ return [
         'name' => 'goandfly',
         'dir' =>  '/goandfly',
     ],
-    'database' => [
+    'database_local' => [
         'host' => 'localhost',
         'user' => 'root',
         'password' => '',
         'database' => 'fly'
+    ],
+    // _live_test
+    'database' => [
+        'host' => 'localhost',
+        'user' => 'd002e083',
+        'password' => '2006gofly0523',
+        'database' => 'd002e083'
+    ],
+    'database_live' => [
+        'host' => 'localhost',
+        'user' => 'd017956f',
+        'password' => 'veQfmf882Z3FCGpE',
+        'database' => 'd017956f'
     ],
     'controller' => [
         'namespace' => 'Controller'
@@ -93,6 +106,18 @@ return [
         'ajax-erstelle-frage' => [
             'controller' => 'JsonController',
             'action' => 'erstelleFrageAction'
+        ],
+        'kontakt-mailer' => [
+            'controller' => 'MailerController',
+            'action' => 'contactFormAction'
+        ],
+        'footer-contact' => [
+            'controller' => 'MailerController',
+            'action' => 'footerContactAction'
+        ],
+        'reise-contact' => [
+            'controller' => 'MailerController',
+            'action' => 'reiseContactAction'
         ]
     ],
     'startpage-offer' => 20,

@@ -80,7 +80,7 @@
                                 {% for reise in tag.getReiseList %}
                                     <option value="{{ reise.getReiseId }}">
                                         {{ reise.getRegion.getName }} - {{ reise.getTitel }} - erstellt
-                                        am {{ reise.getBearbeitet }}
+                                        am {{ reise.getBearbeitet }} - {{ reise.getVeranstalter }}
                                     </option>
                                 {% endfor %}
                             </optgroup>

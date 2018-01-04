@@ -24,9 +24,9 @@ class BackendController extends DefaultController
     /**
      * BackendController constructor.
      */
-    public function __construct(Configuration $configuration)
+    public function __construct(Configuration $configuration, string $routeName)
     {
-        parent::__construct($configuration);
+        parent::__construct($configuration, $routeName);
 
         if ($this->loggedInUser === null) {
             $this->showStandardPage(Routing::ERROR_ROUTE);

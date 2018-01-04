@@ -7,7 +7,7 @@
             <div>{{ reise.getBeschreibung|raw }}</div>
             <div id="reiseFormular">
                 <p>Wenn Sie sich für diese Reise interessieren, dann schreiben Sie uns:</p>
-                <form action="{{ route('kontakt-mailer') }}" method="post">
+                <form action="{{ route('reise-contact') }}" method="post">
                     <p><select name="anrede" required>
                             <option value="0" selected>Bitte auswählen</option>
                             <option value="Frau">Frau</option>
@@ -25,7 +25,7 @@
                             <option value="0" selected>Termin ist zweitrangig</option>
                             {% if reise.getTerminListe|length > 0 %}
                                 {% for termin in reise.getTerminListe %}
-                                    <option value="{{ termin.getTerminId }}">{{ termin.getStart }}
+                                    <option value="{{ termin.getStart }} - {{ termin.getEnde }}">{{ termin.getStart }}
                                         - {{ termin.getEnde }} {{ termin.getPreis }}</option>
                                 {% endfor %}
                             {% endif %}
@@ -35,7 +35,8 @@
                                  placeholder="Hier ist Platz für Ihre Anmerkungen bzw. Wünsche zu dieser Reise."></textarea>
                     </p>
                     <input type="hidden" name="titel" value="{{ reise.getTitel }}"/>
-                    <input type="hidden" name="seite" value="{{ route('reise', reiseId) }}"/>
+                    <input type="hidden" name="route" value="{{ route }}"/>
+                    <input type="hidden" name="reiseId" value="{{ reise.getReiseId }}"/>
                     <p><input type="submit" name="submit" value="Nachricht absenden"/></p>
                     {% if mailSent is same as (true) %}
                         <p>Vielen Dank für Ihr Interesse. Wir werden uns schnellstmölichst mit Ihnen in Verbindung
