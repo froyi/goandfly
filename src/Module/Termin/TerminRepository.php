@@ -3,6 +3,7 @@
 namespace Project\Module\Termin;
 
 use Project\Module\Database\Database;
+use Project\Module\Database\Query;
 use Project\Module\GenericValueObject\Id;
 
 /**
@@ -45,6 +46,7 @@ class TerminRepository
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);
         $query->where('reiseId', '=', $reiseId->toString());
+        $query->orderBy('start', Query::ASC);
 
         return $this->database->fetchAll($query);
     }
