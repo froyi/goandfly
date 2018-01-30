@@ -25,6 +25,6 @@ $routing = new Routing($configuration);
 try {
     $routing->startRoute($route);
 } catch(\InvalidArgumentException $error) {
-    $indexController = new IndexController($configuration);
+    $indexController = new IndexController($configuration, $route);
     $indexController->errorPageAction();
 }
