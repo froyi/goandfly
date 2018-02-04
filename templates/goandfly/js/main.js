@@ -181,7 +181,6 @@ $(document).on('submit', '.js-erstelle-frage', function (event) {
         },
         success: function (response) {
             if (response.status === 'success') {
-                debugger;
                 $frageStatus.html('Die Frage wurde gespeichert.');
                 $frage.val('');
                 $antwort.val('');
@@ -196,5 +195,6 @@ $(document).on('submit', '.js-erstelle-frage', function (event) {
     });
 });
 
+$(document).on('submit')
 
 
