@@ -140,4 +140,23 @@ class JsonController extends DefaultController
 
         $this->jsonModel->send('error');
     }
+
+    public function bearbeiteFrageAction(): void
+    {
+        $frageId = Tools::getValue('frageId');
+
+        if ($frageId === false) {
+            $this->jsonModel->send('error');
+        }
+
+        $frageService = new FrageService($this->database);
+
+        $frage = $frageService->getFrageByFrageId(Id::fromString($frageId));
+
+        $this->viewRenderer->addViewConfig('bearbeiteFrage', $frage);
+
+        $this->jsonModel->addJsonConfig('view',
+            $this->viewRenderer->renderJsonView('partial/bearbeite_frage.twig'));
+        $this->jsonModel->send();
+    }
 }

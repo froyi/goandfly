@@ -8,25 +8,25 @@ return [
         'name' => 'goandfly',
         'dir' =>  '/goandfly',
     ],
-    'database' => [
+    'database_local' => [
         'host' => 'localhost',
         'user' => 'root',
         'password' => '',
         'database' => 'fly'
     ],
     // _live_test
-    'database_live' => [
+    'database' => [
         'host' => 'localhost',
         'user' => 'd002e083',
         'password' => '2006gofly0523',
         'database' => 'd002e083'
     ],
-    'database_live' => [
-        'host' => 'localhost',
-        'user' => 'd017956f',
-        'password' => 'veQfmf882Z3FCGpE',
-        'database' => 'd017956f'
-    ],
+//    'database_live' => [
+//        'host' => 'localhost',
+//        'user' => 'd017956f',
+//        'password' => 'veQfmf882Z3FCGpE',
+//        'database' => 'd017956f'
+//    ],
     'controller' => [
         'namespace' => 'Controller'
     ],
@@ -106,6 +106,13 @@ return [
         'ajax-erstelle-frage' => [
             'controller' => 'JsonController',
             'action' => 'erstelleFrageAction'
+        ],
+        'ajax-bearbeite-frage' => [
+            'controller' => 'JsonController',
+            'action' => 'bearbeiteFrageAction'
+        ],'bearbeite-frage-form' => [
+            'controller' => 'BackendController',
+            'action' => 'bearbeiteFrageFormAction'
         ],
         'kontakt-mailer' => [
             'controller' => 'MailerController',

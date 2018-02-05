@@ -12,7 +12,7 @@ use Project\Module\GenericValueObject\Id;
  */
 class FrageRepository
 {
-    protected const TABLE = 'frage';
+    protected const TABLE = 'fragen';
 
     /** @var Database $database */
     protected $database;
@@ -64,7 +64,7 @@ class FrageRepository
             $query->set('frage', $frage->getFrage()->getText());
             $query->set('antwort', $frage->getAntwort()->getText());
 
-            $query->where('frageId', '=', $frage->getReiseId()->toString());
+            $query->where('frageId', '=', $frage->getFrageId()->toString());
 
             return $this->database->execute($query);
         }

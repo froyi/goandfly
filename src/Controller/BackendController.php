@@ -5,6 +5,8 @@ namespace Project\Controller;
 
 use Project\Configuration;
 use Project\Module\Database\Database;
+use Project\Module\Frage\FrageService;
+use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Image;
 use Project\Module\Migration\Migrate;
 use Project\Module\News\News;
@@ -57,6 +59,11 @@ class BackendController extends DefaultController
 
         $tags = $tagService->getTagsWithReisen($reiseService);
 
+        $this->viewRenderer->addViewConfig('tagsWithReisen', $tags);
+
+        if (Tools::getValue('reiseId') !== false) {
+            $this->viewRenderer->addViewConfig('activeReiseId', Id::fromString(Tools::getValue('reiseId')));
+        }
         $this->viewRenderer->addViewConfig('tagsWithReisen', $tags);
 
         $this->getNews();
@@ -136,6 +143,26 @@ class BackendController extends DefaultController
         $parameter = ['notificationCode' => 'newsUpdateError', 'notificationStatus' => 'error'];
         if ($news instanceof News && $newsService->saveNewsToDatabase($news) === true) {
             $parameter = ['notificationCode' => 'newsUpdateSuccess', 'notificationStatus' => 'success'];
+        }
+
+        header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
+    }
+
+    public function bearbeiteFrageFormAction(): void
+    {
+        $parameter = ['notificationCode' => 'frageError', 'notificationStatus' => 'error', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
+    
+        $frageService = new FrageService($this->database);
+
+        $frage = $frageService->getFrageByParams($_POST);
+
+        if ($frage === null) {
+            header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
+            exit;
+        }
+
+        if ($frageService->saveFrageToDatabase($frage) === true) {
+            $parameter = ['notificationCode' => 'frageSuccess', 'notificationStatus' => 'success', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
         }
 
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));

@@ -33,7 +33,7 @@
                         {% for region in regionsWithReisen %}
                             <optgroup label="{{ region.getName }}">
                                 {% for reise in region.getReisenList %}
-                                    <option value="{{ reise.getReiseId }}">
+                                    <option value="{{ reise.getReiseId }}" {% if activeReiseId and activeReiseId == reise.getReiseId %}selected{% endif %}>
                                         {{ reise.getTitel }} - erstellt
                                         am {{ reise.getBearbeitet }} {{ reise.getVeranstalter }}
                                     </option>

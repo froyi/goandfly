@@ -100,7 +100,7 @@
             {% endif %}
 
             <form action="#" method="post" name="bearbeiteFragenReise" class="js-bearbeite-frage">
-                <p><select name="fragenListe">
+                <p><select name="fragenListe" class="js-frage-liste">
                         <option value="0">Bitte wählen Sie eine Frage aus</option>
 
                         {% for frage in bearbeiteReise.getFrageListe %}
@@ -114,7 +114,7 @@
                 <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
             </form>
 
-            <div class="bearbeite-frage-container"></div>
+            <div class="bearbeite-frage-container js-bearbeite-frage-container"></div>
         </div>    <!-- #erstelleFragen -->
 
         <p>Hier erstellen Sie Reiseleistungen zu Ihrer Reise aus der Sidebar.</p>

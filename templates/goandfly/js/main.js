@@ -158,6 +158,13 @@ $(document).on('submit', '.hole-reise', function (event) {
 
 $(document).ready(function () {
     CKEDITOR.replace('editorCKE');
+
+    if ($('.hole-reise .js-hole-reisedaten-select').val() !== 0) {
+        $('.hole-reise').submit();
+        $('html, body').animate({
+            scrollTop: $('.js-bearbeite-reise').offset().top
+        }, 2000);
+    }
 });
 
 
@@ -189,12 +196,30 @@ $(document).on('submit', '.js-erstelle-frage', function (event) {
                 $frageStatus.html('Die Frage konnte nicht gespeichert werden');
             }
         },
-        error: function(response) {
+        error: function() {
             $frageStatus.html('Die Frage konnte nicht gespeichert werden');
         }
     });
 });
 
-$(document).on('submit')
+$(document).on('submit', '.js-bearbeite-frage', function (event) {
+    event.preventDefault();
 
+    var frageId = $('.js-frage-liste').val(),
+        $bearbeiteFrageContainer = $('.js-bearbeite-frage-container');
 
+    $.ajax({
+        type: 'POST',
+        url: 'index.php?route=ajax-bearbeite-frage',
+        dataType: 'json',
+        data: {
+            frageId: frageId
+        },
+        success: function (response) {
+                $bearbeiteFrageContainer.html(response.view);
+        },
+        error: function() {
+            $bearbeiteFrageContainer.html('Die Frage konnte nicht gefunden werden.');
+        }
+    });
+});

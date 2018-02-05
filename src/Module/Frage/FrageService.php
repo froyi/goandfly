@@ -66,6 +66,23 @@ class FrageService
     }
 
     /**
+     *
+     *
+     * @param Id $frageId
+     * @return null|Frage
+     */
+    public function getFrageByFrageId(Id $frageId): ?Frage
+    {
+        $frageData = $this->frageRepository->getFrageByFrageId($frageId);
+
+        if ($frageData === false) {
+            return null;
+        }
+
+        return $this->frageFactory->getFrageFromObject($frageData);
+    }
+
+    /**
      * @param array $parameter
      *
      * @return null|Frage

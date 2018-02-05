@@ -1,5 +1,5 @@
 {% if bearbeiteFrage|length > 0 %}
-    <form action="#" name="bearbeiteFragenReise" method="post" class="js-bearbeite-reise">
+    <form action="{{ route('bearbeite-frage-form') }}" name="bearbeiteFragenReiseForm" method="post">
         <p><input type="text" name="frage" required placeholder="Stellen Sie hier Ihre Frage"
                   value="{{ bearbeiteFrage.getFrage }}" /></p>
         <p><textarea name="antwort" required
@@ -8,5 +8,6 @@
         <p><input type="submit" name="submit" value="Absenden"/></p>
 
         <input type="hidden" name="frageId" value="{{ bearbeiteFrage.getFrageId }}"/>
+        <input type="hidden" name="reiseId" value="{{ bearbeiteFrage.getReiseId }}"/>
     </form>
 {% endif %}
