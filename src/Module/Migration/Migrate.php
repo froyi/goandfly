@@ -31,7 +31,7 @@ class Migrate
         $this->newDatabase = $newDatabase;
     }
 
-    public function migrate(): void
+    public function startMigration(): void
     {
         $this->emptyDatabase();
 
@@ -366,9 +366,6 @@ class Migrate
 
             $this->newDatabase->execute($query);
         }
-
-        /*$query = $this->newDatabase->getNewSelectQuery($table_new);
-         var_dump($this->newDatabase->fetchAll($query));*/
     }
 
     protected function migrateFrage($reiseId, $oldReiseId): void

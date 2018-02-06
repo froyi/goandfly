@@ -231,6 +231,8 @@ class Query
             case self::TRUNCATE:
                 $queryString .= self::TRUNCATE . $this->getTables();
                 break;
+            default:
+                break;
         }
 
         return $queryString;

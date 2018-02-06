@@ -48,11 +48,15 @@ class NewsFactory
             /** @var Text $text */
             $text = Text::fromString($object->text);
 
-            new News($newsId, $titel, $datum, $text);
+            $news = new News($newsId, $titel, $datum, $text);
         } catch (\InvalidArgumentException $error) {
             return false;
         }
 
-        return true;
+        if ($news instanceof News) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -25,7 +25,7 @@ class MailerController extends DefaultController
         $frage = $_POST["frage"];
 
         $to = "go.and.fly@t-online.de";
-        //$to = "ms2002@onlinehome.de";
+
         $message = $anrede . " " . $vorname . " " . $nachname . "\r\n" .
             $email . "\r\n" .
             $telefon . "\r\n" .
@@ -64,7 +64,6 @@ class MailerController extends DefaultController
             $reiseId = $_POST['reiseId'];
 
             $to = "go.and.fly@t-online.de";
-            //$to = "ms2002@onlinehome.de";
 
             $message = $titel . "\r\n" .
                 $anrede . " " . $vorname . " " . $nachname . "\r\n" .
@@ -102,7 +101,6 @@ class MailerController extends DefaultController
         if (strlen(trim($nachricht)) > 5) {
 
             $to = "go.and.fly@t-online.de";
-            //$to = "ms2002@onlinehome.de";
 
             $message = $name . " schrieb: \r\n" . $nachricht;
 

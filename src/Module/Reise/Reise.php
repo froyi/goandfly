@@ -85,39 +85,23 @@ class Reise
     /**
      * Reise constructor.
      *
-     * @param Id $reiseId
-     * @param Text $kurzbeschreibung
-     * @param Text $beschreibung
-     * @param Title $titel
-     * @param Personen $personen
+     * @param Id         $reiseId
+     * @param Text       $kurzbeschreibung
+     * @param Text       $beschreibung
+     * @param Title      $titel
+     * @param Personen   $personen
      * @param Reisedauer $reisedauer
-     * @param Flugzeit $flugzeit
-     * @param Text $sprache
-     * @param Terrain $terrain
-     * @param Image $karte
-     * @param Datetime $bearbeitet
-     * @param Image $teaser
-     * @param Date $sichtbar
-     * @param Image $bild
-     * @param Name $veranstalter
+     * @param Flugzeit   $flugzeit
+     * @param Text       $sprache
+     * @param Terrain    $terrain
+     * @param Image      $karte
+     * @param Datetime   $bearbeitet
+     * @param Image      $teaser
+     * @param Date       $sichtbar
+     * @param Image      $bild
+     * @param Name       $veranstalter
      */
-    public function __construct(
-        Id $reiseId,
-        Text $kurzbeschreibung,
-        Text $beschreibung,
-        Title $titel,
-        Personen $personen,
-        Reisedauer $reisedauer,
-        Flugzeit $flugzeit,
-        Text $sprache,
-        Terrain $terrain,
-        Image $karte,
-        Datetime $bearbeitet,
-        Image $teaser,
-        Date $sichtbar,
-        Image $bild,
-        Name $veranstalter
-    )
+    public function __construct(Id $reiseId, Text $kurzbeschreibung, Text $beschreibung, Title $titel, Personen $personen, Reisedauer $reisedauer, Flugzeit $flugzeit, Text $sprache, Terrain $terrain, Image $karte, Datetime $bearbeitet, Image $teaser, Date $sichtbar, Image $bild, Name $veranstalter)
     {
         $this->reiseId = $reiseId;
         $this->kurzbeschreibung = $kurzbeschreibung;

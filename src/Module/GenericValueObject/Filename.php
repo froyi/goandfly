@@ -37,9 +37,6 @@ class Filename
         /** @var string $type */
         $type = self::getTypeFromFile($file);
 
-        self::ensureFilenameIsValid($filename);
-        self::ensureTypeIsValid($type);
-
         return new self($filename, $type);
     }
 
@@ -51,9 +48,6 @@ class Filename
     {
         /** @var Uuid $filename */
         $filename = Uuid::uuid4();
-
-        self::ensureTypeIsValid($type);
-        self::ensureFilenameIsValid($filename);
 
         return new self($filename, $type);
     }
@@ -78,22 +72,6 @@ class Filename
         $filenameArray = explode('.', $file);
 
         return $filenameArray[1];
-    }
-
-    /**
-     * @param Uuid $filename
-     */
-    protected static function ensureFilenameIsValid(Uuid $filename): void
-    {
-
-    }
-
-    /**
-     * @param string $type
-     */
-    protected static function ensureTypeIsValid(string $type): void
-    {
-
     }
 
     /**

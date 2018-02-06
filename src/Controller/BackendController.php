@@ -39,7 +39,7 @@ class BackendController extends DefaultController
         $oldDatabase = new Database($this->configuration, 'goandfly');
         $migrate = new Migrate($oldDatabase, $this->database);
 
-        $migrate->migrate();
+        $migrate->startMigration();
     }
 
     public function loggedInAction(): void

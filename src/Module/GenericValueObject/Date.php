@@ -40,16 +40,6 @@ class Date extends AbstractDatetime implements DateInterface
     }
 
     /**
-     * @param $datetime
-     * @return AbstractDatetime
-     * @throws \InvalidArgumentException
-     */
-    public static function fromValue($datetime): AbstractDatetime
-    {
-        return parent::fromValue($datetime);
-    }
-
-    /**
      * @param int $days
      * @return bool
      */
