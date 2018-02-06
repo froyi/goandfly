@@ -16,6 +16,8 @@ class TagRepository
 
     protected const REISE_TAG_TABLE = 'reise_tag';
 
+    protected const ORDER_BY_POSITION = 'position';
+
     /** @var  Database $database */
     protected $database;
 
@@ -35,7 +37,7 @@ class TagRepository
     public function getAllTags(): array
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);
-        $query->orderBy('position', Query::ASC);
+        $query->orderBy(self::ORDER_BY_POSITION, Query::ASC);
 
         return $this->database->fetchAll($query);
     }
@@ -51,7 +53,7 @@ class TagRepository
         $query->addTable(self::TABLE);
         $query->where(self::TABLE . '.tagId', '=', self::REISE_TAG_TABLE . '.tagId', true);
         $query->andWhere('reiseId', '=', $reiseId->toString());
-        $query->orderBy('position', Query::ASC);
+        $query->orderBy(self::ORDER_BY_POSITION, Query::ASC);
 
         return $this->database->fetchAll($query);
     }
@@ -65,7 +67,7 @@ class TagRepository
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);
         $query->where('tagId', '=', $tagId->toString());
-        $query->orderBy('position', Query::ASC);
+        $query->orderBy(self::ORDER_BY_POSITION, Query::ASC);
 
         return $this->database->fetch($query);
     }

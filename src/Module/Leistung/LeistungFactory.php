@@ -24,4 +24,15 @@ class LeistungFactory
 
         return new Leistung($leistungId, $reiseId, $text);
     }
+
+    public function isObjectValid($object): bool
+    {
+        try {
+            $this->getLeistungFromObject($object);
+        } catch (\InvalidArgumentException $error) {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -90,4 +90,18 @@ class FrageRepository
 
         return $this->database->fetch($query);
     }
+
+    /**
+     *
+     *
+     * @param Id $frageId
+     * @return bool
+     */
+    public function deleteFrageFromDatabase(Id $frageId): bool
+    {
+        $query = $this->database->getNewDeleteQuery(self::TABLE);
+        $query->where('frageId', '=', $frageId->toString());
+
+        return $this->database->execute($query);
+    }
 }

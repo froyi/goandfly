@@ -112,4 +112,15 @@ class FrageService
     {
         return $this->frageRepository->saveFrageToDatabase($frage);
     }
+
+    /**
+     *
+     *
+     * @param Id $frageId
+     * @return bool
+     */
+    public function deleteFrageByFrageId(Id $frageId): bool
+    {
+        return $this->frageRepository->deleteFrageFromDatabase($frageId);
+    }
 }

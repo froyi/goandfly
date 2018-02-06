@@ -8,14 +8,14 @@ return [
         'name' => 'goandfly',
         'dir' =>  '/goandfly',
     ],
-    'database_local' => [
+    'database' => [
         'host' => 'localhost',
         'user' => 'root',
         'password' => '',
         'database' => 'fly'
     ],
     // _live_test
-    'database' => [
+    'database_live' => [
         'host' => 'localhost',
         'user' => 'd002e083',
         'password' => '2006gofly0523',
@@ -110,7 +110,12 @@ return [
         'ajax-bearbeite-frage' => [
             'controller' => 'JsonController',
             'action' => 'bearbeiteFrageAction'
-        ],'bearbeite-frage-form' => [
+        ],
+        'ajax-erstelle-leistungen' => [
+            'controller' => 'JsonController',
+            'action' => 'erstelleLeistungenAction'
+        ],
+        'bearbeite-frage-form' => [
             'controller' => 'BackendController',
             'action' => 'bearbeiteFrageFormAction'
         ],

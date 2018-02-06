@@ -9,6 +9,7 @@ use Project\Module\Continent\Continent;
 use Project\Module\Continent\ContinentService;
 use Project\Module\Frage\FrageService;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\Leistung\LeistungService;
 use Project\Module\News\NewsService;
 use Project\Module\Reise\ReiseService;
 use Project\Utilities\Tools;
@@ -158,5 +159,23 @@ class JsonController extends DefaultController
         $this->jsonModel->addJsonConfig('view',
             $this->viewRenderer->renderJsonView('partial/bearbeite_frage.twig'));
         $this->jsonModel->send();
+    }
+
+    public function erstelleLeistungenAction(): void
+    {
+        $leistungService = new LeistungService($this->database);
+
+        $leistung = $leistungService->getLeistungByParams($_POST);
+
+        if ($leistung === null) {
+            $this->jsonModel->send('error');
+        }
+
+        if ($leistungService->saveLeistungToDatabase($leistung) === true) {
+            $this->jsonModel->addJsonConfig('leistung', $leistung);
+            $this->jsonModel->send();
+        }
+
+        $this->jsonModel->send('error');
     }
 }

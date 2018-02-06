@@ -223,3 +223,31 @@ $(document).on('submit', '.js-bearbeite-frage', function (event) {
         }
     });
 });
+
+
+$(document).on('submit', '.js-erstelle-leistungen', function (event) {
+    event.preventDefault();
+
+    var $this = $(this),
+        reiseDataId = $this.find('.js-reiseId').val(),
+        leistungenData = $this.find('#editorCKE3').val(),
+        leistungIdData = $this.find('.js-leistungId').val(),
+        $statusContainer = $('.js-erstelle-leistung-status');
+
+    $.ajax({
+        type: 'POST',
+        url: 'index.php?route=ajax-erstelle-leistungen',
+        dataType: 'json',
+        data: {
+            reiseId: reiseDataId,
+            text: leistungenData,
+            leistungId: leistungIdData
+        },
+        success: function () {
+            $statusContainer.html('Die Leistung wurde erfolgreich gespeichert.');
+        },
+        error: function() {
+            $statusContainer.html('Die Leistung konnte nicht gespeichert werden werden.');
+        }
+    });
+});

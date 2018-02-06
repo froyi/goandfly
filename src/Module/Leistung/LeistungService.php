@@ -60,4 +60,37 @@ class LeistungService
 
         return $this->leistungFactory->getLeistungFromObject($leistung);
     }
+
+    /**
+     *
+     *
+     * @param array $parameter
+     * @return null|Leistung
+     */
+    public function getLeistungByParams(array $parameter): ?Leistung
+    {
+        /** @var \stdClass $object */
+        $object = (object)$parameter;
+
+        if (empty($object->leistungId)) {
+            $object->leistungId = Id::generateId()->toString();
+        }
+
+        if ($this->leistungFactory->isObjectValid($object) === true) {
+            return $this->leistungFactory->getLeistungFromObject($object);
+        }
+
+        return null;
+    }
+
+    /**
+     *
+     *
+     * @param Leistung $leistung
+     * @return bool
+     */
+    public function saveLeistungToDatabase(Leistung $leistung): bool
+    {
+        return $this->leistungRepository->saveLeistung($leistung);
+    }
 }

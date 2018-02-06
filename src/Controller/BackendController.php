@@ -154,6 +154,15 @@ class BackendController extends DefaultController
     
         $frageService = new FrageService($this->database);
 
+        if (Tools::getValue('frageDelete') !== false) {
+            if ($frageService->deleteFrageByFrageId(Id::fromString(Tools::getValue('frageId'))) === true) {
+                $parameter = ['notificationCode' => 'frageSuccess', 'notificationStatus' => 'success', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
+            }
+
+            header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
+            exit;
+        }
+
         $frage = $frageService->getFrageByParams($_POST);
 
         if ($frage === null) {
