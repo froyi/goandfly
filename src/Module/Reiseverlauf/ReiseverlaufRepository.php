@@ -50,4 +50,63 @@ class ReiseverlaufRepository
 
         return $this->database->fetchAll($query);
     }
+
+    /**
+     *
+     *
+     * @param Id $reiseverlaufId
+     * @return mixed
+     */
+    public function getReiseverlaufByReiseverlaufId(Id $reiseverlaufId)
+    {
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->where('reiseverlaufId', '=', $reiseverlaufId->toString());
+
+        return $this->database->fetch($query);
+    }
+
+    /**
+     *
+     *
+     * @param Reiseverlauf $reiseverlauf
+     * @return bool
+     */
+    public function saveReiseverlaufToDatabase(Reiseverlauf $reiseverlauf): bool
+    {
+        if (!empty($this->getReiseverlaufByReiseverlaufId($reiseverlauf->getReiseverlaufId()))) {
+            $query = $this->database->getNewUpdateQuery(self::TABLE);
+            $query->set('reiseverlaufId', $reiseverlauf->getReiseverlaufId()->toString());
+            $query->set('reiseId', $reiseverlauf->getReiseId()->toString());
+            $query->set('reisetag', $reiseverlauf->getReisetag()->getReisetag());
+            $query->set('titel', $reiseverlauf->getTitel()->getTitle());
+            $query->set('beschreibung', $reiseverlauf->getBeschreibung()->getText());
+
+            $query->where('reiseverlaufId', '=', $reiseverlauf->getReiseverlaufId()->toString());
+
+            return $this->database->execute($query);
+        }
+
+        $query = $this->database->getNewInsertQuery(self::TABLE);
+        $query->insert('reiseverlaufId', $reiseverlauf->getReiseverlaufId()->toString());
+        $query->insert('reiseId', $reiseverlauf->getReiseId()->toString());
+        $query->insert('reisetag', $reiseverlauf->getReisetag()->getReisetag());
+        $query->insert('titel', $reiseverlauf->getTitel()->getTitle());
+        $query->insert('beschreibung', $reiseverlauf->getBeschreibung()->getText());
+
+        return $this->database->execute($query);
+    }
+
+    /**
+     *
+     *
+     * @param Id $reiseverlaufId
+     * @return bool
+     */
+    public function deleteReiseverlaufFromDatabase(Id $reiseverlaufId): bool
+    {
+        $query = $this->database->getNewDeleteQuery(self::TABLE);
+        $query->where('reiseverlaufId', '=', $reiseverlaufId->toString());
+
+        return $this->database->execute($query);
+    }
 }

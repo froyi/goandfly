@@ -63,4 +63,65 @@ class TerminService
 
         return $termineArray;
     }
+
+    /**
+     *
+     *
+     * @param Id $terminId
+     * @return null|Termin
+     */
+    public function getTerminByTerminId(Id $terminId): ?Termin
+    {
+        $terminData = $this->terminRepository->getTerminByTerminId($terminId);
+
+        if ($terminData === false) {
+            return null;
+        }
+
+        return $this->terminFactory->getTerminFromObject($terminData);
+    }
+
+    /**
+     *
+     *
+     * @param array $parameter
+     * @return null|Termin
+     */
+    public function getTerminByParams(array $parameter): ?Termin
+    {
+        /** @var \stdClass $object */
+        $object = (object)$parameter;
+
+        if (empty($object->terminId)) {
+            $object->terminId = Id::generateId()->toString();
+        }
+
+        if ($this->terminFactory->isObjectValid($object) === true) {
+            return $this->terminFactory->getTerminFromObject($object);
+        }
+
+        return null;
+    }
+
+    /**
+     *
+     *
+     * @param Termin $termin
+     * @return bool
+     */
+    public function saveTerminToDatabase(Termin $termin): bool
+    {
+        return $this->terminRepository->saveTerminToDatabase($termin);
+    }
+
+    /**
+     *
+     *
+     * @param Id $terminId
+     * @return bool
+     */
+    public function deleteTerminByTerminId(Id $terminId): bool
+    {
+        return $this->terminRepository->deleteTerminByTerminId($terminId);
+    }
 }

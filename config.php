@@ -115,9 +115,41 @@ return [
             'controller' => 'JsonController',
             'action' => 'erstelleLeistungenAction'
         ],
+        'ajax-erstelle-reiseverlauf' => [
+            'controller' => 'JsonController',
+            'action' => 'erstelleReiseverlaufAction'
+        ],
+        'ajax-erstelle-reisetermin' => [
+            'controller' => 'JsonController',
+            'action' => 'erstelleReiseterminAction'
+        ],
+        'ajax-bearbeite-reiseverlauf' => [
+            'controller' => 'JsonController',
+            'action' => 'bearbeiteReiseverlaufAction'
+        ],
+        'ajax-erstelle-tag' => [
+            'controller' => 'JsonController',
+            'action' => 'erstelleTagAction'
+        ],
+        'ajax-bearbeite-termin' => [
+            'controller' => 'JsonController',
+            'action' => 'bearbeiteTerminAction'
+        ],
         'bearbeite-frage-form' => [
             'controller' => 'BackendController',
             'action' => 'bearbeiteFrageFormAction'
+        ],
+        'bearbeite-termin-form' => [
+            'controller' => 'BackendController',
+            'action' => 'bearbeiteTerminFormAction'
+        ],
+        'bearbeite-reiseverlauf-form' => [
+            'controller' => 'BackendController',
+            'action' => 'bearbeiteReiseverlaufFormAction'
+        ],
+        'bearbeite-reise-form' => [
+            'controller' => 'BackendController',
+            'action' => 'bearbeiteReiseFormAction'
         ],
         'kontakt-mailer' => [
             'controller' => 'MailerController',

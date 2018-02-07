@@ -125,4 +125,17 @@ class TagService
 
         return $tagsArray;
     }
+
+    public function saveTagsToReiseInDatabase(array $tags, Id $reiseId): bool
+    {
+        $this->tagRepository->deleteAllTagsFromReise($reiseId);
+
+        foreach ($tags as $tag) {
+            if ($this->tagRepository->saveTagToReise($tag, $reiseId) === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

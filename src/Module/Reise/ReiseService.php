@@ -223,7 +223,7 @@ class ReiseService
     }
 
     /**
-     * @param Reise $reiseVergleich
+     * @param Reise    $reiseVergleich
      * @param int|null $amount
      *
      * @return array
@@ -268,18 +268,15 @@ class ReiseService
     }
 
     /**
-     * @param array $tags
-     * @param Id|null $regionId
+     * @param array    $tags
+     * @param Id|null  $regionId
      * @param int|null $amount
      *
      * @return ReiseContainer
      */
     public function getAllTagAndRegionReisenInContainer(
-        array $tags = [],
-        Id $regionId = null,
-        int $amount = null
-    ): ReiseContainer
-    {
+        array $tags = [], Id $regionId = null, int $amount = null
+    ): ReiseContainer {
         $reisenArray = [];
 
         $reisen = $this->reiseRepository->getReiseByTagsAndRegionId($tags, $regionId, $amount);
@@ -447,5 +444,22 @@ class ReiseService
         }
 
         return false;
+    }
+
+    /**
+     *
+     *
+     * @param Id $reiseId
+     * @return bool
+     */
+    public function deleteReiseByReiseId(Id $reiseId): bool
+    {
+        $reise = $this->getCompleteReiseByReiseId($reiseId);
+
+        if ($reise === null) {
+            return false;
+        }
+
+        return $this->reiseRepository->deleteReise($reise);
     }
 }

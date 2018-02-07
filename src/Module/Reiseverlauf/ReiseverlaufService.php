@@ -63,4 +63,59 @@ class ReiseverlaufService
 
         return $reiseverlaufArray;
     }
+
+    /**
+     *
+     *
+     * @param Id $reiseverlaufId
+     * @return null|Reiseverlauf
+     */
+    public function getReiseverlaufByReiseverlaufId(Id $reiseverlaufId): ?Reiseverlauf
+    {
+        $reiseverlaufData = $this->reiseverlaufRepository->getReiseverlaufByReiseverlaufId($reiseverlaufId);
+
+        if ($reiseverlaufData === false) {
+            return null;
+        }
+
+        return $this->reiseverlaufFactory->getReiseverlaufFromObject($reiseverlaufData);
+    }
+
+    /**
+     *
+     *
+     * @param array $parameter
+     * @return null|Reiseverlauf
+     */
+    public function getReiseverlaufByParams(array $parameter): ?Reiseverlauf
+    {
+        /** @var \stdClass $object */
+        $object = (object)$parameter;
+
+        if (empty($object->reiseverlaufId)) {
+            $object->reiseverlaufId = Id::generateId()->toString();
+        }
+
+        if ($this->reiseverlaufFactory->isObjectValid($object) === true) {
+            return $this->reiseverlaufFactory->getReiseverlaufFromObject($object);
+        }
+
+        return null;
+    }
+
+    /**
+     *
+     *
+     * @param Reiseverlauf $reiseverlauf
+     * @return bool
+     */
+    public function saveReiseverlaufToDatabase(Reiseverlauf $reiseverlauf): bool
+    {
+        return $this->reiseverlaufRepository->saveReiseverlaufToDatabase($reiseverlauf);
+    }
+
+    public function deleteReiseverlaufByReiseverlaufId(Id $reiseverlaufId): bool
+    {
+        return $this->reiseverlaufRepository->deleteReiseverlaufFromDatabase($reiseverlaufId);
+    }
 }

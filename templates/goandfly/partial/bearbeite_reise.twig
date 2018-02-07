@@ -4,7 +4,8 @@
         eingetragene Grunddaten.</p>
 
     <div class="left">
-        <form action="#" method="post" name="bearbeiteReiseForm" class="js-bearbeite-reise-form"
+        <form action="{{ route('bearbeite-reise-form') }}" method="post" name="bearbeiteReiseForm"
+              class="js-bearbeite-reise-form"
               enctype="multipart/form-data">
             <p>Titel:<br/><input type="text" name="titel" required placeholder="Titel der Reise"
                                  value="{{ bearbeiteReise.getTitel }}"/></p>
@@ -50,10 +51,9 @@
             <p>Reiseregionen hinzufügen:<br/>
                 <select class="multipleSelect" name="region[]" multiple size="5" required>
                     {% for continent in continents %}
-                        <optgroup label="{{ continent.getName }}">
+                        <optgroup label="{{ continent.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}">
                             {% for region in continent.getRegionList %}
                                 <option value="{{ region.getRegionId }}"
-
                                         {% if region.getRegionId.toString in bearbeiteReise.getRegionList|keys %}selected{% endif %}>{{ region.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}</option>
                             {% endfor %}
                         </optgroup>
@@ -128,7 +128,8 @@
                 </p>
                 <p><input type="submit" name="submit" value="Absenden"/></p>
                 <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
-                <input type="hidden" name="leistungId" class="js-leistungId" value="{{ bearbeiteReise.getLeistung.getLeistungId }}"/>
+                <input type="hidden" name="leistungId" class="js-leistungId"
+                       value="{{ bearbeiteReise.getLeistung.getLeistungId }}"/>
             </form>
         </div> <!-- #erstelleLeistungen -->
 
@@ -139,9 +140,12 @@
 
         <div id="erstelleReiseverlauf">
             <form action="#" method="post" name="erstelleReiseverlaufForm" class="js-erstelle-reiseverlauf">
-                <p><input type="number" name="reisetag" min="1" required placeholder="Position in der Liste (Sortierung)"/></p>
-                <p><input type="text" name="titel" required placeholder="Titel (Bsp.: Tag 1 - Ankunft)"/></p>
-                <p><textarea name="beschreibung" required placeholder="Beschreibung des Reiseverlaufes"></textarea></p>
+                <p><input type="number" name="reisetag" class="js-reisetag" min="1" required
+                          placeholder="Position in der Liste (Sortierung)"/></p>
+                <p><input type="text" name="titel" required class="js-titel"
+                          placeholder="Titel (Bsp.: Tag 1 - Ankunft)"/></p>
+                <p><textarea name="beschreibung" required class="js-beschreibung"
+                             placeholder="Beschreibung des Reiseverlaufes"></textarea></p>
                 <p><input type="submit" name="submit" value="Absenden"/></p>
                 <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
             </form>
@@ -151,16 +155,17 @@
             <p>Hier bearbeiten Sie Ihre Reiseverlauf</p>
             <form action="#" method="post" name="bearbeiteReiseverlaufReise" class="js-bearbeite-reiseverlauf">
                 <p>
-                    <select name="verlaufListe">
-                        <option value="0">Bitte wählen Sie eine Reiseverlauf aus</option>
+                    <select name="verlaufListe" class="js-verlaufliste">
+                        <option value="0">Bitte wählen Sie einen Verlauf aus</option>
 
                         {% for reiseverlauf in bearbeiteReise.getReiseverlaufListe %}
-                            <option value="{{ reiseverlauf.getReiseverlaufId }}">{{ reiseverlauf.getTitel }}</option>
+                            <option value="{{ reiseverlauf.getReiseverlaufId }}">{{ reiseverlauf.getReisetag }}
+                                - {{ reiseverlauf.getTitel }}</option>
                         {% endfor %}
                     </select>
                 </p>
                 <p><input type="submit" name="submit" value="Absenden"/></p>
-                <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}" />
+                <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
             </form>
 
             <div class="js-bearbeite-reiseverlauf-container"></div>
@@ -172,9 +177,12 @@
 
         <div id="erstelleTermine">
             <form action="#" method="post" name="erstelleTermineForm" class="js-erstelle-reisetermin">
-                <p><input type="date" name="start" placeholder="Startdatum Format: yyy-mm-dd" required/></p>
-                <p><input type="date" name="ende" required placeholder="Enddatum Format: yyy-mm-dd"/></p>
-                <p><input type="text" name="preis" required placeholder="Preis in € (Bsp.: 1.999€)"/></p>
+                <p>Startdatum: <br/><input type="date" name="start" class="js-start"
+                                           placeholder="Startdatum Format: yyy-mm-dd" required/></p>
+                <p>Enddatum: <br><input type="date" name="ende" class="js-ende" required
+                                        placeholder="Enddatum Format: yyy-mm-dd"/></p>
+                <p>Preis: <br><input type="text" name="preis" class="js-preis" required
+                                     placeholder="Preis in € (Bsp.: 1.999€)"/></p>
                 <p><input type="submit" name="submit" value="Absenden"/></p>
                 <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
             </form>
@@ -183,15 +191,16 @@
         <div id="bearbeiteReisetermine">
             <p>Hier bearbeiten Sie Ihre Reisetermine</p>
             <form action="#" method="post" name="bearbeiteReisetermineReise" class="js-bearbeite-reisetermin">
-                <p><select name="termineListe">
+                <p><select name="termineListe" class="js-termine-liste">
                         <option value="0">Bitte wählen Sie einn Reisetermin aus</option>
 
                         {% for reisetermin in bearbeiteReise.getTerminListe %}
-                            <option value="{{ reisetermin.getTerminId }}">{{ reisetermin.getStart }} - {{ reisetermin.getEnde }} | {{ reisetermin.getPreis }}</option>
+                            <option value="{{ reisetermin.getTerminId }}">{{ reisetermin.getStart }}
+                                - {{ reisetermin.getEnde }} | {{ reisetermin.getPreis }}</option>
                         {% endfor %}
                     </select></p>
                 <p><input type="submit" name="submit" value="Absenden"/></p>
-                <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}" />
+                <input type="hidden" name="reiseId" class="js-reiseId" value="{{ bearbeiteReise.getReiseId }}"/>
             </form>
 
             <div class="js-bearbeite-reisetermin-container"></div>
@@ -203,12 +212,13 @@
         <div class="js-erstelle-tag-status"></div>
 
         <div id="erstelleTags">
-            <form action="#" method="post" name="erstelleTermineForm" class="js-erstelle-reisetermin">
+            <form action="#" method="post" name="erstelleReiseTagsForm" class="js-erstelle-reisetags">
                 <p>Tags hinzufügen:<br/>
-                    <select name="tagAuswahl[]" multiple size="8" class="multipleSelect">
+                    <select name="tagAuswahl[]" multiple size="8" class="multipleSelect js-tag-auswahl">
                         {% for tag in tagListe %}
-                            <option value="{{ tag.getTagId }}" {% if tag.getTagId.toString in bearbeiteReise.getTagListe|keys %}selected{% endif %}>{{ tag.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}</option>
-                            {% endfor %}
+                            <option value="{{ tag.getTagId }}"
+                                    {% if tag.getTagId.toString in bearbeiteReise.getTagListe|keys %}selected{% endif %}>{{ tag.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}</option>
+                        {% endfor %}
                     </select>
                 </p>
                 <p><input type="submit" name="submit" value="Absenden"/></p>

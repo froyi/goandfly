@@ -251,3 +251,130 @@ $(document).on('submit', '.js-erstelle-leistungen', function (event) {
         }
     });
 });
+
+$(document).on('submit', '.js-erstelle-reiseverlauf', function (event) {
+    event.preventDefault();
+
+    var $this = $(this),
+        reiseDataId = $this.find('.js-reiseId').val(),
+        verlaufReisetag = $this.find('.js-reisetag').val(),
+        verlaufTitel = $this.find('.js-titel').val(),
+        verlaufBeschreibung = $this.find('.js-beschreibung').val(),
+        $statusContainer = $('.js-erstelle-reiseverlauf-status');
+
+    $.ajax({
+        type: 'POST',
+        url: 'index.php?route=ajax-erstelle-reiseverlauf',
+        dataType: 'json',
+        data: {
+            reiseId: reiseDataId,
+            reisetag: verlaufReisetag,
+            titel: verlaufTitel,
+            beschreibung: verlaufBeschreibung
+        },
+        success: function () {
+            $statusContainer.html('Der Verlauf wurde erfolgreich gespeichert.');
+        },
+        error: function() {
+            $statusContainer.html('Der Verlauf konnte nicht gespeichert werden werden.');
+        }
+    });
+});
+
+$(document).on('submit', '.js-bearbeite-reiseverlauf', function (event) {
+    event.preventDefault();
+
+    var reiseverlaufIdData = $('.js-verlaufliste').val(),
+        $bearbeiteReiseverlaufContainer = $('.js-bearbeite-reiseverlauf-container');
+
+    $.ajax({
+        type: 'POST',
+        url: 'index.php?route=ajax-bearbeite-reiseverlauf',
+        dataType: 'json',
+        data: {
+            reiseverlaufId: reiseverlaufIdData
+        },
+        success: function (response) {
+            $bearbeiteReiseverlaufContainer.html(response.view);
+        },
+        error: function() {
+            $bearbeiteReiseverlaufContainer.html('Der Reiseverlauf konnte nicht gefunden werden.');
+        }
+    });
+});
+
+$(document).on('submit', '.js-erstelle-reisetermin', function (event) {
+    event.preventDefault();
+
+    var $this = $(this),
+        reiseDataId = $this.find('.js-reiseId').val(),
+        reiseTerminStart = $this.find('.js-start').val(),
+        reiseTerminEnde = $this.find('.js-ende').val(),
+        reiseTerminPreis = $this.find('.js-preis').val(),
+        $statusContainer = $('.js-erstelle-reisetermin-status');
+
+    $.ajax({
+        type: 'POST',
+        url: 'index.php?route=ajax-erstelle-reisetermin',
+        dataType: 'json',
+        data: {
+            reiseId: reiseDataId,
+            start: reiseTerminStart,
+            ende: reiseTerminEnde,
+            preis: reiseTerminPreis
+        },
+        success: function () {
+            $statusContainer.html('Der Reisetermin wurde erfolgreich gespeichert.');
+        },
+        error: function() {
+            $statusContainer.html('Der Reisetermin konnte nicht gespeichert werden werden.');
+        }
+    });
+});
+
+$(document).on('submit', '.js-bearbeite-reisetermin', function (event) {
+    event.preventDefault();
+
+    var reiseterminIdData = $('.js-termine-liste').val(),
+        $bearbeiteTerminContainer = $('.js-bearbeite-reisetermin-container');
+
+    $.ajax({
+        type: 'POST',
+        url: 'index.php?route=ajax-bearbeite-termin',
+        dataType: 'json',
+        data: {
+            terminId: reiseterminIdData
+        },
+        success: function (response) {
+            $bearbeiteTerminContainer.html(response.view);
+        },
+        error: function() {
+            $bearbeiteTerminContainer.html('Der Termin konnte nicht gefunden werden.');
+        }
+    });
+});
+
+$(document).on('submit', '.js-erstelle-reisetags', function (event) {
+    event.preventDefault();
+
+    var $this = $(this),
+        reiseDataId = $this.find('.js-reiseId').val(),
+        tagData = $this.find('.js-tag-auswahl').val(),
+        $statusContainer = $('.js-erstelle-tag-status');
+
+    $.ajax({
+        type: 'POST',
+        url: 'index.php?route=ajax-erstelle-tag',
+        dataType: 'json',
+        data: {
+            reiseId: reiseDataId,
+            tagIds: tagData
+        },
+        success: function () {
+            $statusContainer.html('Die Tags wurden erfolgreich gespeichert.');
+        },
+        error: function() {
+            $statusContainer.html('Die Tags konnte nicht gespeichert werden werden.');
+        }
+    });
+});

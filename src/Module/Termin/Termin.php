@@ -108,4 +108,12 @@ class Termin
     {
         $this->preis = $preis;
     }
+
+    /**
+     * @return Id
+     */
+    public function getReiseId(): Id
+    {
+        return $this->reiseId;
+    }
 }

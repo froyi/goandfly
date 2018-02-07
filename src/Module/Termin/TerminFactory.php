@@ -36,4 +36,15 @@ class TerminFactory
 
         return new Termin($terminId, $reiseId, $start, $ende, $preis);
     }
+
+    public function isObjectValid($object): bool
+    {
+        try {
+            $this->getTerminFromObject($object);
+        } catch (\InvalidArgumentException $error) {
+            return false;
+        }
+
+        return true;
+    }
 }

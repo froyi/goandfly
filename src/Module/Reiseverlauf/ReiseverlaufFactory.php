@@ -28,4 +28,21 @@ class ReiseverlaufFactory
 
         return new Reiseverlauf($reiseverlaufId, $reiseId, $reisetag, $titel, $beschreibung);
     }
+
+    /**
+     *
+     *
+     * @param $object
+     * @return bool
+     */
+    public function isObjectValid($object): bool
+    {
+        try {
+            $this->getReiseverlaufFromObject($object);
+        } catch (\InvalidArgumentException $error) {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -71,4 +71,35 @@ class TagRepository
 
         return $this->database->fetch($query);
     }
+
+    /**
+     *
+     *
+     * @param Id $reiseId
+     * @return bool
+     */
+    public function deleteAllTagsFromReise(Id $reiseId): bool
+    {
+        $query = $this->database->getNewDeleteQuery(self::REISE_TAG_TABLE);
+        $query->where('reiseId', '=', $reiseId->toString());
+
+        return $this->database->execute($query);
+    }
+
+    /**
+     *
+     *
+     * @param Id $tagId
+     * @param Id $reiseId
+     * @return bool
+     */
+    public function saveTagToReise(Tag $tag, Id $reiseId): bool
+    {
+        $query = $this->database->getNewInsertQuery(self::REISE_TAG_TABLE);
+        $query->insert('reiseTagId', Id::generateId()->toString());
+        $query->insert('tagId', $tag->getTagId()->toString());
+        $query->insert('reiseId', $reiseId->toString());
+
+        return $this->database->execute($query);
+    }
 }

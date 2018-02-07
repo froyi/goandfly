@@ -1,14 +1,15 @@
 {% if bearbeiteReiseverlauf|length > 0 %}
-    <form action="#" method="post" name="bearbeiteReiseverlaufForm" class="js-bearbeite-reiseverlauf-form">
+    <form action="{{ route('bearbeite-reiseverlauf-form') }}" method="post" name="bearbeiteReiseverlaufForm" class="js-bearbeite-reiseverlauf-form">
         <p><input type="number" name="reisetag" required value="{{ bearbeiteReiseverlauf.getReisetag }}" placeholder="Position in der Liste (Sortierung)"/></p>
-        <p><input type="text" name="leistungTitel" required value="{{ bearbeiteReiseverlauf.getText }}"/></p>
-        <p><textarea name="leistungBeschreibung" required
+        <p><input type="text" name="titel" required value="{{ bearbeiteReiseverlauf.getTitel }}"/></p>
+        <p><textarea name="beschreibung" required
                      placeholder="Beschreibung des Reiseverlaufes">{{ bearbeiteReiseverlauf.getBeschreibung }}</textarea>
         </p>
-        <p><input type="checkbox" name="loescheVerlauf"/> Möchten Sie diese Reiseleistung löschen?</p>
+        <p><input type="checkbox" name="loescheReiseverlauf"/> Möchten Sie den Reiseverlauf löschen?</p>
 
         <input type="submit" name="submit" value="Absenden"/>
 
         <input type="hidden" name="reiseverlaufId" value="{{ bearbeiteReiseverlauf.getReiseverlaufId }}"/>
+        <input type="hidden" name="reiseId" value="{{ bearbeiteReiseverlauf.getReiseId }}"/>
     </form>
 {% endif %}

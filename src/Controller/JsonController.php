@@ -12,6 +12,9 @@ use Project\Module\GenericValueObject\Id;
 use Project\Module\Leistung\LeistungService;
 use Project\Module\News\NewsService;
 use Project\Module\Reise\ReiseService;
+use Project\Module\Reiseverlauf\ReiseverlaufService;
+use Project\Module\Tag\TagService;
+use Project\Module\Termin\TerminService;
 use Project\Utilities\Tools;
 use Project\View\JsonModel;
 
@@ -173,6 +176,99 @@ class JsonController extends DefaultController
 
         if ($leistungService->saveLeistungToDatabase($leistung) === true) {
             $this->jsonModel->addJsonConfig('leistung', $leistung);
+            $this->jsonModel->send();
+        }
+
+        $this->jsonModel->send('error');
+    }
+
+    public function erstelleReiseverlaufAction(): void
+    {
+        $reiseverlaufService = new ReiseverlaufService($this->database);
+
+        $reiseverlauf = $reiseverlaufService->getReiseverlaufByParams($_POST);
+
+        if ($reiseverlauf === null) {
+            $this->jsonModel->send('error');
+        }
+
+        if ($reiseverlaufService->saveReiseverlaufToDatabase($reiseverlauf) === true) {
+            $this->jsonModel->addJsonConfig('reiseverlauf', $reiseverlauf);
+            $this->jsonModel->send();
+        }
+
+        $this->jsonModel->send('error');
+    }
+
+    public function bearbeiteReiseverlaufAction(): void
+    {
+        $reiseverlaufId = Tools::getValue('reiseverlaufId');
+
+        if ($reiseverlaufId === false) {
+            $this->jsonModel->send('error');
+        }
+
+        $reiseverlaufService = new ReiseverlaufService($this->database);
+
+        $reiseverlauf = $reiseverlaufService->getReiseverlaufByReiseverlaufId(Id::fromString($reiseverlaufId));
+
+        $this->viewRenderer->addViewConfig('bearbeiteReiseverlauf', $reiseverlauf);
+
+        $this->jsonModel->addJsonConfig('view',
+            $this->viewRenderer->renderJsonView('partial/bearbeite_reiseverlauf.twig'));
+        $this->jsonModel->send();
+    }
+
+    public function erstelleReiseterminAction(): void
+    {
+        $terminService = new TerminService($this->database);
+
+        $termin = $terminService->getTerminByParams($_POST);
+
+        if ($termin === null) {
+            $this->jsonModel->send('error');
+        }
+
+        if ($terminService->saveTerminToDatabase($termin) === true) {
+            $this->jsonModel->addJsonConfig('termin', $termin);
+            $this->jsonModel->send();
+        }
+
+        $this->jsonModel->send('error');
+    }
+
+    public function bearbeiteTerminAction(): void
+    {
+        $terminId = Tools::getValue('terminId');
+
+        if ($terminId === false) {
+            $this->jsonModel->send('error');
+        }
+
+        $terminService = new TerminService($this->database);
+
+        $termin = $terminService->getTerminByTerminId(Id::fromString($terminId));
+
+        $this->viewRenderer->addViewConfig('bearbeiteReisetermin', $termin);
+
+        $this->jsonModel->addJsonConfig('view',
+            $this->viewRenderer->renderJsonView('partial/bearbeite_reisetermin.twig'));
+        $this->jsonModel->send();
+    }
+
+    public function erstelleTagAction(): void
+    {
+        if (Tools::getValue('reiseId') === false || Tools::getValue('tagIds') === false ) {
+            $this->jsonModel->send('error');
+        }
+
+        $tagService = new TagService($this->database);
+
+        $tags = $tagService->getTagsByTagIdArray(Tools::getValue('tagIds'));
+        $reiseId = Id::fromString(Tools::getValue('reiseId'));
+
+        if ($tagService->saveTagsToReiseInDatabase($tags, $reiseId) === true) {
+            $this->jsonModel->addJsonConfig('tags', $tags);
             $this->jsonModel->send();
         }
 
