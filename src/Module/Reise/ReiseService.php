@@ -435,6 +435,8 @@ class ReiseService
     public function saveReiseToDatabase(Reise $reise): bool
     {
         if ($this->reiseRepository->saveReiseToDatabase($reise)) {
+            $this->reiseRepository->deleteReiseRegionFromDatabase($reise);
+
             /** @var Region $region */
             foreach ($reise->getRegionList() as $region) {
                 $this->reiseRepository->saveReiseRegionToDatabase($reise, $region);

@@ -297,4 +297,18 @@ class ReiseRepository
 
         return true;
     }
+
+    /**
+     *
+     *
+     * @param Reise $reise
+     * @return bool
+     */
+    public function deleteReiseRegionFromDatabase(Reise $reise): bool
+    {
+        $query = $this->database->getNewDeleteQuery(self::REISE_REGION_TABLE);
+        $query->where('reiseId', '=', $reise->getReiseId()->toString());
+
+        return $this->database->execute($query);
+    }
 }

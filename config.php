@@ -8,14 +8,14 @@ return [
         'name' => 'goandfly',
         'dir' =>  '/goandfly',
     ],
-    'database' => [
+    'database_local' => [
         'host' => 'localhost',
         'user' => 'root',
         'password' => '',
         'database' => 'fly'
     ],
     // _live_test
-    'database_live' => [
+    'database' => [
         'host' => 'localhost',
         'user' => 'd002e083',
         'password' => '2006gofly0523',
