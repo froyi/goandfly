@@ -13,10 +13,13 @@ class Filename
 {
     public const TYPE_JPG = 'jpg';
     public const TYPE_PNG = 'png';
+    public const TYPE_GIF = 'gif';
 
     public const TYPE_IMAGE_MAPPING = [
         "image/jpeg" => self::TYPE_JPG,
-        "image/png" => self::TYPE_PNG
+        "image/png" => self::TYPE_PNG,
+        "image/gif" => self::TYPE_GIF,
+
     ];
 
     /** @var string $type */

@@ -163,7 +163,7 @@ class Reise
     /**
      * @return array
      */
-    public function getLeistung(): Leistung
+    public function getLeistung(): ?Leistung
     {
         return $this->leistung;
     }

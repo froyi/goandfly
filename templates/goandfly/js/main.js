@@ -257,9 +257,9 @@ $(document).on('submit', '.js-erstelle-reiseverlauf', function (event) {
 
     var $this = $(this),
         reiseDataId = $this.find('.js-reiseId').val(),
-        verlaufReisetag = $this.find('.js-reisetag').val(),
-        verlaufTitel = $this.find('.js-titel').val(),
-        verlaufBeschreibung = $this.find('.js-beschreibung').val(),
+        verlaufReisetag = $this.find('.js-reisetag'),
+        verlaufTitel = $this.find('.js-titel'),
+        verlaufBeschreibung = $this.find('.js-beschreibung'),
         $statusContainer = $('.js-erstelle-reiseverlauf-status');
 
     $.ajax({
@@ -268,12 +268,15 @@ $(document).on('submit', '.js-erstelle-reiseverlauf', function (event) {
         dataType: 'json',
         data: {
             reiseId: reiseDataId,
-            reisetag: verlaufReisetag,
-            titel: verlaufTitel,
-            beschreibung: verlaufBeschreibung
+            reisetag: verlaufReisetag.val(),
+            titel: verlaufTitel.val(),
+            beschreibung: verlaufBeschreibung.val()
         },
         success: function () {
             $statusContainer.html('Der Verlauf wurde erfolgreich gespeichert.');
+            verlaufReisetag.val('');
+            verlaufTitel.val('');
+            verlaufBeschreibung.val('');
         },
         error: function() {
             $statusContainer.html('Der Verlauf konnte nicht gespeichert werden werden.');
@@ -308,9 +311,9 @@ $(document).on('submit', '.js-erstelle-reisetermin', function (event) {
 
     var $this = $(this),
         reiseDataId = $this.find('.js-reiseId').val(),
-        reiseTerminStart = $this.find('.js-start').val(),
-        reiseTerminEnde = $this.find('.js-ende').val(),
-        reiseTerminPreis = $this.find('.js-preis').val(),
+        reiseTerminStart = $this.find('.js-start'),
+        reiseTerminEnde = $this.find('.js-ende'),
+        reiseTerminPreis = $this.find('.js-preis'),
         $statusContainer = $('.js-erstelle-reisetermin-status');
 
     $.ajax({
@@ -319,12 +322,15 @@ $(document).on('submit', '.js-erstelle-reisetermin', function (event) {
         dataType: 'json',
         data: {
             reiseId: reiseDataId,
-            start: reiseTerminStart,
-            ende: reiseTerminEnde,
-            preis: reiseTerminPreis
+            start: reiseTerminStart.val(),
+            ende: reiseTerminEnde.val(),
+            preis: reiseTerminPreis.val()
         },
         success: function () {
             $statusContainer.html('Der Reisetermin wurde erfolgreich gespeichert.');
+            reiseTerminStart.val('');
+            reiseTerminEnde.val('');
+            reiseTerminPreis.val('');
         },
         error: function() {
             $statusContainer.html('Der Reisetermin konnte nicht gespeichert werden werden.');

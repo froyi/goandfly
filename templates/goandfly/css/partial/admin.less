@@ -1,9 +1,69 @@
-#erstelleReiseContainer {
-  div.right {
-    width: 33%;
-  }
+.containerAdmin {
+    > p {
+        padding-left: 1.2em !important;
+    }
+
+    #erstelleReiseContainer {
+        div.right {
+            width: 33%;
+        }
+    }
+
+    .bearbeite-reise {
+        img {
+            max-width: 400px;
+        }
+    }
+
+    #bearbeiteReise {
+        .reise-auswahl-container {
+            display: flex;
+            justify-content: space-between;
+
+            .reise-auswahl {
+                margin: 0 1.2em 2em 1.2em;
+
+                input[type="submit"], .hole-reisedaten-select {
+                    width: 90%;
+                }
+            }
+        }
+    }
+
+    #erstelleNeuigkeitenContainer {
+        display: none;
+    }
 }
 
-#erstelleNeuigkeitenContainer {
-  display: none;
+.button {
+    width: 400px !important;
+    color: @color-1 !important;
+    background-color: @color-3 !important;
+    border: none !important;
+    text-align: center;
+    padding: 0 !important;
+    margin: 0 0 2em 1.2em !important;
 }
+
+.notification-container {
+    border-top: 2px solid @color-3;
+    border-bottom: 2px solid @color-3;
+    cursor: pointer;
+    line-height: 2em;
+    padding-left: 1em;
+    margin-bottom: 2em;
+
+    &.success-container {
+        background: @color-4;
+    }
+
+    &.error-container {
+        background: @color-3;
+    }
+}
+
+.status-container {
+    padding: 1em 0;
+    color: @color-3;
+}
+

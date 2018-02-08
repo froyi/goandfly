@@ -1,6 +1,6 @@
 {% if bearbeiteNews|length > 0 %}
     <div id="bearbeiteNeuigkeitDetail">
-        <h3 class="marginLeft">Bearbeite Neuigkeit</h3>
+        <h3>Bearbeite Neuigkeit</h3>
         <form action="{{ route('bearbeite-neuigkeiten') }}" method="post" name="bearbeiteNeuigkeitDetailForm">
             <p>Titel:<br/><input type="text" name="titel" value="{{ bearbeiteNews.getTitel }}" required /></p>
             <p>Beschreibung der Neuigkeit:<br/>

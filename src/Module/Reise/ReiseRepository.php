@@ -182,7 +182,7 @@ class ReiseRepository
      */
     public function getAllVeranstalter(): array
     {
-        return $this->database->fetchAllQuery('SELECT DISTINCT veranstalter FROM reise');
+        return $this->database->fetchAllQuery('SELECT DISTINCT veranstalter FROM reise ORDER BY veranstalter');
     }
 
     /**

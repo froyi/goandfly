@@ -2174,7 +2174,6 @@ strong {
   #erstelleNeuigkeit h3,
   #bearbeiteNeuigkeit h3 {
     background: black;
-    width: 99%;
     cursor: pointer;
     line-height: 2em;
     border-top: 2px solid #C90019;
@@ -2639,9 +2638,53 @@ header .container {
   border: none;
   border-left: 1px solid #ffffff;
 }
-#erstelleReiseContainer div.right {
+.containerAdmin > p {
+  padding-left: 1.2em !important;
+}
+.containerAdmin #erstelleReiseContainer div.right {
   width: 33%;
 }
-#erstelleNeuigkeitenContainer {
+.containerAdmin .bearbeite-reise img {
+  max-width: 400px;
+}
+.containerAdmin #bearbeiteReise .reise-auswahl-container {
+  display: flex;
+  justify-content: space-between;
+}
+.containerAdmin #bearbeiteReise .reise-auswahl-container .reise-auswahl {
+  margin: 0 1.2em 2em 1.2em;
+}
+.containerAdmin #bearbeiteReise .reise-auswahl-container .reise-auswahl input[type="submit"],
+.containerAdmin #bearbeiteReise .reise-auswahl-container .reise-auswahl .hole-reisedaten-select {
+  width: 90%;
+}
+.containerAdmin #erstelleNeuigkeitenContainer {
   display: none;
+}
+.button {
+  width: 400px !important;
+  color: #ffffff !important;
+  background-color: #c90019 !important;
+  border: none !important;
+  text-align: center;
+  padding: 0 !important;
+  margin: 0 0 2em 1.2em !important;
+}
+.notification-container {
+  border-top: 2px solid #c90019;
+  border-bottom: 2px solid #c90019;
+  cursor: pointer;
+  line-height: 2em;
+  padding-left: 1em;
+  margin-bottom: 2em;
+}
+.notification-container.success-container {
+  background: #55B280;
+}
+.notification-container.error-container {
+  background: #c90019;
+}
+.status-container {
+  padding: 1em 0;
+  color: #c90019;
 }

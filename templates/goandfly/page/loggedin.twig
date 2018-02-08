@@ -1,12 +1,13 @@
 <div class="containerAdmin">
     {% if notificationStatus|length > 0 %}
-        <div class="{{ notificationStatus }}-container">
+        <div class="{{ notificationStatus }}-container notification-container">
             {{ notificationMessage }}
         </div>
     {% endif %}
-    <p>Willkommen im "go and fly" Admin Bereich. Hier können Sie Reisen anlegen, bearbeiten und löschen, sowie Ihre Neuigkeiten verwalten und sich um die Darstellung der Hauptgrafiken kümmern.</p>
+    <p>Willkommen im "go and fly" Admin Bereich. Hier können Sie Reisen anlegen, bearbeiten und löschen, sowie Ihre
+        Neuigkeiten verwalten und sich um die Darstellung der Hauptgrafiken kümmern.</p>
     <div id="erstelleReise">
-        <h3 class="js-create-reise">Eine Neue Reise erstellen</h3>
+        <h3 class="js-create-reise button">Eine Neue Reise erstellen</h3>
         <div id="erstelleReiseContainer">
             {{ include('partial/erstelle_reise.twig') }}
 
@@ -20,75 +21,81 @@
         <h3>Suchen Sie sich die Reise heraus, die Sie bearbeiten wollen.</h3>
 
         {% if notification %}
-        <p class="errorLog">Die Reise wurde erfolgreich gelöscht.</p>
+            <p class="errorLog">Die Reise wurde erfolgreich gelöscht.</p>
         {% endif %}
 
-        <div class="reise-auswahl">
-            <form id="holeReisedatenRegionForm" class="hole-reise" name="holeReisedatenRegionForm" method="post" action="#">
-                <p>
-                    <label for="reiseAuswahl">Reise nach Region auswählen:</label><br/>
-                    <select name="reiseAuswahl" class="js-hole-reisedaten-select" id="holeReisedatenformAuswahl">
-                        <option value="0">Bitte wählen Sie eine Reise aus</option>
+        <div class="reise-auswahl-container">
+            <div class="reise-auswahl">
+                <form id="holeReisedatenRegionForm" class="hole-reise" name="holeReisedatenRegionForm" method="post"
+                      action="#">
+                    <p>
+                        <label for="reiseAuswahl">Reise nach Region auswählen:</label><br/>
+                        <select name="reiseAuswahl" class="js-hole-reisedaten-select hole-reisedaten-select"
+                                id="holeReisedatenformAuswahl">
+                            <option value="0">Bitte wählen Sie eine Reise aus</option>
 
-                        {% for region in regionsWithReisen %}
-                            <optgroup label="{{ region.getName }}">
-                                {% for reise in region.getReisenList %}
-                                    <option value="{{ reise.getReiseId }}" {% if activeReiseId and activeReiseId == reise.getReiseId %}selected{% endif %}>
-                                        {{ reise.getTitel }} - erstellt
-                                        am {{ reise.getBearbeitet }} {{ reise.getVeranstalter }}
-                                    </option>
-                                {% endfor %}
-                            </optgroup>
-                        {% endfor %}
-                    </select>
-                </p>
-                <p><input type="submit" name="submit" value="Reise auswählen" /></p>
-            </form>
-        </div>
+                            {% for region in regionsWithReisen %}
+                                <optgroup label="{{ region.getName | convert_encoding('UTF-8', 'ISO-8859-1') }}">
+                                    {% for reise in region.getReisenList %}
+                                        <option value="{{ reise.getReiseId }}"
+                                                {% if activeReiseId and activeReiseId == reise.getReiseId %}selected{% endif %}>
+                                            {{ reise.getTitel }} - erstellt
+                                            am {{ reise.getBearbeitet }} {{ reise.getVeranstalter }}
+                                        </option>
+                                    {% endfor %}
+                                </optgroup>
+                            {% endfor %}
+                        </select>
+                    </p>
+                    <p><input type="submit" name="submit" value="Reise auswählen"/></p>
+                </form>
+            </div>
 
-        <div class="reise-auswahl">
-            <form name="holeReisedatenVeranstalterForm" class="hole-reise" method="post" action="#">
-                <p>
-                    <label for="reiseAuswahl">Reise nach Veranstalter auswählen:</label><br/>
-                    <select name="reiseAuswahl" class="js-hole-reisedaten-select" id="holeReisedatenformAuswahl">
-                        <option value="0">Bitte wählen Sie eine Reise aus</option>
+            <div class="reise-auswahl">
+                <form name="holeReisedatenVeranstalterForm" class="hole-reise" method="post" action="#">
+                    <p>
+                        <label for="reiseAuswahl">Reise nach Veranstalter auswählen:</label><br/>
+                        <select name="reiseAuswahl" class="js-hole-reisedaten-select hole-reisedaten-select"
+                                id="holeReisedatenformAuswahl">
+                            <option value="0">Bitte wählen Sie eine Reise aus</option>
 
-                        {% for veranstalter in veranstalterWithReisen %}
-                            <optgroup label="{{ veranstalter.getReiseveranstalter }}">
-                                {% for reise in veranstalter.getReiseList %}
-                                    <option value="{{ reise.getReiseId }}">{{ reise.getTitel }} - erstellt
-                                        am {{ reise.getBearbeitet.getDateString }}
-                                    </option>
-                                {% endfor %}
-                            </optgroup>
-                        {% endfor %}
-                    </select>
-                </p>
-                <p><input type="submit" name="submit" value="Reise auswählen"/></p>
-            </form>
-        </div>
+                            {% for veranstalter in veranstalterWithReisen %}
+                                <optgroup label="{{ veranstalter.getReiseveranstalter }}">
+                                    {% for reise in veranstalter.getReiseList %}
+                                        <option value="{{ reise.getReiseId }}">{{ reise.getTitel }} - erstellt
+                                            am {{ reise.getBearbeitet.getDateString }}
+                                        </option>
+                                    {% endfor %}
+                                </optgroup>
+                            {% endfor %}
+                        </select>
+                    </p>
+                    <p><input type="submit" name="submit" value="Reise auswählen"/></p>
+                </form>
+            </div>
 
-        <div class="reise-auswahl">
-            <form name="holeReisedatenTagForm" method="post" class="hole-reise" action="#">
-                <p>
-                    <label for="reiseAuswahl">Reise nach Kategorien auswählen:</label><br/>
-                    <select name="reiseAuswahl" class="js-hole-reisedaten-select" id="holeReisedatenformAuswahl">
-                        <option value="0">Bitte wählen Sie eine Reise aus</option>
+            <div class="reise-auswahl">
+                <form name="holeReisedatenTagForm" method="post" class="hole-reise" action="#">
+                    <p>
+                        <label for="reiseAuswahl">Reise nach Kategorien auswählen:</label><br/>
+                        <select name="reiseAuswahl" class="js-hole-reisedaten-select hole-reisedaten-select"
+                                id="holeReisedatenformAuswahl">
+                            <option value="0">Bitte wählen Sie eine Reise aus</option>
 
-                        {% for tag in tagsWithReisen %}
-                            <optgroup label="{{ tag.getName }}">
-                                {% for reise in tag.getReiseList %}
-                                    <option value="{{ reise.getReiseId }}">
-                                        {{ reise.getRegion.getName }} - {{ reise.getTitel }} - erstellt
-                                        am {{ reise.getBearbeitet }} - {{ reise.getVeranstalter }}
-                                    </option>
-                                {% endfor %}
-                            </optgroup>
-                        {% endfor %}
-                    </select>
-                </p>
-                <p><input type="submit" name="submit" value="Reise auswählen"/></p>
-            </form>
+                            {% for tag in tagsWithReisen %}
+                                <optgroup label="{{ tag.getName | convert_encoding('UTF-8', 'ISO-8859-1') }}">
+                                    {% for reise in tag.getReiseList %}
+                                        <option value="{{ reise.getReiseId }}">{{ reise.getRegionList|first.getName|convert_encoding('UTF-8', 'ISO-8859-1') }} - {{ reise.getTitel }} - erstellt
+                                            am {{ reise.getBearbeitet }} - {{ reise.getVeranstalter }}
+                                        </option>
+                                    {% endfor %}
+                                </optgroup>
+                            {% endfor %}
+                        </select>
+                    </p>
+                    <p><input type="submit" name="submit" value="Reise auswählen"/></p>
+                </form>
+            </div>
         </div>
 
         <div class="bearbeite-reise js-bearbeite-reise"></div>
@@ -113,18 +120,19 @@
             <p><select name="holeNeuigkeit" class="holeNeuigkeiten">
                     <option value="0">Bitte wählen Sie eine Neuigkeit aus</option>
                     {% for singleNews in news %}
-                    <option value="{{ singleNews.getNewsId }}">{{ singleNews.getDatum }} - {{ singleNews.getTitel }}</option>
+                        <option value="{{ singleNews.getNewsId }}">{{ singleNews.getDatum }}
+                            - {{ singleNews.getTitel }}</option>
                     {% endfor %}
                 </select>
-            <p><input type="submit" name="submit" value="Absenden" /></p>
+            <p><input type="submit" name="submit" value="Absenden"/></p>
         </form>
 
         {% if notification %}
-        <p class="errorLog">Die Neuigkeit wurde erfolgreich geändert.</p>
+            <p class="errorLog">Die Neuigkeit wurde erfolgreich geändert.</p>
         {% endif %}
 
         {% if notification %}
-        <p class="errorLog">Die Neuigkeit wurde erfolgreich gelöscht.</p>
+            <p class="errorLog">Die Neuigkeit wurde erfolgreich gelöscht.</p>
         {% endif %}
 
         <div class="js-bearbeite-neuigkeiten"></div>
