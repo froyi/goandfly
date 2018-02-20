@@ -90,7 +90,7 @@ abstract class AbstractDatetime
     /**
      * @return bool
      */
-    protected function isPastDatetime(): bool
+    public function isPast(): bool
     {
         return !($this->datetime > time());
     }

@@ -43,8 +43,7 @@ class ReiseFactory
         $bild = Image::fromFile($object->bild);
         $veranstalter = Name::fromString($object->veranstalter);
 
-        return new Reise($reiseId, $kurzbeschreibung, $beschreibung, $titel, $personen, $reisedauer, $flugzeit,
-            $sprache, $terrain, $karte, $bearbeitet, $teaser, $sichtbar, $bild, $veranstalter);
+        return new Reise($reiseId, $kurzbeschreibung, $beschreibung, $titel, $personen, $reisedauer, $flugzeit, $sprache, $terrain, $karte, $bearbeitet, $teaser, $sichtbar, $bild, $veranstalter);
     }
 
     /**
@@ -60,30 +59,103 @@ class ReiseFactory
     }
 
     /**
-     * @param array $parameter
-     * @return null|Reise
+     *
+     *
+     * @param $object
+     * @return bool
      */
-    public function getReiseFromUploadedData(array $parameter): ?Reise
+    public function validateObject($object): bool
     {
-        $object = (object)$parameter;
+        try {
+            $this->getReiseFromObject($object);
+        } catch (\InvalidArgumentException $error) {
+            return false;
+        } catch (\TypeError $error) {
+            return false;
+        }
 
+        return true;
+    }
+
+    /**
+     *
+     *
+     * @param $object
+     * @return null|Reisevorschau
+     */
+    public function getReiseVorschauFromObject($object): ?Reisevorschau
+    {
         $reiseId = Id::fromString($object->reiseId);
-        $kurzbeschreibung = Text::fromString($object->kurzbeschreibung);
-        $beschreibung = Text::fromString($object->beschreibung);
-        $titel = Title::fromString($object->titel);
-        $personen = Personen::fromValue($object->personen);
-        $reisedauer = Reisedauer::fromValue((int)$object->reisedauer);
-        $flugzeit = Flugzeit::fromValue((int)$object->flugzeit);
-        $sprache = Text::fromString($object->sprache);
-        $terrain = Terrain::fromValue((int)$object->terrain);
-        $karte = $object->kartenBild;
         $bearbeitet = Datetime::fromValue($object->bearbeitet);
-        $teaser = $object->teaserBild;
         $sichtbar = Date::fromValue($object->sichtbar);
-        $bild = $object->vorschauBild;
-        $veranstalter = Name::fromString($object->veranstalter);
 
-        return new Reise($reiseId, $kurzbeschreibung, $beschreibung, $titel, $personen, $reisedauer, $flugzeit,
-            $sprache, $terrain, $karte, $bearbeitet, $teaser, $sichtbar, $bild, $veranstalter);
+        if ($sichtbar->isPast() === false) {
+            return null;
+        }
+
+        $reisevorschau = new Reisevorschau($reiseId, $bearbeitet, $sichtbar);
+
+        if (!empty($object->kurzbeschreibung)) {
+            $reisevorschau->setKurzbeschreibung(Text::fromString($object->kurzbeschreibung));
+        }
+
+        if (!empty($object->titel)) {
+            $reisevorschau->setTitel(Title::fromString($object->titel));
+        }
+
+        if (!empty($object->personen)) {
+            $reisevorschau->setPersonen(Personen::fromValue($object->personen));
+        }
+
+        if (!empty($object->reisedauer)) {
+            $reisevorschau->setReisedauer(Reisedauer::fromValue((int) $object->reisedauer));
+        }
+
+        if (!empty($object->flugzeit)) {
+            $reisevorschau->setFlugzeit(Flugzeit::fromValue((int)$object->flugzeit));
+        }
+
+        if (!empty($object->sprache)) {
+            $reisevorschau->setSprache(Text::fromString($object->sprache));
+        }
+
+        if (!empty($object->terrain)) {
+            $reisevorschau->setTerrain(Terrain::fromValue((int)$object->terrain));
+        }
+
+        if (!empty($object->karte)) {
+            $reisevorschau->setKarte(Image::fromFile($object->karte));
+        }
+
+        if (!empty($object->teaser)) {
+            $reisevorschau->setTeaser(Image::fromFile($object->teaser));
+        }
+
+        if (!empty($object->bild)) {
+            $reisevorschau->setBild(Image::fromFile($object->bild));
+        }
+
+        if (!empty($object->veranstalter)) {
+            $reisevorschau->setVeranstalter(Name::fromString($object->veranstalter));
+        }
+
+        return $reisevorschau;
+    }
+
+    /**
+     *
+     *
+     * @param $object
+     * @return bool
+     */
+    public function validateReisevorschauObject($object): bool
+    {
+        try {
+            $this->getReiseVorschauFromObject($object);
+        } catch (\InvalidArgumentException $error) {
+            return false;
+        }
+
+        return true;
     }
 }

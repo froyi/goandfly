@@ -7,6 +7,7 @@ use Project\Module\Database\Database;
 use Project\Module\Frage\FrageService;
 use Project\Module\GenericValueObject\Datetime;
 use Project\Module\GenericValueObject\Id;
+use Project\Module\GenericValueObject\Image;
 use Project\Module\Leistung\Leistung;
 use Project\Module\Leistung\LeistungService;
 use Project\Module\Region\Region;
@@ -14,6 +15,7 @@ use Project\Module\Region\RegionService;
 use Project\Module\Reiseverlauf\ReiseverlaufService;
 use Project\Module\Tag\TagService;
 use Project\Module\Termin\TerminService;
+use Project\Utilities\Tools;
 
 /**
  * Class ReiseService
@@ -170,7 +172,7 @@ class ReiseService
      *
      * @return Reise
      */
-    public function getCompleteReiseByReiseId(Id $reiseId): ?Reise
+    public function getCompleteReiseByReiseId(Id $reiseId)
     {
         $reiseData = $this->reiseRepository->getReiseByReiseId($reiseId);
 
@@ -179,7 +181,13 @@ class ReiseService
         }
 
         /** @var Reise $reise */
-        $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+        if ($this->reiseFactory->validateObject($reiseData) === true) {
+            $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+        } else if ($this->reiseFactory->validateReisevorschauObject($reiseData) === true) {
+            $reise = $this->reiseFactory->getReiseVorschauFromObject($reiseData);
+        } else {
+            return null;
+        }
 
         $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
 
@@ -316,9 +324,13 @@ class ReiseService
         $reisen = $this->reiseRepository->getAllReisenByRegionId($regionId);
 
         foreach ($reisen as $reiseData) {
-            $reise = $this->reiseFactory->getReiseFromObject($reiseData);
-
-            $reisenArray[$reise->getReiseId()->toString()] = $reise;
+            if ($this->reiseFactory->validateObject($reiseData) === true) {
+                $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+                $reisenArray[$reise->getReiseId()->toString()] = $reise;
+            } else if ($this->reiseFactory->validateReisevorschauObject($reiseData) === true) {
+                $reise = $this->reiseFactory->getReiseVorschauFromObject($reiseData);
+                $reisenArray[$reise->getReiseId()->toString()] = $reise;
+            }
         }
 
         return $reisenArray;
@@ -334,6 +346,10 @@ class ReiseService
         $veranstalterListe = $this->reiseRepository->getAllVeranstalter();
 
         foreach ($veranstalterListe as $veranstalterData) {
+            if (empty($veranstalterData->veranstalter)) {
+                continue;
+            }
+
             /** @var Reiseveranstalter $veranstalter */
             $veranstalter = $this->reiseFactory->getVeranstalterFromObject($veranstalterData);
 
@@ -359,15 +375,22 @@ class ReiseService
         $reisen = $this->reiseRepository->getAllReisenByVeranstalter($reiseveranstalter);
 
         foreach ($reisen as $reiseData) {
-            $reise = $this->reiseFactory->getReiseFromObject($reiseData);
-
-            $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
-
-            if (count($regions) > 0) {
-                $reise->setRegionList($regions);
+            $reise = null;
+            if ($this->reiseFactory->validateObject($reiseData) === true) {
+                $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+            } else if ($this->reiseFactory->validateReisevorschauObject($reiseData) === true) {
+                $reise = $this->reiseFactory->getReiseVorschauFromObject($reiseData);
             }
 
-            $reisenArray[$reise->getReiseId()->toString()] = $reise;
+            if ($reise !== null) {
+                $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
+
+                if (count($regions) > 0) {
+                    $reise->setRegionList($regions);
+                }
+
+                $reisenArray[$reise->getReiseId()->toString()] = $reise;
+            }
         }
 
         return $reisenArray;
@@ -385,15 +408,22 @@ class ReiseService
         $reisen = $this->reiseRepository->getAllReisenByTagId($tagId);
 
         foreach ($reisen as $reiseData) {
-            $reise = $this->reiseFactory->getReiseFromObject($reiseData);
-
-            $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
-
-            if (count($regions) > 0) {
-                $reise->setRegionList($regions);
+            $reise = null;
+            if ($this->reiseFactory->validateObject($reiseData) === true) {
+                $reise = $this->reiseFactory->getReiseFromObject($reiseData);
+            } else if ($this->reiseFactory->validateReisevorschauObject($reiseData) === true) {
+                $reise = $this->reiseFactory->getReiseVorschauFromObject($reiseData);
             }
 
-            $reisenArray[$reise->getReiseId()->toString()] = $reise;
+            if ($reise !== null) {
+                $regions = $this->regionService->getRegionsByReiseId($reise->getReiseId());
+
+                if (count($regions) > 0) {
+                    $reise->setRegionList($regions);
+                }
+
+                $reisenArray[$reise->getReiseId()->toString()] = $reise;
+            }
         }
 
         return $reisenArray;
@@ -404,19 +434,24 @@ class ReiseService
      *
      * @return Reise
      */
-    public function getReiseByParams(array $parameter, RegionService $regionService): Reise
+    public function getReiseByParams($object, RegionService $regionService): ?Reise
     {
-        if (empty($parameter['reiseId'])) {
-            $parameter['reiseId'] = Id::generateId()->toString();
+
+        if (empty($object->reiseId)) {
+            $object->reiseId = Id::generateId()->toString();
         }
 
-        if (empty($parameter['bearbeitet'])) {
-            $parameter['bearbeitet'] = Datetime::fromValue('now')->toString();
+        if (empty($object->bearbeitet)) {
+            $object->bearbeitet = Datetime::fromValue('now')->toString();
         }
 
-        $reise = $this->reiseFactory->getReiseFromUploadedData($parameter);
+        if ($this->reiseFactory->validateObject($object) === false) {
+            return null;
+        }
 
-        foreach ($parameter['region'] as $regionIdData) {
+        $reise = $this->reiseFactory->getReiseFromObject($object);
+
+        foreach ($object->region as $regionIdData) {
             $regionId = Id::fromString($regionIdData);
 
             $region = $regionService->getRegionByRegionId($regionId);
@@ -435,11 +470,11 @@ class ReiseService
     public function saveReiseToDatabase(Reise $reise): bool
     {
         if ($this->reiseRepository->saveReiseToDatabase($reise)) {
-            $this->reiseRepository->deleteReiseRegionFromDatabase($reise);
+            $this->reiseRepository->deleteReiseRegionFromDatabase($reise->getReiseId());
 
             /** @var Region $region */
             foreach ($reise->getRegionList() as $region) {
-                $this->reiseRepository->saveReiseRegionToDatabase($reise, $region);
+                $this->reiseRepository->saveReiseRegionToDatabase($reise->getReiseId(), $region);
             }
 
             return true;
@@ -451,17 +486,101 @@ class ReiseService
     /**
      *
      *
+     * @param Reisevorschau $reisevorschau
+     * @return bool
+     */
+    public function saveReisevorschauToDatabase(Reisevorschau $reisevorschau): bool
+    {
+       if ($this->reiseRepository->saveReisevorschauToDatabase($reisevorschau)) {
+           $this->reiseRepository->deleteReiseRegionFromDatabase($reisevorschau->getReiseId());
+
+           /** @var Region $region */
+           foreach ($reisevorschau->getRegionList() as $region) {
+               $this->reiseRepository->saveReiseRegionToDatabase($reisevorschau->getReiseId(), $region);
+           }
+
+           return true;
+       }
+
+       return false;
+    }
+
+    /**
+     *
+     *
      * @param Id $reiseId
      * @return bool
      */
     public function deleteReiseByReiseId(Id $reiseId): bool
     {
-        $reise = $this->getCompleteReiseByReiseId($reiseId);
+        return $this->reiseRepository->deleteReise($reiseId);
+    }
 
-        if ($reise === null) {
-            return false;
+    /**
+     *
+     *
+     * @param               $object
+     * @param RegionService $regionService
+     * @return null|Reisevorschau
+     */
+    public function getReiseVorschauByParameter($object, RegionService $regionService): ?Reisevorschau
+    {
+        /** @var null|Image $imageVorschauBild */
+        $imageVorschauBild = null;
+        if (Tools::getFile('vorschauBild') !== false) {
+            $imageVorschauBild = Image::fromUploadWithSave(Tools::getFile('vorschauBild'), Image::PATH_REISE)->toString();
+        }
+        $object->bild = $imageVorschauBild;
+
+        /** @var null|Image $imageKartenBild */
+        $imageKartenBild = null;
+        if (Tools::getFile('kartenBild') !== false) {
+            $imageKartenBild = Image::fromUploadWithSave(Tools::getFile('kartenBild'), Image::PATH_KARTE)->toString();
+        }
+        $object->karte = $imageKartenBild;
+
+        /** @var null|Image $imageTeaserBild */
+        $imageTeaserBild = null;
+        if (Tools::getFile('teaserBild') !== false) {
+            $imageTeaserBild = Image::fromUploadWithSave(Tools::getFile('teaserBild'), Image::PATH_REISE)->toString();
+        }
+        $object->teaser = $imageTeaserBild;
+
+
+        return $this->getReiseVorschau($object, $regionService);
+    }
+
+    /**
+     *
+     *
+     * @param               $object
+     * @param RegionService $regionService
+     * @return null|Reisevorschau
+     */
+    protected function getReiseVorschau($object, RegionService $regionService): ?Reisevorschau
+    {
+        if (empty($object->reiseId)) {
+            $object->reiseId = Id::generateId()->toString();
         }
 
-        return $this->reiseRepository->deleteReise($reise);
+        if (empty($object->bearbeitet)) {
+            $object->bearbeitet = Datetime::fromValue('now')->toString();
+        }
+
+        if ($this->reiseFactory->validateReisevorschauObject($object) === false) {
+            return null;
+        }
+
+        $reise = $this->reiseFactory->getReiseVorschauFromObject($object);
+
+        foreach ($object->region as $regionIdData) {
+            $regionId = Id::fromString($regionIdData);
+
+            $region = $regionService->getRegionByRegionId($regionId);
+
+            $reise->addRegionToRegionList($region);
+        }
+
+        return $reise;
     }
 }

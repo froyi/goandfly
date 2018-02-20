@@ -8,14 +8,14 @@ return [
         'name' => 'goandfly',
         'dir' =>  '/goandfly',
     ],
-    'database' => [
+    'database_local' => [
         'host' => 'localhost',
         'user' => 'root',
         'password' => '',
         'database' => 'fly'
     ],
     // _live_test
-    'database_live' => [
+    'database' => [
         'host' => 'localhost',
         'user' => 'd002e083',
         'password' => '2006gofly0523',
@@ -168,6 +168,8 @@ return [
     'reise-recommender-offer' => 3,
     'notification' => [
         'reiseInsertSuccess' => 'Die Reise wurde erfolgreich angelegt.',
+        'reisevorschauInsertSuccess' => 'Die Reise wurde erfolgreich angelegt. Jedoch nur als Vorlage. Es fehlen einige Daten.',
+        'reisevorschauInsertError' => 'Die Reisevorlage konnte nicht erstellt werden.',
         'reiseInsertError' => 'Bei der Erstellung der Reise gab es einen Fehler.',
         'newsInsertSuccess' => 'Die Neuigkeit wurde erfolgreich angelegt.',
         'newsInsertError' => 'Bei der Erstellung der Neuigkeit gab es einen Fehler.',

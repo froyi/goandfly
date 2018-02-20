@@ -35,8 +35,10 @@ class BackendController extends DefaultController
 
         if ($this->loggedInUser === null) {
             $this->showStandardPage(Routing::ERROR_ROUTE);
+            exit;
         }
     }
+
     public function migrateAction(): void
     {
         $oldDatabase = new Database($this->configuration, 'goandfly');
@@ -83,60 +85,82 @@ class BackendController extends DefaultController
 
         $reise = $this->getReiseFromParameter();
 
+        if ($reise === null) {
+            $regionService = new RegionService($this->database);
 
-        /** @var array $parameter */
+            $reisevorschau = $reiseService->getReiseVorschauByParameter((object)$_POST, $regionService);
 
-        if ($reiseService->saveReiseToDatabase($reise) === true) {
-            $parameter = ['notificationCode' => 'reiseInsertSuccess', 'notificationStatus' => 'success'];
+            if ($reisevorschau !== null && $reiseService->saveReisevorschauToDatabase($reisevorschau)) {
+                $parameter = ['notificationCode' => 'reisevorschauInsertSuccess', 'notificationStatus' => 'success'];
+            }
+        } else {
+            /** @var array $parameter */
+
+            if ($reise !== null && $reiseService->saveReiseToDatabase($reise) === true) {
+                $parameter = ['notificationCode' => 'reiseInsertSuccess', 'notificationStatus' => 'success'];
+            }
         }
 
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
     }
 
-    protected function getReiseFromParameter(Reise $reise = null): ?Reise
+    /**
+     * @todo Diese Funktion muss in den ReiseService rein
+     *
+     *
+     * @param Reise|null $reiseOld
+     * @return null|Reise
+     */
+    protected function getReiseFromParameter($reiseOld = null): ?Reise
     {
-        $params = $_POST;
+        $object = (object)$_POST;
 
         /** @var null|Image $imageVorschauBild */
         $imageVorschauBild = null;
         if (Tools::getFile('vorschauBild') !== false) {
-            $imageVorschauBild = Image::fromUploadWithSave(Tools::getFile('vorschauBild'), Image::PATH_REISE);
-        } else if ($reise !== null) {
-            $imageVorschauBild = $reise->getBild();
+            $imageVorschauBild = Image::fromUploadWithSave(Tools::getFile('vorschauBild'), Image::PATH_REISE)->toString();
+        } else {
+            if ($reiseOld !== null && $reiseOld->getBild() !== null) {
+                $imageVorschauBild = $reiseOld->getBild()->toString();
+            }
         }
-        $params['vorschauBild'] = $imageVorschauBild;
+        $object->bild = $imageVorschauBild;
 
         /** @var null|Image $imageKartenBild */
         $imageKartenBild = null;
         if (Tools::getFile('kartenBild') !== false) {
-            $imageKartenBild = Image::fromUploadWithSave(Tools::getFile('kartenBild'), Image::PATH_KARTE);
-        } else if ($reise !== null) {
-            $imageKartenBild = $reise->getKarte();
+            $imageKartenBild = Image::fromUploadWithSave(Tools::getFile('kartenBild'), Image::PATH_KARTE)->toString();
+        } else {
+            if ($reiseOld !== null && $reiseOld->getKarte() !== null) {
+                $imageKartenBild = $reiseOld->getKarte()->toString();
+            }
         }
-        $params['kartenBild'] = $imageKartenBild;
+        $object->karte = $imageKartenBild;
 
         /** @var null|Image $imageTeaserBild */
         $imageTeaserBild = null;
         if (Tools::getFile('teaserBild') !== false) {
-            $imageTeaserBild = Image::fromUploadWithSave(Tools::getFile('teaserBild'), Image::PATH_REISE);
-        } else if ($reise !== null) {
-            $imageTeaserBild = $reise->getTeaser();
+            $imageTeaserBild = Image::fromUploadWithSave(Tools::getFile('teaserBild'), Image::PATH_REISE)->toString();
+        } else {
+            if ($reiseOld !== null && $reiseOld->getTeaser() !== null) {
+                $imageTeaserBild = $reiseOld->getTeaser()->toString();
+            }
         }
-        $params['teaserBild'] = $imageTeaserBild;
+        $object->teaser = $imageTeaserBild;
 
         $reiseService = new ReiseService($this->database);
         $regionService = new RegionService($this->database);
 
-        if ($reise = $reiseService->getReiseByParams($params, $regionService)) {
-            return $reise;
-        }
-
-        return null;
+        return $reiseService->getReiseByParams($object, $regionService);
     }
 
     public function bearbeiteReiseFormAction(): void
     {
-        $parameter = ['notificationCode' => 'reiseEditError', 'notificationStatus' => 'error', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
+        $parameter = [
+            'notificationCode' => 'reiseEditError',
+            'notificationStatus' => 'error',
+            'reiseId' => Id::fromString(Tools::getValue('reiseId'))
+        ];
 
         $reiseService = new ReiseService($this->database);
 
@@ -160,10 +184,27 @@ class BackendController extends DefaultController
 
         $reise = $this->getReiseFromParameter($editReise);
 
-        /** @var array $parameter */
+        if ($reise === null) {
+            $regionService = new RegionService($this->database);
 
-        if ($reiseService->saveReiseToDatabase($reise) === true) {
-            $parameter = ['notificationCode' => 'reiseEditSuccess', 'notificationStatus' => 'success', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
+            $reise = $reiseService->getReiseVorschauByParameter((object)$_POST, $regionService);
+
+            /** @var array $parameter */
+            if ($reiseService->saveReisevorschauToDatabase($reise) === true) {
+                $parameter = [
+                    'notificationCode' => 'reiseEditSuccess',
+                    'notificationStatus' => 'success',
+                    'reiseId' => Id::fromString(Tools::getValue('reiseId'))
+                ];
+            }
+        } else {
+            if ($reiseService->saveReiseToDatabase($reise) === true) {
+                $parameter = [
+                    'notificationCode' => 'reiseEditSuccess',
+                    'notificationStatus' => 'success',
+                    'reiseId' => Id::fromString(Tools::getValue('reiseId'))
+                ];
+            }
         }
 
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
@@ -208,13 +249,21 @@ class BackendController extends DefaultController
 
     public function bearbeiteFrageFormAction(): void
     {
-        $parameter = ['notificationCode' => 'frageError', 'notificationStatus' => 'error', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
-    
+        $parameter = [
+            'notificationCode' => 'frageError',
+            'notificationStatus' => 'error',
+            'reiseId' => Id::fromString(Tools::getValue('reiseId'))
+        ];
+
         $frageService = new FrageService($this->database);
 
         if (Tools::getValue('frageDelete') !== false) {
             if ($frageService->deleteFrageByFrageId(Id::fromString(Tools::getValue('frageId'))) === true) {
-                $parameter = ['notificationCode' => 'frageSuccess', 'notificationStatus' => 'success', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
+                $parameter = [
+                    'notificationCode' => 'frageSuccess',
+                    'notificationStatus' => 'success',
+                    'reiseId' => Id::fromString(Tools::getValue('reiseId'))
+                ];
             }
 
             header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
@@ -229,7 +278,11 @@ class BackendController extends DefaultController
         }
 
         if ($frageService->saveFrageToDatabase($frage) === true) {
-            $parameter = ['notificationCode' => 'frageSuccess', 'notificationStatus' => 'success', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
+            $parameter = [
+                'notificationCode' => 'frageSuccess',
+                'notificationStatus' => 'success',
+                'reiseId' => Id::fromString(Tools::getValue('reiseId'))
+            ];
         }
 
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
@@ -237,13 +290,21 @@ class BackendController extends DefaultController
 
     public function bearbeiteReiseverlaufFormAction(): void
     {
-        $parameter = ['notificationCode' => 'reiseverlaufError', 'notificationStatus' => 'error', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
+        $parameter = [
+            'notificationCode' => 'reiseverlaufError',
+            'notificationStatus' => 'error',
+            'reiseId' => Id::fromString(Tools::getValue('reiseId'))
+        ];
 
         $reiseverlaufService = new ReiseverlaufService($this->database);
 
         if (Tools::getValue('loescheReiseverlauf') !== false) {
             if ($reiseverlaufService->deleteReiseverlaufByReiseverlaufId(Id::fromString(Tools::getValue('reiseverlaufId'))) === true) {
-                $parameter = ['notificationCode' => 'reiseverlaufSuccess', 'notificationStatus' => 'success', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
+                $parameter = [
+                    'notificationCode' => 'reiseverlaufSuccess',
+                    'notificationStatus' => 'success',
+                    'reiseId' => Id::fromString(Tools::getValue('reiseId'))
+                ];
             }
 
             header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
@@ -258,7 +319,11 @@ class BackendController extends DefaultController
         }
 
         if ($reiseverlaufService->saveReiseverlaufToDatabase($reiseverlauf) === true) {
-            $parameter = ['notificationCode' => 'reiseverlaufSuccess', 'notificationStatus' => 'success', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
+            $parameter = [
+                'notificationCode' => 'reiseverlaufSuccess',
+                'notificationStatus' => 'success',
+                'reiseId' => Id::fromString(Tools::getValue('reiseId'))
+            ];
         }
 
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
@@ -266,13 +331,21 @@ class BackendController extends DefaultController
 
     public function bearbeiteTerminFormAction(): void
     {
-        $parameter = ['notificationCode' => 'temrinError', 'notificationStatus' => 'error', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
+        $parameter = [
+            'notificationCode' => 'temrinError',
+            'notificationStatus' => 'error',
+            'reiseId' => Id::fromString(Tools::getValue('reiseId'))
+        ];
 
         $terminService = new TerminService($this->database);
 
         if (Tools::getValue('loescheTermin') !== false) {
             if ($terminService->deleteTerminByTerminId(Id::fromString(Tools::getValue('terminId'))) === true) {
-                $parameter = ['notificationCode' => 'terminSuccess', 'notificationStatus' => 'success', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
+                $parameter = [
+                    'notificationCode' => 'terminSuccess',
+                    'notificationStatus' => 'success',
+                    'reiseId' => Id::fromString(Tools::getValue('reiseId'))
+                ];
             }
 
             header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));
@@ -287,7 +360,11 @@ class BackendController extends DefaultController
         }
 
         if ($terminService->saveTerminToDatabase($termin) === true) {
-            $parameter = ['notificationCode' => 'terminSuccess', 'notificationStatus' => 'success', 'reiseId' => Id::fromString(Tools::getValue('reiseId'))];
+            $parameter = [
+                'notificationCode' => 'terminSuccess',
+                'notificationStatus' => 'success',
+                'reiseId' => Id::fromString(Tools::getValue('reiseId'))
+            ];
         }
 
         header('Location: ' . Tools::getRouteUrl('loggedin', $parameter));

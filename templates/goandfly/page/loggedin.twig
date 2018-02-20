@@ -40,7 +40,7 @@
                                         <option value="{{ reise.getReiseId }}"
                                                 {% if activeReiseId and activeReiseId == reise.getReiseId %}selected{% endif %}>
                                             {{ reise.getTitel }} - erstellt
-                                            am {{ reise.getBearbeitet }} {{ reise.getVeranstalter }}
+                                            am {{ reise.getBearbeitet }} {{ reise.getVeranstalter | convert_encoding('UTF-8', 'ISO-8859-1') }}
                                         </option>
                                     {% endfor %}
                                 </optgroup>
@@ -86,7 +86,7 @@
                                 <optgroup label="{{ tag.getName | convert_encoding('UTF-8', 'ISO-8859-1') }}">
                                     {% for reise in tag.getReiseList %}
                                         <option value="{{ reise.getReiseId }}">{{ reise.getRegionList|first.getName|convert_encoding('UTF-8', 'ISO-8859-1') }} - {{ reise.getTitel }} - erstellt
-                                            am {{ reise.getBearbeitet }} - {{ reise.getVeranstalter }}
+                                            am {{ reise.getBearbeitet }} - {{ reise.getVeranstalter | convert_encoding('UTF-8', 'ISO-8859-1') }}
                                         </option>
                                     {% endfor %}
                                 </optgroup>

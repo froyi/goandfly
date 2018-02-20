@@ -4,6 +4,7 @@ declare (strict_types=1);
 namespace Project\Module\Region;
 
 use Project\Module\Database\Database;
+use Project\Module\Database\Query;
 use Project\Module\GenericValueObject\Id;
 
 /**
@@ -34,6 +35,7 @@ class RegionRepository
     public function getAllRegions(): array
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->orderBy('name', Query::ASC);
 
         return $this->database->fetchAll($query);
     }
