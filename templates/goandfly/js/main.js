@@ -31,6 +31,11 @@ function handleAngebote(page, regionId) {
         success: function (response) {
             if (response.status === 'success') {
                 $('.js-main-content').html(response.view);
+
+                $('.js-reise-remove').remove();
+                if (typeof response.regionRemove !== 'undefined') {
+                    $('.js-teaser').prepend(response.regionRemove);
+                }
             }
         }
     });

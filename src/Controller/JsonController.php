@@ -11,6 +11,7 @@ use Project\Module\Frage\FrageService;
 use Project\Module\GenericValueObject\Id;
 use Project\Module\Leistung\LeistungService;
 use Project\Module\News\NewsService;
+use Project\Module\Region\RegionService;
 use Project\Module\Reise\ReiseService;
 use Project\Module\Reiseverlauf\ReiseverlaufService;
 use Project\Module\Tag\TagService;
@@ -48,6 +49,18 @@ class JsonController extends DefaultController
         $this->getReisenContainer(true);
 
         $this->jsonModel->addJsonConfig('view', $this->viewRenderer->renderJsonView('page/home.twig'));
+
+        if (Tools::getValue('regionId') !== false) {
+            $regionService = new RegionService($this->database);
+
+            $regionId = Id::fromString(Tools::getValue('regionId'));
+            $region = $regionService->getRegionByRegionId($regionId);
+
+            $this->viewRenderer->addViewConfig('regionReiseLink', true);
+            $this->viewRenderer->addViewConfig('regionReise', $region);
+
+            $this->jsonModel->addJsonConfig('regionRemove', $this->viewRenderer->renderJsonView('partial/region_remove.twig'));
+        }
 
         $this->jsonModel->send();
     }

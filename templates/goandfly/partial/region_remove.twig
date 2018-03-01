@@ -1,0 +1,6 @@
+{% if regionReiseLink is same as(true)  %}
+    {% set regionReiseLink = {'regionReiseLink': regionReiseLink} %}
+    <div class="reise-remove js-reise-remove">
+        <a href="{{ route('index', regionReiseLink) }}"><span>{{ regionReise.getName | convert_encoding('UTF-8', 'ISO-8859-1') }} als Reiseziel entfernen</span><span class="x-button">x</span></a>
+    </div>
+{% endif %}

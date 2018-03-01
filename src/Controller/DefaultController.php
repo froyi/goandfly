@@ -179,11 +179,24 @@ class DefaultController
 
         // Region
         $regionId = null;
-        if (Tools::getValue('regionId') !== false) {
-            $regionId = Id::fromString(Tools::getValue('regionId'));
+        $regionService = new RegionService($this->database);
+
+        /** redirect if user removed region */
+        if (Tools::getValue('regionReiseLink') !== false && Tools::getValue('regionId') !== false) {
+            $regionService->saveRegionToSession($regionId);
+
+            header('Location: ' . Tools::getRouteUrl('index'));
+            exit;
         }
 
-        $regionService = new RegionService($this->database);
+        if (Tools::getValue('regionId') !== false) {
+            $regionId = Id::fromString(Tools::getValue('regionId'));
+            $this->viewRenderer->addViewConfig('regionReiseLink', true);
+
+            $region = $regionService->getRegionByRegionId($regionId);
+            $this->viewRenderer->addViewConfig('regionReise', $region);
+        }
+
         $regionService->saveRegionToSession($regionId);
 
         $startpageOfferAmount = null;

@@ -2688,3 +2688,24 @@ header .container {
   padding: 1em 0;
   color: #c90019;
 }
+#teaser {
+  position: relative;
+}
+#teaser .reise-remove {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(201, 0, 25, 0.7);
+  height: 40px;
+  padding: 0 10px;
+}
+#teaser .reise-remove span {
+  font-family: 'cooper_md_btmedium', Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  line-height: 40px;
+}
+#teaser .reise-remove span.x-button {
+  margin-left: 12px;
+  font-family: Arial, sans-serif;
+  font-size: 1.2em;
+}
