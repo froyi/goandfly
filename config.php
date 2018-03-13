@@ -6,9 +6,9 @@ return [
     ],
     'template' => [
         'name' => 'goandfly',
-        'dir' =>  '/goandfly',
+        'dir' => '/goandfly',
     ],
-    'database_local' => [
+    'database_lokal' => [
         'host' => 'localhost',
         'user' => 'root',
         'password' => '',
@@ -21,19 +21,19 @@ return [
         'password' => '2006gofly0523',
         'database' => 'd002e083'
     ],
-//    'database_live' => [
-//        'host' => 'localhost',
-//        'user' => 'd017956f',
-//        'password' => 'veQfmf882Z3FCGpE',
-//        'database' => 'd017956f'
-//    ],
+    //    'database_live' => [
+    //        'host' => 'localhost',
+    //        'user' => 'd017956f',
+    //        'password' => 'veQfmf882Z3FCGpE',
+    //        'database' => 'd017956f'
+    //    ],
     'controller' => [
         'namespace' => 'Controller'
     ],
     'route' => [
         'index' => [
             'controller' => 'IndexController',
-            'action' => 'indexAction'
+            'action' => 'indexAction',
         ],
         'ueber-uns' => [
             'controller' => 'IndexController',
@@ -57,11 +57,17 @@ return [
         ],
         'reise' => [
             'controller' => 'IndexController',
-            'action' => 'reiseAction'
+            'action' => 'reiseAction',
+            'js-packages' => [
+                'fancybox' => true,
+            ],
         ],
         'migrate' => [
             'controller' => 'BackendController',
-            'action' => 'migrateAction'
+            'action' => 'migrateAction',
+            'js-packages' => [
+                'ckeditor' => true,
+            ],
         ],
         'filter-reisen' => [
             'controller' => 'JsonController',
@@ -81,15 +87,24 @@ return [
         ],
         'loggedin' => [
             'controller' => 'BackendController',
-            'action' => 'loggedInAction'
+            'action' => 'loggedInAction',
+            'js-packages' => [
+                'ckeditor' => true,
+            ],
         ],
         'erstelle-reise' => [
             'controller' => 'BackendController',
-            'action' => 'erstelleReiseAction'
+            'action' => 'erstelleReiseAction',
+            'js-packages' => [
+                'ckeditor' => true,
+            ],
         ],
         'erstelle-neuigkeiten' => [
             'controller' => 'BackendController',
-            'action' => 'erstelleNeuigkeitenAction'
+            'action' => 'erstelleNeuigkeitenAction',
+            'js-packages' => [
+                'ckeditor' => true,
+            ],
         ],
         'ajax-bearbeite-neuigkeiten' => [
             'controller' => 'JsonController',
@@ -101,7 +116,10 @@ return [
         ],
         'bearbeite-neuigkeiten' => [
             'controller' => 'BackendController',
-            'action' => 'bearbeiteNeuigkeitenAction'
+            'action' => 'bearbeiteNeuigkeitenAction',
+            'js-packages' => [
+                'ckeditor' => true,
+            ],
         ],
         'ajax-erstelle-frage' => [
             'controller' => 'JsonController',
@@ -137,19 +155,31 @@ return [
         ],
         'bearbeite-frage-form' => [
             'controller' => 'BackendController',
-            'action' => 'bearbeiteFrageFormAction'
+            'action' => 'bearbeiteFrageFormAction',
+            'js-packages' => [
+                'ckeditor' => true,
+            ],
         ],
         'bearbeite-termin-form' => [
             'controller' => 'BackendController',
-            'action' => 'bearbeiteTerminFormAction'
+            'action' => 'bearbeiteTerminFormAction',
+            'js-packages' => [
+                'ckeditor' => true,
+            ],
         ],
         'bearbeite-reiseverlauf-form' => [
             'controller' => 'BackendController',
-            'action' => 'bearbeiteReiseverlaufFormAction'
+            'action' => 'bearbeiteReiseverlaufFormAction',
+            'js-packages' => [
+                'ckeditor' => true,
+            ],
         ],
         'bearbeite-reise-form' => [
             'controller' => 'BackendController',
-            'action' => 'bearbeiteReiseFormAction'
+            'action' => 'bearbeiteReiseFormAction',
+            'js-packages' => [
+                'ckeditor' => true,
+            ],
         ],
         'kontakt-mailer' => [
             'controller' => 'MailerController',
@@ -175,4 +205,21 @@ return [
         'newsInsertError' => 'Bei der Erstellung der Neuigkeit gab es einen Fehler.',
         'newsDeleteSuccess' => 'Die Neuigkeit wurde erfolgreich gelöscht.',
     ],
+    'tinypng-api-key' => 'oCp8yUGdePuUObLKVmhAHeB4V3zLbDZD',
+    'js-packages' => [
+        'fancybox' => '/js/fancybox.min.js',
+        'ckeditor' => '/ckeditor/ckeditor.js',
+        'responsive-slides' => '/js/responsiveSlides.min.js',
+        'jquery' => '/js/jquery-3.2.1.min.js',
+        'pageslide' => '/js/jquery.pageslide.min.js',
+        'main' => '/js/main.min.js',
+    ],
+    'js-boxes' => [
+        'main' => [
+            'jquery' => true,
+            'responsive-slides' => true,
+            'pageslide' => true,
+            'main' => true,
+        ]
+    ]
 ];

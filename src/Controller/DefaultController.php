@@ -15,6 +15,7 @@ use Project\Module\Reise\ReiseService;
 use Project\Module\Tag\TagService;
 use Project\Module\User\User;
 use Project\Module\User\UserService;
+use Project\Service\JsPluginService;
 use Project\Utilities\Notification;
 use Project\Utilities\Tools;
 use Project\View\ViewRenderer;
@@ -66,6 +67,8 @@ class DefaultController
         $this->setDefaultData();
 
         $this->setNotifications();
+
+        $this->setJsPackages($routeName);
     }
 
     /**
@@ -76,7 +79,6 @@ class DefaultController
         $this->viewRenderer->addViewConfig('page', 'notfound');
         $this->viewRenderer->addViewConfig('route', $routeName);
         $this->viewRenderer->addViewConfig('teaserBild', 'templates/goandfly/img/partner_teaser.jpg');
-
     }
 
     protected function setDefaultData(): void
@@ -93,6 +95,22 @@ class DefaultController
         if ($this->loggedInUser !== null) {
             $this->viewRenderer->addViewConfig('loggedInUser', $this->loggedInUser);
         }
+    }
+
+    /**
+     *
+     *
+     * @param string $routeName
+     */
+    protected function setJsPackages(string $routeName): void
+    {
+        $jsPlugInService = new JsPluginService($this->configuration);
+
+        $jsMainPackage = $jsPlugInService->getMainPackages();
+        $this->viewRenderer->addViewConfig('jsPlugins', $jsMainPackage);
+
+        $jsRoutePackage = $jsPlugInService->getPackagesByRouteName($routeName);
+        $this->viewRenderer->addViewConfig('jsRoutePlugins', $jsRoutePackage);
     }
 
     /**

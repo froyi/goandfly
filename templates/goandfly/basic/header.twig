@@ -15,16 +15,15 @@
 
     <title>go and fly</title>
 
-    <link rel="stylesheet" href="{{ templateDir }}/css/main.css">
+    <link rel="stylesheet" href="{{ templateDir }}/css/main.min.css">
 
-    <script src="{{ templateDir }}/js/jquery-3.2.1.min.js"></script>
-    <script src="{{ templateDir }}/js/responsiveSlides.min.js"></script>
+    {% for jsPlugin in jsPlugins %}
+        <script src="{{ templateDir }}{{ jsPlugin }}"></script>
+    {% endfor %}
 
-    <script src="{{ templateDir }}/js/main.js"></script>
-
-    <script src="{{ templateDir }}/ckeditor/ckeditor.js"></script>
-
-    <script src="{{ templateDir }}/js/fancybox.min.js"></script>
+    {% for jsPlugin in jsRoutePlugins %}
+        <script src="{{ templateDir }}{{ jsPlugin }}"></script>
+    {% endfor %}
 </head>
 <body>
 

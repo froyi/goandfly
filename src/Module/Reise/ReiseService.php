@@ -528,21 +528,21 @@ class ReiseService
         /** @var null|Image $imageVorschauBild */
         $imageVorschauBild = null;
         if (Tools::getFile('vorschauBild') !== false) {
-            $imageVorschauBild = Image::fromUploadWithSave(Tools::getFile('vorschauBild'), Image::PATH_REISE)->toString();
+            $imageVorschauBild = Image::fromUploadWithSave(Tools::getFile('vorschauBild'), Image::USE_BILD)->toString();
         }
         $object->bild = $imageVorschauBild;
 
         /** @var null|Image $imageKartenBild */
         $imageKartenBild = null;
         if (Tools::getFile('kartenBild') !== false) {
-            $imageKartenBild = Image::fromUploadWithSave(Tools::getFile('kartenBild'), Image::PATH_KARTE)->toString();
+            $imageKartenBild = Image::fromUploadWithSave(Tools::getFile('kartenBild'), Image::USE_KARTE)->toString();
         }
         $object->karte = $imageKartenBild;
 
         /** @var null|Image $imageTeaserBild */
         $imageTeaserBild = null;
         if (Tools::getFile('teaserBild') !== false) {
-            $imageTeaserBild = Image::fromUploadWithSave(Tools::getFile('teaserBild'), Image::PATH_REISE)->toString();
+            $imageTeaserBild = Image::fromUploadWithSave(Tools::getFile('teaserBild'), Image::USE_TEASER)->toString();
         }
         $object->teaser = $imageTeaserBild;
 

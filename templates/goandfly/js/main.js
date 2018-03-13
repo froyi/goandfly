@@ -154,6 +154,7 @@ $(document).on('submit', '.hole-reise', function (event) {
         success: function (response) {
             if (response.status === 'success') {
                 $bearbeiteReiseContainer.html(response.view);
+
                 CKEDITOR.replace('ReiseEditorCKE');
                 CKEDITOR.replace('editorCKE3');
             }
@@ -162,13 +163,18 @@ $(document).on('submit', '.hole-reise', function (event) {
 });
 
 $(document).ready(function () {
-    CKEDITOR.replace('editorCKE');
+    if (typeof CKEDITOR !== "undefined") {
+        CKEDITOR.replace('editorCKE');
+    }
 
     if ($('.hole-reise .js-hole-reisedaten-select').val() !== 0) {
         $('.hole-reise').submit();
-        $('html, body').animate({
-            scrollTop: $('.js-bearbeite-reise').offset().top
-        }, 2000);
+        if (typeof $('.js-bearbeite-reise').offset() !== 'undefined') {
+            $('html, body').animate({
+                scrollTop: $('.js-bearbeite-reise').offset().top
+            }, 2000);
+        }
+
     }
 });
 
@@ -389,3 +395,31 @@ $(document).on('submit', '.js-erstelle-reisetags', function (event) {
         }
     });
 });
+
+/* SHOW VERLAUF & LEISTUNGEN */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+function showVerlauf(id)
+{
+    var laenge = document.getElementById("reiseverlaufDetail").getElementsByClassName("verlauf").length;
+
+    for(var i = 0; i < laenge; i ++)
+    {
+        document.getElementById("reiseverlaufDetail").getElementsByClassName("verlauf").item(i).style.display = "none";
+    }
+    document.getElementById("verlauf"+id).style.display = "inherit";
+}
+function showReiseverlauf()
+{
+    document.getElementById("reiseverlaufDetail").style.height = "auto";
+    document.getElementById("reiseverlaufMehr").style.display = "none";
+}
+function showLeistungen()
+{
+    document.getElementById("reiseSidebarLeistungenContainer").style.height = "auto";
+    document.getElementById("leistungenMehr").style.display = "none";
+}
+function showTermine()
+{
+    document.getElementById("reiseTerminContainer").style.height = "auto";
+    document.getElementById("termineMehr").style.display = "none";
+}
