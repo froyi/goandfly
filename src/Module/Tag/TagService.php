@@ -46,6 +46,23 @@ class TagService
     }
 
     /**
+     * @return array
+     */
+    public function getAllTagsSorted(): array
+    {
+        $tagsArray = [];
+
+        $tags = $this->tagRepository->getAllTagsSorted();
+
+        foreach ($tags as $tagData) {
+            $tag = $this->tagFactory->getTagFromObject($tagData);
+            $tagsArray[$tag->getTagId()->toString()] = $tag;
+        }
+
+        return $tagsArray;
+    }
+
+    /**
      * @param Id $reiseId
      *
      * @return array
@@ -112,7 +129,7 @@ class TagService
     {
         $tagsArray = [];
 
-        $tags = $this->getAllTags();
+        $tags = $this->getAllTagsSorted();
 
         /** @var Tag $tag */
         foreach ($tags as $tag) {
@@ -126,6 +143,13 @@ class TagService
         return $tagsArray;
     }
 
+    /**
+     *
+     *
+     * @param array $tags
+     * @param Id    $reiseId
+     * @return bool
+     */
     public function saveTagsToReiseInDatabase(array $tags, Id $reiseId): bool
     {
         $this->tagRepository->deleteAllTagsFromReise($reiseId);

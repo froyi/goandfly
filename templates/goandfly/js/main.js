@@ -174,7 +174,16 @@ $(document).ready(function () {
                 scrollTop: $('.js-bearbeite-reise').offset().top
             }, 2000);
         }
+    }
+});
 
+$(document).on('click', 'img.open', function () {
+    var $navigation = $('#nav');
+
+    if ($navigation.is(':visible')) {
+        $navigation.hide();
+    } else {
+        $navigation.show();
     }
 });
 
@@ -207,7 +216,7 @@ $(document).on('submit', '.js-erstelle-frage', function (event) {
                 $frageStatus.html('Die Frage konnte nicht gespeichert werden');
             }
         },
-        error: function() {
+        error: function () {
             $frageStatus.html('Die Frage konnte nicht gespeichert werden');
         }
     });
@@ -227,9 +236,9 @@ $(document).on('submit', '.js-bearbeite-frage', function (event) {
             frageId: frageId
         },
         success: function (response) {
-                $bearbeiteFrageContainer.html(response.view);
+            $bearbeiteFrageContainer.html(response.view);
         },
-        error: function() {
+        error: function () {
             $bearbeiteFrageContainer.html('Die Frage konnte nicht gefunden werden.');
         }
     });
@@ -257,7 +266,7 @@ $(document).on('submit', '.js-erstelle-leistungen', function (event) {
         success: function () {
             $statusContainer.html('Die Leistung wurde erfolgreich gespeichert.');
         },
-        error: function() {
+        error: function () {
             $statusContainer.html('Die Leistung konnte nicht gespeichert werden werden.');
         }
     });
@@ -289,7 +298,7 @@ $(document).on('submit', '.js-erstelle-reiseverlauf', function (event) {
             verlaufTitel.val('');
             verlaufBeschreibung.val('');
         },
-        error: function() {
+        error: function () {
             $statusContainer.html('Der Verlauf konnte nicht gespeichert werden werden.');
         }
     });
@@ -311,7 +320,7 @@ $(document).on('submit', '.js-bearbeite-reiseverlauf', function (event) {
         success: function (response) {
             $bearbeiteReiseverlaufContainer.html(response.view);
         },
-        error: function() {
+        error: function () {
             $bearbeiteReiseverlaufContainer.html('Der Reiseverlauf konnte nicht gefunden werden.');
         }
     });
@@ -343,7 +352,7 @@ $(document).on('submit', '.js-erstelle-reisetermin', function (event) {
             reiseTerminEnde.val('');
             reiseTerminPreis.val('');
         },
-        error: function() {
+        error: function () {
             $statusContainer.html('Der Reisetermin konnte nicht gespeichert werden werden.');
         }
     });
@@ -365,7 +374,7 @@ $(document).on('submit', '.js-bearbeite-reisetermin', function (event) {
         success: function (response) {
             $bearbeiteTerminContainer.html(response.view);
         },
-        error: function() {
+        error: function () {
             $bearbeiteTerminContainer.html('Der Termin konnte nicht gefunden werden.');
         }
     });
@@ -390,36 +399,35 @@ $(document).on('submit', '.js-erstelle-reisetags', function (event) {
         success: function () {
             $statusContainer.html('Die Tags wurden erfolgreich gespeichert.');
         },
-        error: function() {
+        error: function () {
             $statusContainer.html('Die Tags konnte nicht gespeichert werden werden.');
         }
     });
 });
 
 /* SHOW VERLAUF & LEISTUNGEN */
+
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-function showVerlauf(id)
-{
+function showVerlauf(id) {
     var laenge = document.getElementById("reiseverlaufDetail").getElementsByClassName("verlauf").length;
 
-    for(var i = 0; i < laenge; i ++)
-    {
+    for (var i = 0; i < laenge; i++) {
         document.getElementById("reiseverlaufDetail").getElementsByClassName("verlauf").item(i).style.display = "none";
     }
-    document.getElementById("verlauf"+id).style.display = "inherit";
+    document.getElementById("verlauf" + id).style.display = "inherit";
 }
-function showReiseverlauf()
-{
+
+function showReiseverlauf() {
     document.getElementById("reiseverlaufDetail").style.height = "auto";
     document.getElementById("reiseverlaufMehr").style.display = "none";
 }
-function showLeistungen()
-{
+
+function showLeistungen() {
     document.getElementById("reiseSidebarLeistungenContainer").style.height = "auto";
     document.getElementById("leistungenMehr").style.display = "none";
 }
-function showTermine()
-{
+
+function showTermine() {
     document.getElementById("reiseTerminContainer").style.height = "auto";
     document.getElementById("termineMehr").style.display = "none";
 }

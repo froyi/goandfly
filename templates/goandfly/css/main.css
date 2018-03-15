@@ -1216,6 +1216,9 @@ address {
 /*********************/
 body {
   background-color: #1C191D;
+  background: url(../img/body_bg.jpg) top center no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 #wrapper {
   width: 100%;
@@ -1243,8 +1246,8 @@ body {
   border-right: 2px solid #C90019;
   border-bottom: 2px solid #C90019;
   /*-webkit-box-shadow: inset 0 0 5px 5px #222;
-  -moz-box-shadow: inset 0 0 5px 5px #222;
-  box-shadow: inset 0 0 5px 5px #222;*/
+    -moz-box-shadow: inset 0 0 5px 5px #222;
+    box-shadow: inset 0 0 5px 5px #222;*/
 }
 .kontinent {
   border-bottom: 1px dotted #464646;
@@ -1263,7 +1266,7 @@ body {
 .open {
   float: left;
 }
-a.open img {
+a.open img.open {
   margin: 70% 0 0 20%;
 }
 #menueBig {
@@ -1278,6 +1281,26 @@ a.open img {
 #navigationBig {
   display: none;
 }
+#navigation {
+  background: #1c191d;
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+#navigation .kontinent {
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+#navigation .kontinent img {
+  width: 40%;
+  height: auto;
+}
+#navigation .kontinent p {
+  width: 30%;
+  padding-right: 3.5em;
+}
 #logo {
   text-align: center;
   width: 210px;
@@ -1288,12 +1311,10 @@ a.open img {
   font-family: 'cooper_lt_btlight', Arial, Helvetica, sans-serif;
   color: #cfd3cd;
   line-height: 1.167;
-  padding-bottom: 6%;
 }
 #logo img {
   max-width: 173px;
   margin: 0 auto;
-  padding: 4% 0 1% 0;
 }
 #logo_big {
   display: none;
@@ -1469,7 +1490,163 @@ select.multipleSelect {
 strong {
   font-weight: bold;
 }
-@media screen and (min-width: 500px) {
+@media screen and (max-device-width: 699px) {
+  #main .teaser-reise-container {
+    display: none;
+  }
+  .reise {
+    display: flex;
+    justify-content: flex-start;
+    border: 2px solid #C90019;
+    background: rgba(28, 25, 29, 0.9);
+    margin: 10px 0;
+  }
+  .reise p {
+    font-size: 0.8125em;
+    font-family: 'CandaraRegular', Arial, Helvetica, sans-serif;
+    line-height: 1.563;
+    padding-left: 0.625em;
+    padding-right: 0.625em;
+  }
+  .reise h3 {
+    padding-top: 5px;
+    padding-left: 0.4em;
+  }
+  .reise img {
+    width: 45%;
+  }
+  .reise .reiseKurzinformation {
+    width: auto !important;
+  }
+  #mainSidebar {
+    float: none;
+    width: 96%;
+    background: rgba(28, 25, 29, 0.9);
+    border: 2px solid #C90019;
+    margin-top: 2em;
+    position: relative;
+    padding: 1em;
+  }
+  #mainSidebar #schildSidebar {
+    display: none;
+  }
+  #mainSidebar .neuigkeit {
+    margin: 0.5em 0;
+  }
+  #reiseSidebar #reiseSidebarKarte img {
+    width: 50%;
+    display: block;
+    margin: 50px auto;
+  }
+  #reiseSidebar #reiseSidebarKurzinformation {
+    width: 55%;
+    margin: 0 auto;
+  }
+  #reiseSidebar #reiseSidebarKurzinformation table tbody tr td {
+    width: 20%;
+  }
+  #reiseSidebar .reiseSidebarContainer,
+  #reiseSidebar #reiseSidebarLeistungen {
+    margin: 20px 0;
+    padding: 0 15px;
+  }
+  #reiseRecommender #reiseRecommenderContainer .reise > p {
+    display: none;
+  }
+  #reiseRecommender #reiseRecommenderContainer .reise > a {
+    width: 40%;
+    display: block;
+  }
+  #reiseRecommender #reiseRecommenderContainer .reise img {
+    width: 100%;
+  }
+  #reiseRecommender #reiseRecommenderContainer .tagListe,
+  #reiseRecommender #reiseRecommenderContainer .reiseKurzinformation {
+    display: none;
+  }
+  #footer .container {
+    display: flex;
+    justify-content: space-between;
+  }
+  #footer .container > div:first-of-type {
+    margin: 0;
+    text-align: center;
+  }
+  #footer .container > div:first-of-type img {
+    float: none;
+  }
+  #footer .container > div:first-of-type div {
+    float: none;
+    width: 100%;
+    max-width: none;
+  }
+  #footer .container > div:first-of-type ul {
+    margin-top: 1em;
+  }
+  #footer .container > div:first-of-type ul li a {
+    color: #ffffff;
+  }
+  #footer .line {
+    display: none;
+  }
+  #partner {
+    background: rgba(28, 25, 29, 0.9);
+    border-left: 2px solid #C90019;
+    border-right: 2px solid #C90019;
+    border-bottom: 2px solid #C90019;
+    padding-top: 20px;
+  }
+  #partner > div {
+    padding: 0 15px;
+    margin-bottom: 40px;
+  }
+  #partner > div img {
+    float: right;
+    width: 55%;
+    padding-left: 10px;
+  }
+  #ueber_uns {
+    background: rgba(28, 25, 29, 0.9);
+    border-left: 2px solid #C90019;
+    border-right: 2px solid #C90019;
+    border-bottom: 2px solid #C90019;
+    padding: 20px 10px 20px 10px;
+  }
+  #ueber_uns p img {
+    float: left;
+    padding-right: 15px;
+    padding-bottom: 15px;
+  }
+  #kontakt {
+    background: rgba(28, 25, 29, 0.9);
+    border-left: 2px solid #C90019;
+    border-right: 2px solid #C90019;
+    border-bottom: 2px solid #C90019;
+    padding: 20px 10px 20px 10px;
+  }
+  #impressum {
+    background: rgba(28, 25, 29, 0.9);
+    border-left: 2px solid #C90019;
+    border-right: 2px solid #C90019;
+    border-bottom: 2px solid #C90019;
+    padding: 20px 10px 20px 10px;
+  }
+  #reiseContainer {
+    width: 100%;
+    background: rgba(28, 25, 29, 0.9);
+    border-left: 2px solid #C90019;
+    border-right: 2px solid #C90019;
+    border-bottom: 2px solid #C90019;
+    padding-top: 1em;
+  }
+  #reiseContainer #reiseContent {
+    margin: 0 15px;
+  }
+  #sidebar {
+    display: none;
+  }
+}
+@media screen and (min-device-width: 500px) {
   body {
     background: url(../img/body_bg.jpg) top center no-repeat;
     background-attachment: fixed;
@@ -1491,24 +1668,38 @@ strong {
     height: 70px;
   }
   #header #hotline {
-    width: 24%;
+    width: 21%;
+    min-width: 230px;
     max-height: 58px;
     text-align: right;
     display: inherit;
-    padding-top: 12px;
+    padding-top: 30px;
   }
   #header #hotline img {
     width: 100%;
     min-width: 140px;
     max-width: 220px;
   }
+  /* Navigation austauschen */
+  .open {
+    display: none;
+  }
+  #menueBig {
+    z-index: 100;
+    display: inherit;
+    position: absolute;
+    left: 50%;
+    margin-left: -120px;
+    content: url(../img/globus.png);
+    cursor: pointer;
+  }
   #teaser {
     /*padding:0px;*/
     /*background-color:#1c191d;*/
     border: 2px solid #C90019;
     /*
-		border-left:2px solid #C90019;
-		border-right:2px solid #C90019;*/
+                border-left:2px solid #C90019;
+                border-right:2px solid #C90019;*/
     max-height: 366px;
     max-width: 1096px;
     overflow: hidden;
@@ -1516,7 +1707,7 @@ strong {
   }
   #teaser img {
     /*border-left:2px solid #C90019;
-    border-right:2px solid #C90019;*/
+        border-right:2px solid #C90019;*/
     max-height: 367px;
   }
   .open {
@@ -1572,11 +1763,105 @@ strong {
   #main .container {
     /*display:none;*/
   }
+  #navigationBig {
+    width: 90%;
+    max-width: 1096px;
+    height: 620px;
+    background: rgba(0, 0, 0, 0.87);
+    position: fixed;
+    border-left: 2px solid #C90019;
+    border-right: 2px solid #C90019;
+    border-bottom: 2px solid #C90019;
+    margin-left: -2px;
+    z-index: 1;
+    padding-top: 50px;
+  }
+  #navigationBig #navigationBild {
+    display: none;
+  }
+  #navigationBig > div.left {
+    width: 20%;
+    height: 540px;
+    margin-top: 15px;
+    padding-left: 15px;
+    border-right: 1px solid white;
+  }
+  #navigationBig > div.left p {
+    font-size: 1.1em;
+    font-family: 'cooper_lt_btlight', Arial, Helvetica, sans-serif;
+    color: white;
+    cursor: pointer;
+    line-height: 2.824;
+    margin-left: 5%;
+  }
+  #navigationBig > div.left > p:hover {
+    color: #C90019;
+  }
+  #regionenAusgabe {
+    width: 74% !important;
+    border: none !important;
+  }
+  #regionenAusgabe img {
+    width: 100%;
+    border: none;
+    height: auto;
+  }
+  #regionenAusgabe div.left {
+    width: 40%;
+    border-right: 1px solid white;
+    height: 540px;
+    padding-right: 5px;
+  }
+  #regionenAusgabe > div.left div {
+    margin-bottom: 10px;
+  }
+  #regionenAusgabe div.left p {
+    font-size: 1em;
+    font-family: 'cooper_lt_btlight', Arial, Helvetica, sans-serif;
+    color: white;
+    line-height: 1.667;
+    text-align: left;
+    margin-left: 0;
+  }
+  #regionenAusgabe div.left span {
+    font-size: 0.9em;
+    font-family: 'cooper_lt_btlight', Arial, Helvetica, sans-serif;
+    color: #C90019;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  #regionenAusgabe div.right {
+    width: 57%;
+  }
+  #regionenAusgabe div.right #kontinentInformation {
+    margin-top: 5px;
+  }
+  #regionenAusgabe div.right #kontinentInformation h2 {
+    margin-left: 25px;
+  }
+  #regionenAusgabe div.right #kontinentInformation p {
+    padding-right: 0.3em;
+    font-size: 0.85em;
+    line-height: 1.5em;
+    cursor: default;
+    padding-top: 6px;
+  }
+  #regionenAusgabe div.right #kontinentInformation span {
+    font-size: 1.15em;
+    color: #c90019;
+  }
 }
-@media screen and (min-width: 700px) {
+@media screen and (min-device-width: 700px) {
   /* REISE VORSCHAU INDEX */
+  #main .container {
+    display: flex;
+    justify-content: space-between;
+  }
   #main > div.right {
     width: 30%;
+  }
+  #sidebar {
+    display: block;
   }
   .reise {
     width: 30%;
@@ -1595,17 +1880,6 @@ strong {
   }
   .reise h3 {
     padding-left: 0.4em;
-  }
-  .container .reise:nth-of-type(1),
-  .container .reise:nth-of-type(2),
-  .container .reise:nth-of-type(3) {
-    float: left;
-  }
-  .container .reise:nth-of-type(3) {
-    float: right;
-  }
-  .reise:nth-of-type(2) {
-    margin: 0 4%;
   }
   #reiseListeContainer {
     width: 66%;
@@ -1627,19 +1901,19 @@ strong {
     /*float:left;*/
     margin-top: 0.5em;
     /*    margin-left:0.5em;
-    min-width:45%;
-    max-width: 45%;*/
+            min-width:45%;
+            max-width: 45%;*/
   }
   #reiseListeContainer .reise > p {
     /*float:left;
-    margin-left:0.5em;
-    width:35%;*/
+        margin-left:0.5em;
+        width:35%;*/
   }
   #reiseListeContainer .reise .reiseKurzinformation {
     /*margin-top:0;
-    min-width:70px;
-    width:5%;
-    float:right;*/
+        min-width:70px;
+        width:5%;
+        float:right;*/
   }
   #reiseListeContainer .reise .reiseKurzinformation > div {
     width: 100%;
@@ -1764,15 +2038,15 @@ strong {
     background: rgba(28, 25, 29, 0.9);
     border: 2px solid #C90019;
     margin-top: 2em;
-    /*padding:0px 20px;*/
+    position: relative;
   }
   #mainSidebar #schildSidebar {
-    position: relative;
+    position: absolute;
     top: -27px;
-    right: -295px;
+    right: -33px;
   }
   #mainSidebar h3 {
-    margin-top: -70px;
+    margin-top: 10px;
     margin-left: 0.7em;
   }
   #mainSidebar p {
@@ -1780,6 +2054,10 @@ strong {
     font-size: 0.8125em;
     font-family: 'CandaraRegular', Arial, Helvetica, sans-serif;
     line-height: 1.563;
+  }
+  #mainSidebar p.whiteLine {
+    width: inherit !important;
+    margin-top: 0.5em;
   }
   #mainSidebar p span {
     font-size: 1.2em;
@@ -1790,10 +2068,6 @@ strong {
   #mainSidebar div.neuigkeit:last-of-type p.whiteLine {
     border: none;
     background-color: inherit;
-  }
-  #mainSidebar p.whiteLine {
-    width: inherit !important;
-    margin-top: 0.5em;
   }
   #mainSidebar .neuigkeit p.clear img {
     position: relative;
@@ -2307,35 +2581,22 @@ strong {
     width: 95%;
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-device-width: 800px) {
   #header #kompass {
     top: 23px;
   }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-device-width: 800px) {
   #header #kompass {
     right: 0;
   }
 }
-@media screen and (min-width: 900px) {
+@media screen and (min-device-width: 900px) {
   #header #kompass {
     right: 1%;
   }
 }
-@media screen and (min-width: 1000px) {
-  /* Navigation austauschen */
-  .open {
-    display: none;
-  }
-  #menueBig {
-    z-index: 100;
-    display: inherit;
-    position: absolute;
-    left: 50%;
-    margin-left: -120px;
-    content: url(../img/globus.png);
-    cursor: pointer;
-  }
+@media screen and (min-device-width: 1000px) {
   #navigationBig {
     width: 90%;
     max-width: 1096px;
@@ -2424,7 +2685,7 @@ strong {
     color: #c90019;
   }
 }
-@media screen and (min-width: 1100px) {
+@media screen and (min-device-width: 1100px) {
   #footer {
     font-size: 1.1em;
   }
@@ -2438,32 +2699,32 @@ strong {
     right: 3%;
   }
 }
-@media screen and (min-width: 1300px) {
+@media screen and (min-device-width: 1300px) {
   #header #kompass {
     right: 4%;
   }
 }
-@media screen and (min-width: 1400px) {
+@media screen and (min-device-width: 1400px) {
   #header #kompass {
     right: 9%;
   }
 }
-@media screen and (min-width: 1400px) {
+@media screen and (min-device-width: 1400px) {
   #header #kompass {
     right: 11%;
   }
 }
-@media screen and (min-width: 1600px) {
+@media screen and (min-device-width: 1600px) {
   #header #kompass {
     right: 14%;
   }
 }
-@media screen and (min-width: 1700px) {
+@media screen and (min-device-width: 1700px) {
   #header #kompass {
     right: 17%;
   }
 }
-@media screen and (min-width: 1800px) {
+@media screen and (min-device-width: 1800px) {
   #header #kompass {
     right: 19%;
   }
@@ -2485,6 +2746,7 @@ strong {
 }
 .zurueck {
   width: 30%;
+  min-width: 240px;
   padding-top: 5px;
   padding-left: 1.5em;
   height: 25px;
@@ -2563,6 +2825,7 @@ header .container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  background: rgba(28, 25, 29, 0.9);
 }
 #tagListe .tag {
   min-width: 13%;
@@ -2606,7 +2869,7 @@ header .container {
   padding-left: 3px;
 }
 .reise > p {
-  height: 140px;
+  height: 160px;
 }
 .reise-quer {
   display: flex;
@@ -2690,6 +2953,7 @@ header .container {
 }
 #teaser {
   position: relative;
+  padding-top: 70px;
 }
 #teaser .reise-remove {
   position: absolute;

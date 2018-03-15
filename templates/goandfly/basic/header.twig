@@ -11,7 +11,7 @@
 <html> <!--<![endif]-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.67, maximum-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=0.67 maximum-scale=1.0"/>
 
     <title>go and fly</title>
 
@@ -42,8 +42,8 @@
     <header id="header">
         <div class="container">
             <!-- Menü -->
-            <a class="open" href="#nav"><img src="{{ templateDir }}/img/nav_world.png"/></a>
-            <img id="menueBig" src="{{ templateDir }}/img/globus.png" />
+            <a class="open" href="#nav"><img src="{{ templateDir }}/img/nav_world.png" class="open"/></a>
+            <img id="menueBig" src="{{ templateDir }}/img/globus.png"  />
 
             <!-- Logo -->
             <div id="logo">
@@ -56,7 +56,7 @@
 
             <!-- Hotline -->
             <div id="hotline" class="right">
-                <img src="{{ templateDir }}/img/hotline.png"/>
+                <span>Direktkontakt zum Spezialisten<br/><b>T 0345-2100514</b></span>
             </div>
             <p class="clear"></p>
 
@@ -64,18 +64,19 @@
             <div id="navigation">
                 <div id="nav">
                     {% for continent in continents %}
-                        {% set continentId = {'continentId': continent.getContinentId} %}
                         <div class="kontinent">
-                            {{ continent.getFlaeche }}
-                            <a href="{{ route('index', continentId) }}"><img src="{{ continent.getBild }}" width="220"/></a>
                             <table width="200">
                                 {% for region in continent.getRegionList %}
                                     {% set regionId = {'regionId': region.getRegionId} %}
                                     <tr>
-                                        <td><a href="{{ route('index', regionId) }}">{{ region.getName }}</a></td>
+                                        <td><a href="{{ route('index', regionId) }}">{{ region.getName | convert_encoding('UTF-8', 'ISO-8859-1') }}</a></td>
                                     </tr>
                                 {% endfor %}
                             </table>
+
+                            <img src="{{ continent.getBild }}"/>
+
+                            <p>{{ continent.getFlaeche }}</p>
                         </div> <!-- .kontinent -->
                     {% endfor %}
                 </div> <!-- #nav -->

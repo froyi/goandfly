@@ -18,6 +18,9 @@ class TagRepository
 
     protected const ORDER_BY_POSITION = 'position';
 
+    protected const ORDER_BY_NAME = 'name';
+
+
     /** @var  Database $database */
     protected $database;
 
@@ -38,6 +41,17 @@ class TagRepository
     {
         $query = $this->database->getNewSelectQuery(self::TABLE);
         $query->orderBy(self::ORDER_BY_POSITION, Query::ASC);
+
+        return $this->database->fetchAll($query);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllTagsSorted(): array
+    {
+        $query = $this->database->getNewSelectQuery(self::TABLE);
+        $query->orderBy(self::ORDER_BY_NAME, Query::ASC);
 
         return $this->database->fetchAll($query);
     }
