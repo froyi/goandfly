@@ -2350,6 +2350,13 @@ strong {
     max-width: 800px;
     min-height: 150px;
   }
+  #kontakt table {
+    margin-left: 15px;
+    margin-bottom: 1em;
+  }
+  #kontakt table tbody tr td {
+    padding-right: 10px;
+  }
   /* IMPRESSUM */
   #impressum {
     background: rgba(28, 25, 29, 0.9);
