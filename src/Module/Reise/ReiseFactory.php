@@ -23,6 +23,7 @@ class ReiseFactory
 {
     /**
      * @param $object
+     *
      * @return Reise
      */
     public function getReiseFromObject($object): Reise
@@ -43,7 +44,8 @@ class ReiseFactory
         $bild = Image::fromFile($object->bild);
         $veranstalter = Name::fromString($object->veranstalter);
 
-        return new Reise($reiseId, $kurzbeschreibung, $beschreibung, $titel, $personen, $reisedauer, $flugzeit, $sprache, $terrain, $karte, $bearbeitet, $teaser, $sichtbar, $bild, $veranstalter);
+        return new Reise($reiseId, $kurzbeschreibung, $beschreibung, $titel, $personen, $reisedauer, $flugzeit,
+            $sprache, $terrain, $karte, $bearbeitet, $teaser, $sichtbar, $bild, $veranstalter);
     }
 
     /**
@@ -62,12 +64,15 @@ class ReiseFactory
      *
      *
      * @param $object
+     *
      * @return bool
      */
     public function validateObject($object): bool
     {
         try {
-            $this->getReiseFromObject($object);
+            if ($this->getReiseFromObject($object) === null) {
+                return false;
+            }
         } catch (\InvalidArgumentException $error) {
             return false;
         } catch (\TypeError $error) {
@@ -81,17 +86,19 @@ class ReiseFactory
      *
      *
      * @param $object
+     *
      * @return null|Reisevorschau
      */
-    public function getReiseVorschauFromObject($object): ?Reisevorschau
+    public function getReiseVorschauFromObject($object, ?bool $backend = false): ?Reisevorschau
     {
         $reiseId = Id::fromString($object->reiseId);
         $bearbeitet = Datetime::fromValue($object->bearbeitet);
         $sichtbar = Date::fromValue($object->sichtbar);
 
-        if ($sichtbar->isPast() === false) {
+        if ($sichtbar->isPast() === false && $backend === false) {
             return null;
         }
+
 
         $reisevorschau = new Reisevorschau($reiseId, $bearbeitet, $sichtbar);
 
@@ -108,7 +115,7 @@ class ReiseFactory
         }
 
         if (!empty($object->reisedauer)) {
-            $reisevorschau->setReisedauer(Reisedauer::fromValue((int) $object->reisedauer));
+            $reisevorschau->setReisedauer(Reisedauer::fromValue((int)$object->reisedauer));
         }
 
         if (!empty($object->flugzeit)) {
@@ -146,12 +153,15 @@ class ReiseFactory
      *
      *
      * @param $object
+     *
      * @return bool
      */
-    public function validateReisevorschauObject($object): bool
+    public function validateReisevorschauObject($object, ?bool $backend = false): bool
     {
         try {
-            $this->getReiseVorschauFromObject($object);
+            if ($this->getReiseVorschauFromObject($object, $backend) === null) {
+                return false;
+            }
         } catch (\InvalidArgumentException $error) {
             return false;
         }

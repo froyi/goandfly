@@ -52,7 +52,7 @@ class BackendController extends DefaultController
         $reiseService = new ReiseService($this->database);
 
         $regionService = new RegionService($this->database);
-        $regions = $regionService->getAllRegionsWithReisen($reiseService);
+        $regions = $regionService->getAllRegionsWithReisen($reiseService, true);
 
         $this->viewRenderer->addViewConfig('regionsWithReisen', $regions);
 
@@ -190,10 +190,16 @@ class BackendController extends DefaultController
             $reise = $reiseService->getReiseVorschauByParameter((object)$_POST, $regionService);
 
             /** @var array $parameter */
-            if ($reiseService->saveReisevorschauToDatabase($reise) === true) {
+            if ($reise !== null && $reiseService->saveReisevorschauToDatabase($reise) === true) {
                 $parameter = [
                     'notificationCode' => 'reiseEditSuccess',
                     'notificationStatus' => 'success',
+                    'reiseId' => Id::fromString(Tools::getValue('reiseId'))
+                ];
+            } else {
+                $parameter = [
+                    'notificationCode' => 'reiseEditError',
+                    'notificationStatus' => 'error',
                     'reiseId' => Id::fromString(Tools::getValue('reiseId'))
                 ];
             }

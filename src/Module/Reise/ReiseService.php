@@ -317,7 +317,7 @@ class ReiseService
      *
      * @return array
      */
-    public function getAllReisenByRegionId(Id $regionId): array
+    public function getAllReisenByRegionId(Id $regionId, ?bool $backend = false): array
     {
         $reisenArray = [];
 
@@ -327,8 +327,11 @@ class ReiseService
             if ($this->reiseFactory->validateObject($reiseData) === true) {
                 $reise = $this->reiseFactory->getReiseFromObject($reiseData);
                 $reisenArray[$reise->getReiseId()->toString()] = $reise;
-            } else if ($this->reiseFactory->validateReisevorschauObject($reiseData) === true) {
-                $reise = $this->reiseFactory->getReiseVorschauFromObject($reiseData);
+            } else if ($this->reiseFactory->validateReisevorschauObject($reiseData, $backend) === true) {
+                $reise = $this->reiseFactory->getReiseVorschauFromObject($reiseData, $backend);
+                if ($reise === null) {
+                    $a = 2;
+                }
                 $reisenArray[$reise->getReiseId()->toString()] = $reise;
             }
         }

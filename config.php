@@ -204,6 +204,8 @@ return [
         'newsInsertSuccess' => 'Die Neuigkeit wurde erfolgreich angelegt.',
         'newsInsertError' => 'Bei der Erstellung der Neuigkeit gab es einen Fehler.',
         'newsDeleteSuccess' => 'Die Neuigkeit wurde erfolgreich gelöscht.',
+        'reiseEditSuccess' => 'Die Reise wurde erfolgreich bearbeitet.',
+        'reiseEditError' => 'Die Reise konnte nicht bearbeitet werden.',
     ],
     'tinypng-api-key' => 'oCp8yUGdePuUObLKVmhAHeB4V3zLbDZD',
     'js-packages' => [

@@ -83,7 +83,7 @@ class RegionService
      *
      * @return array
      */
-    public function getAllRegionsWithReisen(ReiseService $reiseService): array
+    public function getAllRegionsWithReisen(ReiseService $reiseService, ?bool $backend = false): array
     {
         $regionArray = [];
 
@@ -91,7 +91,7 @@ class RegionService
 
         /** @var Region $region */
         foreach ($regions as $region) {
-            $reisen = $reiseService->getAllReisenByRegionId($region->getRegionId());
+            $reisen = $reiseService->getAllReisenByRegionId($region->getRegionId(), $backend);
 
             $region->setReisenList($reisen);
 
