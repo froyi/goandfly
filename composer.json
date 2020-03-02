@@ -1,5 +1,5 @@
 {
-  "name": "Go and Fly Website",
+  "name": "go-and-fly-website",
   "description": "New Version of Go and Fly Website",
   "type": "website",
   "keywords": [
@@ -13,14 +13,22 @@
     }
   ],
   "require": {
-    "roave/security-advisories": "dev-master",
     "php": "^7.0",
     "paragonie/random_compat": "^1.0|^2.0",
-    "twig/twig": "2.4.3",
-    "ramsey/uuid": "3.6.1",
-    "league/uri": "5.*",
+    "ext-json": "*",
+    "ext-pdo": "*",
+    "ext-mysqli": "*",
+    "monolog/monolog": "^1.24",
+    "twig/twig": "2.*",
+    "fabpot/goutte": "4.0.*",
+    "ramsey/uuid": "3.8.*",
     "claviska/simpleimage": "3.*",
-    "tinify/tinify": "*"
+    "tinify/tinify": "1.*",
+    "tecnickcom/tcpdf": "^6.2",
+    "swiftmailer/swiftmailer": "6.*",
+    "endroid/qr-code": "^3.4",
+    "ext-simplexml": "*",
+    "league/uri": "6.1.*"
   },
   "autoload": {
     "psr-4": {

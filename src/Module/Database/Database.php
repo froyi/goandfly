@@ -52,7 +52,7 @@ class Database
      */
     public function connect(): void
     {
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->database;
+        $dsn = 'mysql:host=' . $this->host . ';port=3309;dbname=' . $this->database;
         $this->connection = new \PDO($dsn, $this->user, $this->password);
     }
 
