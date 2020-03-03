@@ -21,12 +21,12 @@ return [
         'password' => '2006gofly0523',
         'database' => 'd002e083'
     ],
-    //    'database_live' => [
-    //        'host' => 'localhost',
-    //        'user' => 'd017956f',
-    //        'password' => 'veQfmf882Z3FCGpE',
-    //        'database' => 'd017956f'
-    //    ],
+    /*'database_live' => [
+        'host' => 'localhost',
+        'user' => 'd017956f',
+        'password' => 'veQfmf882Z3FCGpE',
+        'database' => 'd017956f'
+    ],*/
     'controller' => [
         'namespace' => 'Controller'
     ],

@@ -2856,6 +2856,12 @@ header .container {
   color: #c90019;
   margin-right: 15px;
 }
+.reise .priceContainer {
+  text-align: right;
+  font-size: 1.4em;
+  padding-right: 0.4em;
+  margin-bottom: 0.75em;
+}
 .reise .reiseKurzinformation {
   float: none;
   display: flex;

@@ -9,6 +9,7 @@ use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Image;
 use Project\Module\GenericValueObject\Name;
 use Project\Module\GenericValueObject\Personen;
+use Project\Module\GenericValueObject\Price;
 use Project\Module\GenericValueObject\Reisedauer;
 use Project\Module\GenericValueObject\Terrain;
 use Project\Module\GenericValueObject\Text;
@@ -66,16 +67,24 @@ class Reisevorschau
 
     /** @var  array $regionList */
     protected $regionList = [];
+
     /** @var array $tagListe */
     protected $tagListe = [];
+
     /** @var array $terminListe */
     protected $terminListe = [];
+
     /** @var array $reiseverlaufListe */
     protected $reiseverlaufListe = [];
+
     /** @var Leistung $leistung */
     protected $leistung;
+
     /** @var array $frageListe */
     protected $frageListe = [];
+
+    /** @var null|Price */
+    protected $preisAb;
 
     public function __construct(Id $reiseId, Datetime $bearbeitet, Date $sichtbar)
     {
@@ -434,5 +443,21 @@ class Reisevorschau
     public function setVeranstalter(Name $veranstalter): void
     {
         $this->veranstalter = $veranstalter;
+    }
+
+    /**
+     * @param Price $preisAb
+     */
+    public function setPreisAb(Price $preisAb): void
+    {
+        $this->preisAb = $preisAb;
+    }
+
+    /**
+     * @return Price|null
+     */
+    public function getPreisAb(): ?Price
+    {
+        return $this->preisAb;
     }
 }

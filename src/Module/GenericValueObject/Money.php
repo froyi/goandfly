@@ -58,21 +58,35 @@ abstract class Money
      * @return int
      */
     protected static function convertMoney($money): int
-	{
-		$money *= 100;
-		$money = floor($money);
-		$money = (int)$money; 
+    {
+        $money = self::tofloat($money);
+        $money *= 100;
+        $money = floor($money);
+        $money = (int)$money;
 
-		return $money;
-	}
+        return $money;
+    }
+
+    protected static function tofloat($num)
+    {
+        $dotPos = strrpos($num, '.');
+        $commaPos = strrpos($num, ',');
+        $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos : ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
+
+        if (!$sep) {
+            return floatval(preg_replace("/[^0-9]/", "", $num));
+        }
+
+        return floatval(preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' . preg_replace("/[^0-9]/", "", substr($num, $sep + 1, strlen($num))));
+    }
 
     /**
      * @return int
      */
     public function getMoney(): int
-	{
-		return $this->money;
-	}
+    {
+        return $this->money;
+    }
 
     /**
      * @return string

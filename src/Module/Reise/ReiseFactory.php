@@ -3,6 +3,7 @@ declare (strict_types=1);
 
 namespace Project\Module\Reise;
 
+use InvalidArgumentException;
 use Project\Module\GenericValueObject\Date;
 use Project\Module\GenericValueObject\Datetime;
 use Project\Module\GenericValueObject\Flugzeit;
@@ -10,10 +11,12 @@ use Project\Module\GenericValueObject\Id;
 use Project\Module\GenericValueObject\Image;
 use Project\Module\GenericValueObject\Name;
 use Project\Module\GenericValueObject\Personen;
+use Project\Module\GenericValueObject\Price;
 use Project\Module\GenericValueObject\Reisedauer;
 use Project\Module\GenericValueObject\Terrain;
 use Project\Module\GenericValueObject\Text;
 use Project\Module\GenericValueObject\Title;
+use TypeError;
 
 /**
  * Class ReiseFactory
@@ -44,8 +47,13 @@ class ReiseFactory
         $bild = Image::fromFile($object->bild);
         $veranstalter = Name::fromString($object->veranstalter);
 
-        return new Reise($reiseId, $kurzbeschreibung, $beschreibung, $titel, $personen, $reisedauer, $flugzeit,
-            $sprache, $terrain, $karte, $bearbeitet, $teaser, $sichtbar, $bild, $veranstalter);
+        $reise = new Reise($reiseId, $kurzbeschreibung, $beschreibung, $titel, $personen, $reisedauer, $flugzeit, $sprache, $terrain, $karte, $bearbeitet, $teaser, $sichtbar, $bild, $veranstalter);
+
+        if (!empty($object->preisAb)) {
+            $reise->setPreisAb(Price::fromValue($object->preisAb));
+        }
+
+        return $reise;
     }
 
     /**
@@ -73,9 +81,9 @@ class ReiseFactory
             if ($this->getReiseFromObject($object) === null) {
                 return false;
             }
-        } catch (\InvalidArgumentException $error) {
+        } catch (InvalidArgumentException $error) {
             return false;
-        } catch (\TypeError $error) {
+        } catch (TypeError $error) {
             return false;
         }
 
@@ -101,6 +109,10 @@ class ReiseFactory
 
 
         $reisevorschau = new Reisevorschau($reiseId, $bearbeitet, $sichtbar);
+
+        if (!empty($object->preisAb)) {
+            $reisevorschau->setPreisAb(Price::fromValue($object->preisAb));
+        }
 
         if (!empty($object->kurzbeschreibung)) {
             $reisevorschau->setKurzbeschreibung(Text::fromString($object->kurzbeschreibung));
@@ -162,7 +174,7 @@ class ReiseFactory
             if ($this->getReiseVorschauFromObject($object, $backend) === null) {
                 return false;
             }
-        } catch (\InvalidArgumentException $error) {
+        } catch (InvalidArgumentException $error) {
             return false;
         }
 

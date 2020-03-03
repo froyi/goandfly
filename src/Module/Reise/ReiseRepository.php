@@ -227,6 +227,10 @@ class ReiseRepository
             $query->set('bild', $reise->getBild()->toString());
             $query->set('veranstalter', $reise->getVeranstalter()->getName());
 
+            if ($reise->getPreisAb() !== null) {
+                $query->set('preisAb', $reise->getPreisAb()->getPrice());
+            }
+
             $query->where('reiseId', '=', $reise->getReiseId()->toString());
 
             return $this->database->execute($query);
@@ -248,6 +252,10 @@ class ReiseRepository
         $query->insert('sichtbar', $reise->getSichtbar()->toString());
         $query->insert('bild', $reise->getBild()->toString());
         $query->insert('veranstalter', $reise->getVeranstalter()->getName());
+
+        if ($reise->getPreisAb() !== null) {
+            $query->insert('preisAb', $reise->getPreisAb()->getPrice());
+        }
 
         return $this->database->execute($query);
     }
@@ -308,6 +316,10 @@ class ReiseRepository
                 $query->set('veranstalter', $reise->getVeranstalter()->getName());
             }
 
+            if ($reise->getPreisAb() !== null) {
+                $query->set('preisAb', $reise->getPreisAb()->getPrice());
+            }
+
             $query->where('reiseId', '=', $reise->getReiseId()->toString());
 
             return $this->database->execute($query);
@@ -364,6 +376,10 @@ class ReiseRepository
 
         if ($reise->getVeranstalter() !== null) {
             $query->insert('veranstalter', $reise->getVeranstalter()->getName());
+        }
+
+        if ($reise->getPreisAb() !== null) {
+            $query->insert('preisAb', $reise->getPreisAb()->getPrice());
         }
 
         return $this->database->execute($query);

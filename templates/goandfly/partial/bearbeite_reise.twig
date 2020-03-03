@@ -22,6 +22,7 @@
                                                        placeholder="Reiseveranstalter"/></p>
             <p>Karte uploaden:<br/><input type="file" name="kartenBild"/></p>
             <p>Teaserbild uploaden:<br/><input type="file" name="teaserBild"/></p>
+            <p>Preis ab (ohne €):<br/><input type="text" name="preisAb" required placeholder="Preis ab  Bsp.: 1920" value="{{ bearbeiteReise.getPreisAb }}" /></p>
             <p>Personenanzahl:<br/><input type="text" name="personen" required placeholder="Personenanzahl Bsp.: 4-6"
                                           value="{{ bearbeiteReise.getPersonen }}"/></p>
             <p>Reisedauer in Tagen:<br/><input type="text" name="reisedauer" required

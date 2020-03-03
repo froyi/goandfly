@@ -8,7 +8,15 @@
     <div class="beschreibung">
         <h3><a href="{{ route('reise', reiseId) }}">{{ reise.getTitel }}</a></h3>
         <div class="flex">
-            <p>{{ shortener(reise.getKurzbeschreibung, 400, true) }}</p>
+            <div>
+                <p>{{ shortener(reise.getKurzbeschreibung, 400, true) }}</p>
+
+                {% if reise.getPreisAb %}
+                    <div class="priceContainer">
+                        ab {{ reise.getPreisAb }}€
+                    </div>
+                {% endif %}
+            </div>
 
             <div class="reiseKurzinformation">
                 <div>
