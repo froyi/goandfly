@@ -11,8 +11,8 @@ return [
     'database' => [
         'host' => 'localhost',
         'user' => 'root',
-        'password' => '',
-        'database' => 'fly'
+        'password' => 'root',
+        'database' => 'goandfly'
     ],
     // _live_test
     'database_live' => [

@@ -1,17 +1,11 @@
 {
-  "name": "go-and-fly-website",
+  "name": "abcdsad/adsdf",
   "description": "New Version of Go and Fly Website",
   "type": "website",
   "keywords": [
-    "Reisebüro"
+    "Reisebuero"
   ],
   "license": "MIT",
-  "authors": [
-    {
-      "name": "Maik Schößler",
-      "email": "ms2002@onlinehome.de"
-    }
-  ],
   "require": {
     "php": "^7.0",
     "paragonie/random_compat": "^1.0|^2.0",

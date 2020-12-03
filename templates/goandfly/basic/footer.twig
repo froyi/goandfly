@@ -1,7 +1,7 @@
 <div id="footer">
     <div class="container">
         <div>
-            <img src="{{ templateDir }}/img/dieter_rosenbusch.png" />
+            <img src="{{ templateDir }}/img/dieter_rosenbusch.png"/>
             <div>
                 <h3>Dieter Rosenbusch</h3>
                 <p>ist Inhaber der Firma GO and Fly, die seit 1992 besteht und mit seiner Frau Renate geführt wird. </p>
@@ -18,12 +18,12 @@
 
         <div id="kontaktform">
             <h3>Kontaktformular</h3>
-            <form name="kontakt" method="post" action="{{ route('footer-contact') }}">{#inc.php/mail.sc.php#}
+            <form name="kontakt" method="post" action="{{ route('footer-contact') }}">{# inc.php/mail.sc.php #}
                 <input type="text" name="name" required placeholder="Name"><br/>
                 <input type="email" name="email" required placeholder="E-Mail"><br/>
                 <textarea name="nachricht" placeholder="Nachricht" required></textarea><br/>
                 <input type="submit" name="submit" value="Senden">
-                <input type="hidden" name="route" value="{{ route }}" />
+                <input type="hidden" name="route" value="{{ route }}"/>
             </form>
             {% if mailSent is same as (true) %}
                 <p>Vielen Dank für Ihr Interesse, wir werden uns bei Ihnen melden.</p>
@@ -34,23 +34,18 @@
         <div id="partner_footer">
             <h3>Unsere Partner - hier online buchbar!</h3>
             <div class="left">
-                <a href="http://www.studiosus.com/?agnr=71043">Studienreisen:<br/> <img src="{{ templateDir }}/img/partner/studiosus.png" /></a>
+                <a href="http://www.studiosus.com/?agnr=71043">Studienreisen:<br/> <img src="{{ templateDir }}/img/partner/studiosus.png"/></a>
             </div>
             <div class="left">
-                <a href="http://www.chamaeleon-reisen.de/?anr=106549">Kleingruppen: <br/><img src="{{ templateDir }}/img/partner/chamaeleon.png" /></a>
+                <a href="http://www.chamaeleon-reisen.de/?anr=106549">Kleingruppen: <br/><img src="{{ templateDir }}/img/partner/chamaeleon.png"/></a>
             </div>
             <div class="left">
                 <!--<a href="http://www.portfolio-ms.de"><img src="img/partner/ms.png" /></a>-->
-                <a href="https://www.diamir.de/?agnr=35647">Aktivreisen:<br/> <img src="{{ templateDir }}/img/partner/diamir.jpg" /></a>
-            </div>
-            <div class="left">
-                <a href="http://goandfly-bus.blueandwhite.de/">Bus/Flug:<br/> <img src="{{ templateDir }}/img/partner/bw.png" id="bw" /></a>
+                <a href="https://www.diamir.de/?agnr=35647">Aktivreisen:<br/> <img src="{{ templateDir }}/img/partner/diamir.jpg"/></a>
             </div>
             <div>
                 <a href="https://www.wikinger-reisen.de/?anr=13085" target="_blank">
-                    <img
-                            src="https://www.wikinger-reisen.de/bilder/img/wikinger-logo.gif"
-                            height="100px;">
+                    <img src="{{ templateDir }}/img/partner/wikinger-logo.png">
                 </a>
             </div>
             <p class="clear"></p>
@@ -65,7 +60,11 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-46208813-1"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
     gtag('js', new Date());
 
     gtag('config', 'UA-46208813-1');
