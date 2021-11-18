@@ -24,7 +24,16 @@
                 <textarea name="nachricht" placeholder="Nachricht" required></textarea><br/>
                 <input type="submit" name="submit" value="Senden">
                 <input type="hidden" name="route" value="{{ route }}"/>
+                <input type="hidden" name="recaptcha_token" id="recaptcha_token">
             </form>
+            <script src="https://www.google.com/recaptcha/api.js?render=6LdaDUEdAAAAABa5FQrlHxG61WISbjVCA9OCyPJt"></script>
+            <script>
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('6LdaDUEdAAAAABa5FQrlHxG61WISbjVCA9OCyPJt', {action: 'login'}).then(function(token) {
+                        document.getElementById('recaptcha_token').value = token;
+                    });
+                });
+            </script>
             {% if mailSent is same as (true) %}
                 <p>Vielen Dank für Ihr Interesse, wir werden uns bei Ihnen melden.</p>
             {% endif %}

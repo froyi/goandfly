@@ -8,20 +8,20 @@ return [
         'name' => 'goandfly',
         'dir' => '/goandfly',
     ],
-    'database' => [
+    /*'database' => [
         'host' => 'localhost',
         'user' => 'root',
         'password' => 'root',
         'database' => 'goandfly'
-    ],
+    ],*/
     // _live_test
-    'database_live' => [
+    'database' => [
         'host' => 'localhost',
         'user' => 'd002e083',
         'password' => '2006gofly0523',
         'database' => 'd002e083'
     ],
-    /*'database_live' => [
+    /*'database' => [
         'host' => 'localhost',
         'user' => 'd017956f',
         'password' => 'veQfmf882Z3FCGpE',
@@ -223,5 +223,8 @@ return [
             'pageslide' => true,
             'main' => true,
         ]
-    ]
+    ],
+    'captcha-public-key' => '6LdaDUEdAAAAABa5FQrlHxG61WISbjVCA9OCyPJt',
+    'captcha-private-key' => '6LdaDUEdAAAAAM1Y_8SFq-blyUjHDli4vmEdg9oW',
+    'captcha-score' => 0.6,
 ];

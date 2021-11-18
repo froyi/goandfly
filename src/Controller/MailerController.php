@@ -99,8 +99,17 @@ class MailerController extends DefaultController
         }
 
         if (strlen(trim($nachricht)) > 5) {
+            // Anfrage
+            $request = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $this->configuration->getEntryByName('captcha-private-key') . '&response=' . $_POST['recaptcha_token']);
+// JSON-Antwort dekodieren
+            $request = json_decode($request);
+
+            if ($request->success == false || $request->score >= $this->configuration->getEntryByName('captcha-score')) {
+                header('Location: ' . Tools::getRouteUrl($route));
+            }
 
             $to = "go.and.fly@t-online.de";
+            $to = "ms2002@onlinehome.de";
 
             $message = $name . " schrieb: \r\n" . $nachricht;
 
