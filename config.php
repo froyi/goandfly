@@ -226,5 +226,5 @@ return [
     ],
     'captcha-public-key' => '6LdaDUEdAAAAABa5FQrlHxG61WISbjVCA9OCyPJt',
     'captcha-private-key' => '6LdaDUEdAAAAAM1Y_8SFq-blyUjHDli4vmEdg9oW',
-    'captcha-score' => 0.6,
+    'captcha-score' => 1,
 ];
