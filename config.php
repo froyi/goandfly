@@ -185,7 +185,7 @@ return [
             'controller' => 'MailerController',
             'action' => 'contactFormAction'
         ],
-        'footer-contact' => [
+        'footer-contact-form' => [
             'controller' => 'MailerController',
             'action' => 'footerContactAction'
         ],
