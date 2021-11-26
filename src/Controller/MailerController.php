@@ -104,7 +104,7 @@ class MailerController extends DefaultController
 // JSON-Antwort dekodieren
             $request = json_decode($request);
 
-            if ($request->success == false || $request->score >= $this->configuration->getEntryByName('captcha-score')) {
+            if ($request->success == false || $request->score <= $this->configuration->getEntryByName('captcha-score')) {
                 header('Location: ' . Tools::getRouteUrl($route));
             }
 
