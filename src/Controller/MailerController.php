@@ -98,6 +98,7 @@ class MailerController extends DefaultController
             $route = 'index';
         }
 
+
         if (strlen(trim($nachricht)) > 5) {
             // Anfrage
             $request = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $this->configuration->getEntryByName('captcha-private-key') . '&response=' . $_POST['recaptcha_token']);
@@ -109,7 +110,7 @@ class MailerController extends DefaultController
             }
 
             $to = "go.and.fly@t-online.de";
-            $to = "ms2002@onlinehome.de";
+            $to = "gfsfdgdfsh@bhfghfgh.de";
 
             $message = $name . " schrieb: \r\n" . $nachricht;
 
