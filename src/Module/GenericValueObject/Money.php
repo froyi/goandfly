@@ -59,7 +59,7 @@ abstract class Money
      */
     protected static function convertMoney($money): int
     {
-        $money = self::tofloat($money);
+        $money = is_float($money) ? $money : self::tofloat($money);
         $money *= 100;
         $money = floor($money);
         $money = (int)$money;

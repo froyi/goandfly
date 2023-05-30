@@ -224,7 +224,7 @@ class BackendController extends DefaultController
 
         /** @var array $parameter */
         $parameter = ['notificationCode' => 'newsInsertError', 'notificationStatus' => 'error'];
-        if ($news instanceof News && $newsService->saveNewsToDatabase($news) === true) {
+        if ($newsService->saveNewsToDatabase($news) === true) {
             $parameter = ['notificationCode' => 'newsInsertSuccess', 'notificationStatus' => 'success'];
         }
 

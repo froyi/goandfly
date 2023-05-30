@@ -3,10 +3,11 @@ declare (strict_types=1);
 
 namespace Project\Module\GenericValueObject;
 
+use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 
 /**
- * Class Id
+ * Class ID
  * @package Project\Module\GenericValueObject
  */
 class Id
@@ -16,7 +17,7 @@ class Id
 
     /**
      * @return Id
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public static function generateId(): self
     {
@@ -31,15 +32,13 @@ class Id
     /**
      * @param string $id
      * @return Id
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public static function fromString(string $id): self
     {
-        $uuId = Uuid::fromString($id);
+        self::ensureValueIsValid($id);
 
-        self::ensureValueIsValid($uuId);
-
-        return new self($uuId);
+        return new self(Uuid::fromString($id));
     }
 
     /**
@@ -53,12 +52,12 @@ class Id
 
     /**
      * @param $uuId
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected static function ensureValueIsValid($uuId): void
     {
-        if (Uuid::isValid($uuId) === false) {
-            throw new \InvalidArgumentException('This value is not valid $uuId');
+        if (Uuid::isValid(strval($uuId)) === false) {
+            throw new InvalidArgumentException('This value is not valid $uuId');
         }
     }
 

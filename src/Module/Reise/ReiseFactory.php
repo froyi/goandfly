@@ -50,7 +50,7 @@ class ReiseFactory
         $reise = new Reise($reiseId, $kurzbeschreibung, $beschreibung, $titel, $personen, $reisedauer, $flugzeit, $sprache, $terrain, $karte, $bearbeitet, $teaser, $sichtbar, $bild, $veranstalter);
 
         if (!empty($object->preisAb)) {
-            $reise->setPreisAb(Price::fromValue($object->preisAb));
+            $reise->setPreisAb(Price::fromValue((string)$object->preisAb));
         }
 
         return $reise;

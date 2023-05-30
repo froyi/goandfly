@@ -85,7 +85,8 @@ class NewsRepository
         $query->insert('text', $news->getText()->getText());
         $query->insert('datum', $news->getDatum()->toString());
 
-        return $this->database->execute($query);
+        $result = $this->database->execute($query);
+        return $result;
     }
 
     /**

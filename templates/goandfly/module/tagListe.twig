@@ -1,9 +1,9 @@
 {% if tagListe|length > 0 %}
     <div id="tagListe">
         {% for tag in tagListe %}
-            {% if tag.getName == 'Busreisen' %}
+            {% if tag.getName == 'Kreuzfahrten' %}
                 <div class="tag">
-                    <a href="http://goandfly-bus.blueandwhite.de/" target="_blank">{{ tag.getName }}</a>
+                    <a href="https://leinen-los-kreuzfahrten.de/" target="_blank">{{ tag.getName }}</a>
                 </div>
             {% else %}
                 <div class="tag {% if tag.getTagId.toString in activeTags %}active{% endif %}" data-tag-id="{{ tag.getTagId }}">{{ tag.getName| convert_encoding('UTF-8', 'ISO-8859-1') }}</div>
